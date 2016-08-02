@@ -10,11 +10,12 @@ using ijengine::Canvas;
 
 class MBLevel : public Level{
 	public:
-		MBLevel(int r, int g, int b, const string &next = "", const string &audio_path = "");
+		MBLevel(int r, int g, int b, const string &current, const string &next = "", const string &audio_path = "");
 
 		bool done() const;
 		string next() const;
 		string audio() const;
+		string current_level() const;
 
 	protected:
 		void update_self(unsigned now, unsigned last);
@@ -23,7 +24,7 @@ class MBLevel : public Level{
 	private:
 		int m_r, m_g, m_b;
 		bool m_done;
-		string m_next, m_audio_path;
+		string m_next, m_audio_path, m_current_level;
 		int m_start;
 };
 

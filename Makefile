@@ -1,4 +1,4 @@
-NAME = mb_game
+NAME = game
 
 SRC_DIR = src
 INC_DIR = include
@@ -35,6 +35,14 @@ $(TARGET): $(OBJ)
 	@echo Building $@
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) -o $@ $(LIBS)
 	@echo Done.
+
+run:
+	$(TARGET)
+
+crun:
+	make dist-clean
+	make -j
+	make run
 
 clean:
 	@echo Cleaning...
