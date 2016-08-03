@@ -12,86 +12,157 @@
 
 using namespace ijengine;
 
-namespace ijengine{
-	namespace game_event{
-		const unsigned MOVEMENT = GameEvent::assign_id();
-		const unsigned MOTION = GameEvent::assign_id();
-		const unsigned CLICK = GameEvent::assign_id();
-	}
+namespace ijengine
+{
+    namespace game_event
+    {
+        const unsigned GAME_EVENT_JUMP =            1 << 4;
+        const unsigned GAME_EVENT_DOWN_PRESSED =    1 << 5;
+        const unsigned GAME_EVENT_DOWN_RELEASED =   1 << 6;
+        const unsigned GAME_EVENT_MENU_SELECT =     1 << 7;
+        const unsigned GAME_MOUSE_PRESSED =         1 << 8;
+        const unsigned GAME_MOUSE_MOVEMENT =        1 << 9;
+        const unsigned GAME_MOUSE_MOTION =          1 << 10;
+        const unsigned GAME_EVENT_PUNCH =           1 << 11;
+        const unsigned GAME_EVENT_UP_PRESSED =      1 << 12;
+        const unsigned GAME_EVENT_UP_RELEASED =     1 << 13;
+        const unsigned GAME_EVENT_LEFT_PRESSED =    1 << 14;
+        const unsigned GAME_EVENT_LEFT_RELEASED =   1 << 15;
+        const unsigned GAME_EVENT_RIGHT_PRESSED =   1 << 16;
+        const unsigned GAME_EVENT_RIGHT_RELEASED =  1 << 17;
+        const unsigned GAME_EVENT_ENTER =           1 << 18;
+        const unsigned GAME_EVENT_DEBUG =           1 << 19;
+        const unsigned GAME_MOUSE_RELEASED =        1 << 20;
+    }
 }
 
-class MBGame{
-	public:
-		MBGame(const string &title, int w, int h);
-		~MBGame();
+class MBGame {
+    public:
+        MBGame(const string& title, int w, int h);
+        ~MBGame();
 
-		int run(const string &level_id);
+        int run(const string& level_id);
 
-	private:
-		class Translator : public EventsTranslator{
-			bool translate(GameEvent &, const JoystickEvent &){
-				return false;
-			}
+    private:
+        class Translator : public EventsTranslator {
+            bool translate(GameEvent& to, const MouseEvent& from){
+                to.set_timestamp(from.timestamp());
+                to.set_property<double>("x", from.x());
+                to.set_property<double>("y", from.y());
 
-			bool translate(GameEvent &to, const MouseEvent &from){
-				to.set_timestamp(from.timestamp());
-				to.set_property <double>("x", from.x());
-				to.set_property <double>("y", from.y());
+                if (from.state() == MouseEvent::MOTION)
+                    to.set_id(game_event::GAME_MOUSE_MOTION);
+                else if (from.state() == MouseEvent::PRESSED)
+                    to.set_id(game_event::GAME_MOUSE_PRESSED);
+                else
+                	to.set_id(game_event::GAME_MOUSE_RELEASED);
 
-				if(from.state() == MouseEvent::MOTION)
-					to.set_id(game_event::MOTION);
-				else
-					to.set_id(game_event::CLICK);
+                return true;
+            }
 
-				return true;
-			}
+            bool translate(GameEvent& to, const SystemEvent& from){
+                if(from.action() == SystemEvent::QUIT){
+                    to.set_timestamp(from.timestamp());
+                    to.set_id(game_event::QUIT);
 
-			bool translate(GameEvent &to, const SystemEvent &from){
-				if(from.action() == SystemEvent::QUIT){
-					to.set_timestamp(from.timestamp());
-					to.set_id(game_event::QUIT);
+                    return true;
+                }
 
-					return true;
-				}
+                return false;
+            }
 
-				return false;
-			}
 
-			virtual bool translate(GameEvent &to, const KeyboardEvent &from){
-				to.set_timestamp(from.timestamp());
+            virtual bool translate(GameEvent&, const JoystickEvent&){
+                return false;
+            }
 
-				bool done = true;
-				int id = 0;
+            virtual bool translate(GameEvent& to, const KeyboardEvent& from){
+                to.set_timestamp(from.timestamp());
 
-				switch(from.key()){
-					case KeyboardEvent::ESCAPE:
-						id = game_event::QUIT;
-					break;
+                bool done = true;
 
-					case KeyboardEvent::UP:
-						id = game_event::MOVEMENT;
-						to.set_property <string>("direction", "up");
-					break;
+                switch(from.key()){
+                    case KeyboardEvent::SPACE:
+                        if(from.state() == KeyboardEvent::PRESSED){
+                            to.set_property<string>("jump", "space");
+                            to.set_id(game_event::GAME_EVENT_JUMP);
+                        }
 
-					case KeyboardEvent::DOWN:
-						id = game_event::MOVEMENT;
-						to.set_property <string>("direction", "down");
-					break;
+                        break;
 
-					default:
-						done = false;
-				}
+                    case KeyboardEvent::C:
+                        to.set_property<string>("select", "c");
+                        to.set_id(game_event::GAME_EVENT_MENU_SELECT);
+                        break;
 
-				to.set_id(id);
+                    case KeyboardEvent::X:
+                        to.set_property<string>("punch", "x");
+                        to.set_id(game_event::GAME_EVENT_PUNCH);
+                        break;
 
-				return done;
-			}
-		};
+                    case KeyboardEvent::DOWN:
+                        to.set_property<string>("slide", "down");
 
-		Game m_game;
-		Engine m_engine;
-		MBLevelFactory m_level_factory;
-		Translator m_translator;
+                        if(from.state() == KeyboardEvent::PRESSED)
+                            to.set_id(game_event::GAME_EVENT_DOWN_PRESSED);
+                        else if(from.state() == KeyboardEvent::RELEASED)
+                            to.set_id(game_event::GAME_EVENT_DOWN_RELEASED);
+
+                        break;
+
+                    case KeyboardEvent::UP:
+                        to.set_property<string>("slide", "up");
+
+                        if(from.state() == KeyboardEvent::PRESSED)
+                            to.set_id(game_event::GAME_EVENT_UP_PRESSED);
+                        else if(from.state() == KeyboardEvent::RELEASED)
+                            to.set_id(game_event::GAME_EVENT_UP_RELEASED);
+
+                        break;
+
+                    case KeyboardEvent::LEFT:
+                        to.set_property<string>("slide", "left");
+
+                        if(from.state() == KeyboardEvent::PRESSED)
+                            to.set_id(game_event::GAME_EVENT_LEFT_PRESSED);
+                        else if(from.state() == KeyboardEvent::RELEASED)
+                            to.set_id(game_event::GAME_EVENT_LEFT_RELEASED);
+
+                        break;
+
+                    case KeyboardEvent::RIGHT:
+                        to.set_property<string>("slide", "right");
+
+                        if(from.state() == KeyboardEvent::PRESSED)
+                            to.set_id(game_event::GAME_EVENT_RIGHT_PRESSED);
+                        else if(from.state() == KeyboardEvent::RELEASED)
+                            to.set_id(game_event::GAME_EVENT_RIGHT_RELEASED);
+
+                        break;
+
+                    case KeyboardEvent::RETURN:
+                        to.set_property<string>("jump", "enter");
+                        to.set_id(game_event::GAME_EVENT_ENTER);
+                        break;
+
+                    case KeyboardEvent::B:
+                        to.set_property<string>("debug", "b");
+                        to.set_id(game_event::GAME_EVENT_DEBUG);
+                        break;
+
+                    default:
+                        done = false;
+                }
+
+                return done;
+            }
+        };
+
+        Game m_game;
+        Engine m_engine;
+        Translator m_translator;
+        MBLevelFactory m_level_factory;
 };
 
 #endif
+

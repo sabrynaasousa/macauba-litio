@@ -19,8 +19,11 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 	// auto m_m_texture = resources::get_texture(m_current_level + "/collectable.png");
 	printf("Foi\n");
 
-	MBPiece *piece = new MBPiece(m_current_level, 200, 1);
+	MBPiece *piece = new MBPiece(m_current_level, 50, 400, 1);
 	add_child(piece);
+
+	MBPiece *another_piece = new MBPiece(m_current_level, 100, 400, 2);
+	add_child(another_piece);
 
 	toolbar->set_priority(2);
 	
