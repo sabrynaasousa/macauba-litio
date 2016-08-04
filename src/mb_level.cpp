@@ -1,6 +1,7 @@
 #include "mb_level.h"
 #include "mb_toolbar.h"
 #include "mb_piece.h"
+#include "mb_trail.h"
 
 #include <ijengine/canvas.h>
 #include <ijengine/engine.h>
@@ -19,6 +20,9 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 	// auto m_m_texture = resources::get_texture(m_current_level + "/collectable.png");
 	printf("Foi\n");
 
+	MBTrail *trail = new MBTrail(m_current_level, 50, 130);
+	add_child(trail);
+
 	MBPiece *piece = new MBPiece(m_current_level, 50, 400, 1);
 	add_child(piece);
 
@@ -26,10 +30,20 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 	add_child(another_piece);
 
 	toolbar->set_priority(2);
-	
-	video::set_full_screen(0);
-
 	add_child(toolbar);
+	
+
+	m_buttons.clear();
+	m_buttons.push_back(new MBButton("Pronto!", m_current_level, 250, 220, "menu-nova-aventura.png", 299, 34));
+
+	for(auto btn : m_buttons){
+		add_child(btn);
+	}
+
+	event::register_listener(this);
+
+
+	video::set_full_screen(0);
 }
 
 bool MBLevel::done() const{
@@ -48,12 +62,19 @@ string MBLevel::current_level() const{
 	return m_current_level;
 }
 
+void MBLevel::do_action(string label){
+	if(label == "Pronto!"){
+		m_done = true;
+	}
+}
+
+bool MBLevel::on_event(const GameEvent&){
+	return false;
+}
+
 void MBLevel::update_self(unsigned now, unsigned){
 	if(m_start == -1)
 		m_start=now;
-
-	if(now - m_start > 10000)
-		m_done = true;
 }
 
 void MBLevel::draw_self(Canvas *canvas, unsigned, unsigned){

@@ -4,11 +4,13 @@
 #include <ijengine/level.h>
 #include <string>
 
+#include "mb_button.h"
+
 using std::string;
 using ijengine::Level;
 using ijengine::Canvas;
 
-class MBLevel : public Level{
+class MBLevel : public Level, GameEventsListener{
 	public:
 		MBLevel(int r, int g, int b, const string &current, const string &next = "", const string &audio_path = "");
 
@@ -16,6 +18,9 @@ class MBLevel : public Level{
 		string next() const;
 		string audio() const;
 		string current_level() const;
+		void do_action(string label);
+
+		bool on_event(const GameEvent& event);
 
 	protected:
 		void update_self(unsigned now, unsigned last);
@@ -26,6 +31,7 @@ class MBLevel : public Level{
 		bool m_done;
 		string m_next, m_audio_path, m_current_level;
 		int m_start;
+		vector< MBButton* > m_buttons;
 };
 
 #endif
