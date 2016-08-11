@@ -8,7 +8,8 @@ MBGame::MBGame(const string &title, int w, int h)
 	event::register_translator(&m_translator);
 	level::register_factory(&m_level_factory);
 
-	resources::set_fonts_dir("res");
+    resources::set_fonts_dir("res");
+    resources::set_textures_dir("res");
 }
 
 MBGame::~MBGame(){
