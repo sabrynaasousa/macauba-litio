@@ -1,14 +1,15 @@
 #include "mb_frame.h"
+#include "mb_piece.h"
 
 MBFrame::MBFrame(){
 
 }
 
-MBFrame::MBFrame(std::string current_level, double px, double py, int correct_piece_id){
+MBFrame::MBFrame(std::string current_level, double px, double py, int id){
     m_sprite_speed = 0;
     m_sprite_counter = 0;
     m_start = -1;
-    m_correct_piece_id = correct_piece_id;
+    m_id = id;
 
     m_height = m_width = 60;
     m_y = py;
@@ -17,6 +18,7 @@ MBFrame::MBFrame(std::string current_level, double px, double py, int correct_pi
     m_texture = resources::get_texture("square.jpg");
     m_bounding_box = Rectangle(m_x, m_y, m_width, m_height);
     m_active = true;
+
     physics::register_object(this);
     event::register_listener(this);
 }
@@ -64,8 +66,16 @@ const list<Rectangle>& MBFrame::hit_boxes() const{
     return l;
 }
 
-void MBFrame::on_collision(const Collidable *, const Rectangle&, const unsigned, const unsigned){
-	printf("UHUU, COLIDI!");
+void MBFrame::on_collision(const Collidable * piece, const Rectangle& rectangle, const unsigned, const unsigned){
+	if(auto p = dynamic_cast<const MBPiece *>(piece)){
+        int id_piece = p->id();
+        //printf("(%f , %f) x (%f, %f)\n", m_x, m_y, p->x(), p->y());
+
+        printf("%f x %f (%f, %f)\n", rectangle.area(), p->bounding_box().area(), rectangle.x(), rectangle.y());
+        if(/*id_piece == m_id &&*/ rectangle.area() == p->bounding_box().area() && not p->following()){
+            printf("TO DENTRO\n");
+        }
+    }
     //printf("MBFrame colidiu em %.2f,%.2f em %u-%u\n", where.x(), where.y(), now, last);
 }
 

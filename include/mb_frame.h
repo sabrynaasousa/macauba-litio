@@ -20,7 +20,7 @@ using std::to_string;
 class MBFrame : public GameObject, public Collidable, public GameEventsListener {
     public:
         MBFrame();
-        MBFrame(std::string current_level, double px, double py, int correct_piece_id);
+        MBFrame(std::string current_level, double px, double py, int id);
         ~MBFrame();
         double x();
         double y();
@@ -59,7 +59,7 @@ class MBFrame : public GameObject, public Collidable, public GameEventsListener 
         double m_x, m_y;
         double m_height, m_width;
         double m_sprite_counter, m_sprite_speed;
-        int m_start, m_correct_piece_id;
+        int m_start, m_id;
         Rectangle m_bounding_box;
         list<Rectangle> l;
         bool m_active;

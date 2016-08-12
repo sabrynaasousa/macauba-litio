@@ -22,10 +22,11 @@ class MBPiece : public GameObject, public Collidable, public GameEventsListener 
         MBPiece();
         MBPiece(std::string current_level, double px, double py, int piece_id);
         ~MBPiece();
-        double x();
-        double y();
+        double x() const;
+        double y() const;
         double height();
         double width();
+        int id() const;
         shared_ptr<Texture> texture();
 
         void set_x(double px);
@@ -33,6 +34,7 @@ class MBPiece : public GameObject, public Collidable, public GameEventsListener 
         void set_height(double ph);
         void register_self(int current_x);
 
+        bool following() const;
         bool on_event(const GameEvent& event);
         bool active() const;
         pair<double, double> direction() const;

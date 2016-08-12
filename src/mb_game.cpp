@@ -8,6 +8,8 @@ MBGame::MBGame(const string &title, int w, int h)
 	event::register_translator(&m_translator);
 	level::register_factory(&m_level_factory);
 
+    physics::set_collision_mode(physics::Mode::ALL_TO_ALL, nullptr);
+
 	resources::set_fonts_dir("res");
 }
 

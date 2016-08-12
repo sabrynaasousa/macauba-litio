@@ -27,10 +27,12 @@ MBPiece::~MBPiece(){
     physics::unregister_object(this);
 }
 
-double MBPiece::x(){ return m_x; }
-double MBPiece::y(){ return m_y; }
+bool MBPiece::following() const{ return m_following; }
+double MBPiece::x() const{ return m_x; }
+double MBPiece::y() const{ return m_y; }
 double MBPiece::height(){ return m_height; }
 double MBPiece::width(){ return m_width; }
+int MBPiece::id() const{ return m_id; }
 shared_ptr<Texture> MBPiece::texture(){ return m_texture; }
 
 void MBPiece::set_x(double cx) { m_x = cx; }
@@ -65,7 +67,7 @@ bool MBPiece::on_event(const GameEvent& event){
 
         return true;
     }
-    printf("Event x, y => [%f, %f]\n", event.get_property<double>("x"), event.get_property<double>("y"));
+    //printf("Event x, y => [%f, %f]\n", event.get_property<double>("x"), event.get_property<double>("y"));
 
     return false;
 }
@@ -96,6 +98,7 @@ void MBPiece::update_self(unsigned now, unsigned) {
         m_start = now;
     }
 
+    //printf("%f, %f\n", m_x, m_y);
     m_bounding_box = Rectangle(m_x, m_y, m_width, m_height);
     l.clear();
     l.insert(l.begin(), m_bounding_box);
