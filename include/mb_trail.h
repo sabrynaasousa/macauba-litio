@@ -20,6 +20,9 @@ class MBTrail : public GameObject{
 
 	private:
         double m_x, m_y;
+		double m_percentage;
+		int n_frames;
+		MBFrame *frames[100];
 };
 
 #endif

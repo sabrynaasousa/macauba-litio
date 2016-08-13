@@ -2,8 +2,13 @@
 
 #include <ijengine/canvas.h>
 
-MBToolbar::MBToolbar(int r, int g, int b, int w, int h)
+MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int w, int h)
 	: m_r(r), m_g(g), m_b(b), m_rectangle(0, 430, w, h){
+
+	for(int i=0; i<10; i++){
+		m_pieces.push_back(new MBPiece(current_level, 50*(i+1), 400, i+1));
+		add_child(m_pieces[i]);
+	}
 
 }
 

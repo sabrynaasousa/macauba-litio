@@ -14,24 +14,18 @@ using namespace ijengine;
 MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_level, const string &audio_path)
 	: m_r(r), m_g(g), m_b(b), m_done(false), m_current_level(current), m_next(next_level), m_audio_path(audio_path), m_start(-1){
 	
-	MBToolbar *toolbar = new MBToolbar(255, 255, 0, 1300, 100);
+	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0, 1300, 100);
 	
 	// auto font = resources::get_font("Forelle.ttf", 40);
 	// auto m_m_texture = resources::get_texture(m_current_level + "/collectable.png");
 	printf("Foi\n");
 
 	MBTrail *trail = new MBTrail(m_current_level, 50, 130);
+	trail->set_priority(2);
 	add_child(trail);
-
-	MBPiece *piece = new MBPiece(m_current_level, 50, 400, 1);
-	add_child(piece);
-
-	MBPiece *another_piece = new MBPiece(m_current_level, 100, 400, 2);
-	add_child(another_piece);
 
 	toolbar->set_priority(2);
 	add_child(toolbar);
-	
 
 	m_buttons.clear();
 	m_buttons.push_back(new MBButton("Pronto!", m_current_level, 250, 220, "menu-nova-aventura.png", 299, 34));

@@ -4,11 +4,13 @@
 #include <ijengine/rectangle.h>
 #include <ijengine/game_object.h>
 
+#include "mb_piece.h"
+
 using namespace ijengine;
 
 class MBToolbar : public GameObject{
 	public:
-		MBToolbar(int r, int g, int b, int w, int h);
+		MBToolbar(std::string current_level, int r, int g, int b, int w, int h);
 
 	protected:
 		void update_self(unsigned now, unsigned last);
@@ -17,6 +19,7 @@ class MBToolbar : public GameObject{
 	private:
 		int m_r, m_g, m_b;
 		Rectangle m_rectangle;
+		vector <MBPiece *> m_pieces;
 };
 
 #endif

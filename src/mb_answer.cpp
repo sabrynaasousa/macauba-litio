@@ -15,24 +15,30 @@ MBAnswer::MBAnswer(){
 
 	fread(&n_levels, sizeof(int), 1, answer);
 
-	int id_level = 1;
-	while(fread(&n_frames, sizeof(int), 1, answer)>0){
-		fread(m_level_answer[id_level++], sizeof(int), 3 * n_frames, answer);
+	int id_level=0;
+	while(fread(&m_frames[++id_level], sizeof(int), 1, answer)>0){
+		fread(m_level_answer[id_level][0], sizeof(int), m_frames[id_level], answer);
+		fread(m_level_answer[id_level][1], sizeof(int), m_frames[id_level], answer);
+		fread(m_level_answer[id_level][2], sizeof(int), m_frames[id_level], answer);
 	}
 
 	fclose(answer);
 }
 
-int *MBAnswer::in_trail(int level){
-	return m_level_answer[level][0];
+int MBAnswer::n_frames(int level){
+	return m_frames[level]; 
 }
 
-int *MBAnswer::main_trail(int level){
-	return m_level_answer[level][1];
+int MBAnswer::in_trail(int level, int frame){
+	return m_level_answer[level][0][frame-1];
 }
 
-int *MBAnswer::out_trail(int level){
-	return m_level_answer[level][2];
+int MBAnswer::main_trail(int level, int frame){
+	return m_level_answer[level][1][frame-1];
+}
+
+int MBAnswer::out_trail(int level, int frame){
+	return m_level_answer[level][2][frame-1];
 }
 
 MBAnswer::~MBAnswer(){

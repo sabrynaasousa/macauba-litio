@@ -99,7 +99,7 @@ void MBPiece::update_self(unsigned now, unsigned) {
     }
 
     //printf("%f, %f\n", m_x, m_y);
-    m_bounding_box = Rectangle(m_x, m_y, m_width, m_height);
+    m_bounding_box = Rectangle(m_x-15, m_y-15, m_width, m_height);
     l.clear();
     l.insert(l.begin(), m_bounding_box);
 

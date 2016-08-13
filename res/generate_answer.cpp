@@ -36,7 +36,9 @@ int main(){
 		}
 
 		fwrite(&n_frames, sizeof(int), 1, answer);
-		fwrite(level_answer, sizeof(int), 3 * n_frames, answer);
+		fwrite(level_answer[0], sizeof(int), n_frames, answer);
+		fwrite(level_answer[1], sizeof(int), n_frames, answer);
+		fwrite(level_answer[2], sizeof(int), n_frames, answer);
 	}
 
 	

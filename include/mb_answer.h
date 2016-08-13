@@ -10,13 +10,14 @@ class MBAnswer{
 		MBAnswer();
 		~MBAnswer();
 
-		int *in_trail(int level);
-		int *main_trail(int level);
-		int *out_trail(int level);
+		int n_frames(int level);
+		int in_trail(int level, int frame);
+		int main_trail(int level, int frame);
+		int out_trail(int level, int frame);
 
 	private:
 		int m_level_answer[30][5][100];
-		int n_frames;
+		int m_frames[30];
 		int n_levels;
 
 		FILE *answer;

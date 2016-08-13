@@ -20,17 +20,19 @@ using std::to_string;
 class MBFrame : public GameObject, public Collidable, public GameEventsListener {
     public:
         MBFrame();
-        MBFrame(std::string current_level, double px, double py, int id);
+        MBFrame(std::string current_level, double px, double py, int id_piece);
         ~MBFrame();
         double x();
         double y();
         double height();
         double width();
+		bool is_right();
         shared_ptr<Texture> texture();
 
         void set_x(double px);
         void set_y(double py);
         void set_height(double ph);
+		void set_right();
         void register_self(int current_x);
 
         bool on_event(const GameEvent& event);
@@ -59,10 +61,11 @@ class MBFrame : public GameObject, public Collidable, public GameEventsListener 
         double m_x, m_y;
         double m_height, m_width;
         double m_sprite_counter, m_sprite_speed;
-        int m_start, m_id;
+		int m_correct_piece;
+        int m_start;
         Rectangle m_bounding_box;
         list<Rectangle> l;
-        bool m_active;
+        bool m_active, m_is_right;
         shared_ptr<Texture> m_texture;
 };
 
