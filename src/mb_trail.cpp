@@ -11,14 +11,52 @@ MBTrail::MBTrail(std::string current_level, double p_x, double p_y){
 
 	MBAnswer *answer = new MBAnswer();
 
-	//COLOCAR O TIPO DA PEÇA
-	int type=0;
-
+	int type;
 	n_frames = answer->n_frames(1); 
+
+	type=0;
+	n_frames = 1;
+	frames[1] = new MBFrame(current_level, type, p_x + 80 * 1, 106, answer->piece(atoi(current_level.c_str()), 1, type));
+	add_child(frames[1]);
+
+	type=1;
+	frames[2] = new MBFrame(current_level, type, p_x + 80 * 1, 178, answer->piece(atoi(current_level.c_str()), 1, type));
+	add_child(frames[2]);
+
+	type=2;
+	frames[3] = new MBFrame(current_level, type, p_x + 80 + 48 * 1, 322, answer->piece(atoi(current_level.c_str()), 1, type));
+	add_child(frames[3]);
+
+	type=3;
+	frames[4] = new MBFrame(current_level, type, p_x + 80 + 15 * 1, 387-27, answer->piece(atoi(current_level.c_str()), 1, type));
+	add_child(frames[4]);
+	
+
+/*
+	type = 0;
 	for(int i = 1; i <= n_frames; i++){
-		frames[i] = new MBFrame(current_level, i%4, p_x + 80 * i, p_y, answer->piece(atoi(current_level.c_str()), i, type));
+		frames[i] = new MBFrame(current_level, type, p_x + 80 * i, 106, answer->piece(atoi(current_level.c_str()), i, type));
+		add_child(frames[i]);
+	}*/
+/*
+	type = 1;
+	for(int i = 1; i <= n_frames; i++){
+		frames[i] = new MBFrame(current_level, type, p_x + 80 * i, 250, answer->piece(atoi(current_level.c_str()), i, type));
 		add_child(frames[i]);
 	}
+
+	type = 2;
+	for(int i = 1; i <= n_frames; i++){
+		frames[i] = new MBFrame(current_level, type, p_x + 80 * i, 394, answer->piece(atoi(current_level.c_str()), i, type));
+		add_child(frames[i]);
+	}
+
+	type = 3;
+	for(int i = 1; i <= n_frames; i++){
+		frames[i] = new MBFrame(current_level, type, p_x + 80 * i, 459, answer->piece(atoi(current_level.c_str()), i, type));
+		add_child(frames[i]);
+	}
+*/
 }
 
 void MBTrail::update_self(unsigned, unsigned){

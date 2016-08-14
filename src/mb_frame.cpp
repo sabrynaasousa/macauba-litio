@@ -14,11 +14,32 @@ MBFrame::MBFrame(std::string current_level, int type, double px, double py, int 
 	m_is_right = false;
 	m_type = type;
 
-    m_height = m_width = 60;
+	if(type == 0){
+		m_height = 72;
+		m_width = 66;
+	}else if(type == 1){
+		m_height = 144;
+		m_width = 173;
+	}else if(type == 2){
+		m_height = 65;
+		m_width = 72;
+	}else{
+		m_height = 67;
+		m_width = 143;
+	}
+
     m_y = py;
     m_x = px;
 
-    m_texture = resources::get_texture("square.jpg");
+	if(type == 0)
+		m_texture = resources::get_texture("in.png");
+	else if(type == 1)
+		m_texture = resources::get_texture("main.png");
+	else if(type == 2)
+		m_texture = resources::get_texture("out.png");
+	else
+		m_texture = resources::get_texture("treatment.png");
+		
     m_bounding_box = Rectangle(m_x, m_y, m_width, m_height);
     m_active = true;
 
@@ -105,9 +126,6 @@ void MBFrame::update_self(unsigned now, unsigned) {
 }
 
 void MBFrame::draw_self(Canvas* canvas, unsigned, unsigned) {
-
-    printf("Frame: (%f, %f)\n", m_x, m_y);
-
     if(m_active)
 		canvas->draw(m_texture.get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x, m_y);
 }
