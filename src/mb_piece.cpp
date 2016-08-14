@@ -31,7 +31,8 @@ MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, 
         m_width = 143;
     }
 
-    m_texture = resources::get_texture(current_level + "/" + m_type + "_" + to_string(m_id) + ".png");
+    m_texture[0] = resources::get_texture(current_level + "/" + m_type + "_" + to_string(m_id) + ".png");
+    m_texture[1] = resources::get_texture(current_level + "/" + m_type + "_" + to_string(m_id) + "_placed.png");
     m_bounding_box = Rectangle(m_x, m_y, m_width, m_height);
     m_active = true;
     m_following = false;
@@ -52,7 +53,7 @@ double MBPiece::height(){ return m_height; }
 double MBPiece::width(){ return m_width; }
 int MBPiece::frame_id() const{ return m_frame_id; }
 int MBPiece::id() const{ return m_id; }
-shared_ptr<Texture> MBPiece::texture(){ return m_texture; }
+shared_ptr<Texture> MBPiece::texture(){ return m_texture[0]; }
 
 void MBPiece::set_x(double cx) { m_x = cx; }
 void MBPiece::set_y(double cy) { m_y = cy; }
@@ -147,6 +148,6 @@ void MBPiece::update_self(unsigned now, unsigned) {
 }
 
 void MBPiece::draw_self(Canvas* canvas, unsigned, unsigned) {
-    if(m_active) canvas->draw(m_texture.get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x, m_y);
+    if(m_active) canvas->draw(m_texture[m_frame_id != -1].get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x, m_y);
 }
 

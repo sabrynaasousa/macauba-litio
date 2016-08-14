@@ -13,6 +13,7 @@ using namespace ijengine;
 
 MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_level, const string &audio_path)
 	: m_r(r), m_g(g), m_b(b), m_done(false), m_current_level(current), m_next(next_level), m_audio_path(audio_path), m_start(-1){
+	printf("Começou a construir\n");
 	
 	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0, 1600, 100);
 	
