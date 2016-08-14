@@ -6,30 +6,31 @@ MBFrame::MBFrame(){
 
 }
 
-MBFrame::MBFrame(std::string current_level, std::string type, double px, double py, int id_piece){
+MBFrame::MBFrame(std::string current_level, std::string frame_type, double px, double py, int id_piece, int frame_id){
 	m_correct_piece = id_piece;
     m_sprite_speed = 0;
     m_sprite_counter = 0;
     m_start = -1;
 	m_is_right = false;
-	m_type = type;
+	m_type = frame_type;
+    m_id = frame_id;
 
-	if(type == "in"){
+	if(m_type == "in"){
 		m_height = 72;
 		m_width = 66;
         m_minimum_area = 2500;
-	}else if(type == "main"){
+	}else if(m_type == "main"){
 		m_height = 144;
 		m_width = 173;
         m_minimum_area = 16000;
-	}else if(type == "out"){
+	}else if(m_type == "out"){
 		m_height = 65;
 		m_width = 72;
         m_minimum_area = 2500;
 	}else{
 		m_height = 67;
 		m_width = 143;
-        m_minimum_area = 900;
+        m_minimum_area = 500;
 	}
 
     m_y = py;
@@ -39,6 +40,7 @@ MBFrame::MBFrame(std::string current_level, std::string type, double px, double 
 		
     m_bounding_box = Rectangle(m_x, m_y, m_width, m_height);
     m_active = true;
+    m_piece = nullptr;
 
     physics::register_object(this);
     event::register_listener(this);
@@ -51,7 +53,9 @@ MBFrame::~MBFrame(){
 
 double MBFrame::x() const{ return m_x; }
 double MBFrame::y() const{ return m_y; }
+int MBFrame::id() const{ return m_id; }
 string MBFrame::type() const{ return m_type; }
+const MBPiece * MBFrame::piece() const{ return m_piece; }
 double MBFrame::height(){ return m_height; }
 double MBFrame::width(){ return m_width; }
 bool MBFrame::is_right() { return m_is_right; }
@@ -99,18 +103,20 @@ void MBFrame::on_collision(const Collidable * piece, const Rectangle& rectangle,
 
         printf("Colidiu\n");
         //printf("%f x %f (%f, %f)\n", rectangle.area(), p->bounding_box().area(), rectangle.x(), rectangle.y());
-        if(rectangle.area() >= p->bounding_box().area()/2.0 && not p->following()){
+        if(rectangle.area() >= m_minimum_area && not p->following() && m_piece == nullptr && p->type() == m_type){
 			if(id_piece == m_correct_piece){
 				m_is_right = true;
 			}else{
 				m_is_right = false;
 			}
+            m_piece = p;
         }
     }
     // printf("MBFrame colidiu em %.2f,%.2f em %u-%u\n", where.x(), where.y(), now, last);
 }
 
 void MBFrame::update_self(unsigned now, unsigned) {
+    printf("Entrou update frame\n");
     if(m_start == -1){
         m_start = now;
     }
@@ -126,7 +132,14 @@ void MBFrame::update_self(unsigned now, unsigned) {
         l.insert(l.begin(), Rectangle(m_x + 103 + 40.0/2, m_y + 27.0/2, 40, 27));
     }
 
+    if(m_piece != nullptr){
+        if(m_piece->frame_id() != m_id){
+            m_piece = nullptr;
+        }
+    }
+
     m_start = now;
+    printf("Saiu update frame\n");
 }
 
 void MBFrame::draw_self(Canvas* canvas, unsigned, unsigned) {

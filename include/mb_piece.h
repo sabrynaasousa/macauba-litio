@@ -27,8 +27,10 @@ class MBPiece : public GameObject, public Collidable, public GameEventsListener 
         double y() const;
         double height();
         double width();
+        int frame_id() const;
         int id() const;
         shared_ptr<Texture> texture();
+        std::string type() const;
 
         void set_x(double px);
         void set_y(double py);
@@ -62,7 +64,7 @@ class MBPiece : public GameObject, public Collidable, public GameEventsListener 
         double m_x, m_y;
         double m_height, m_width;
         double m_sprite_counter, m_sprite_speed;
-        int m_start, m_id; 
+        int m_start, m_id, m_frame_id; 
         string m_type;
         Rectangle m_bounding_box;
         list<Rectangle> l;

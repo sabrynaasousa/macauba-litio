@@ -41,6 +41,8 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 
 
 	video::set_full_screen(0);
+
+	printf("Construiu level\n");
 }
 
 bool MBLevel::done() const{
@@ -70,8 +72,10 @@ bool MBLevel::on_event(const GameEvent&){
 }
 
 void MBLevel::update_self(unsigned now, unsigned){
+	printf("Entrou update level\n");
 	if(m_start == -1)
 		m_start=now;
+	printf("Saiu update level\n");
 }
 
 void MBLevel::draw_self(Canvas *canvas, unsigned, unsigned){

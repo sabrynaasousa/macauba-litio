@@ -15,6 +15,7 @@ MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, 
     m_height = m_width = 30;
     m_y = py;
     m_x = px;
+    m_frame_id = -1;
 
     if(piece_type == "in"){
         m_height = 72;
@@ -46,8 +47,10 @@ MBPiece::~MBPiece(){
 bool MBPiece::following() const{ return m_following; }
 double MBPiece::x() const{ return m_x; }
 double MBPiece::y() const{ return m_y; }
+std::string MBPiece::type() const{ return m_type; }
 double MBPiece::height(){ return m_height; }
 double MBPiece::width(){ return m_width; }
+int MBPiece::frame_id() const{ return m_frame_id; }
 int MBPiece::id() const{ return m_id; }
 shared_ptr<Texture> MBPiece::texture(){ return m_texture; }
 
@@ -68,6 +71,8 @@ bool MBPiece::on_event(const GameEvent& event){
         double mouse_y = event.get_property<double>("y");
         if(mouse_x >= m_x && mouse_x <= m_x + m_width && mouse_y >= m_y && mouse_y <= m_y + m_height){
             m_following = !m_following;
+            m_frame_id = -1;
+
             printf("Clicou na %d\n", m_id);
             return true;
         }else{
@@ -80,8 +85,11 @@ bool MBPiece::on_event(const GameEvent& event){
         double mouse_y = event.get_property<double>("y");
         m_x = mouse_x - m_width/2;
         m_y = mouse_y - m_height/2;
+        set_priority(10);
 
         return true;
+    }else{
+        set_priority(2);
     }
     //printf("Event x, y => [%f, %f]\n", event.get_property<double>("x"), event.get_property<double>("y"));
 
@@ -107,16 +115,19 @@ const list<Rectangle>& MBPiece::hit_boxes() const{
 
 void MBPiece::on_collision(const Collidable *collidable, const Rectangle& r, const unsigned, const unsigned){
     if(auto p = dynamic_cast<const MBFrame *>(collidable)){
-        if(r.area() >= p->minimum_area() && not m_following && m_type == p->type()){
+        if(r.area() >= p->minimum_area() && not m_following && p->piece() == nullptr && m_type == p->type()){
             m_x = p->x();
             m_y = p->y();
+            m_frame_id = p->id();
         }
+        printf("area do ret: %.2f\n", r.area());
     }
     //printf("MBPiece colidiu em %.2f,%.2f em %u-%u\n", where.x(), where.y(), now, last);
-    printf("area do ret: %.2f\n", r.area());
+    
 }
 
 void MBPiece::update_self(unsigned now, unsigned) {
+    printf("Entrou update piece\n");
     if(m_start == -1){
         m_start = now;
     }
@@ -132,7 +143,9 @@ void MBPiece::update_self(unsigned now, unsigned) {
     }
 
     m_start = now;
+    printf("Saiu update piece\n");
 }
+
 void MBPiece::draw_self(Canvas* canvas, unsigned, unsigned) {
     if(m_active) canvas->draw(m_texture.get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x, m_y);
 }
