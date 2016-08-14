@@ -20,14 +20,16 @@ using std::to_string;
 class MBFrame : public GameObject, public Collidable, public GameEventsListener {
     public:
         MBFrame();
-        MBFrame(std::string current_level, int type, double px, double py, int id_piece);
+        MBFrame(std::string current_level, std::string type, double px, double py, int id_piece);
         ~MBFrame();
-        double x();
-        double y();
+        double x() const;
+        double y() const;
+        std::string type() const;
         double height();
         double width();
 		bool is_right();
         shared_ptr<Texture> texture();
+        double minimum_area() const;
 
         void set_x(double px);
         void set_y(double py);
@@ -59,11 +61,11 @@ class MBFrame : public GameObject, public Collidable, public GameEventsListener 
         ClickState m_click_state;
         HoverState m_hover_state;
         double m_x, m_y;
-        double m_height, m_width;
+        double m_height, m_width, m_minimum_area;
         double m_sprite_counter, m_sprite_speed;
 		int m_correct_piece;
         int m_start;
-		int m_type;
+		std::string m_type;
         Rectangle m_bounding_box;
         list<Rectangle> l;
         bool m_active, m_is_right;

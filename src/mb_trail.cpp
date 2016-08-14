@@ -11,24 +11,24 @@ MBTrail::MBTrail(std::string current_level, double p_x, double p_y){
 
 	MBAnswer *answer = new MBAnswer();
 
-	int type;
+	string type;
 	n_frames = answer->n_frames(1); 
 
-	type=0;
+	type = "in";
 	n_frames = 1;
-	frames[1] = new MBFrame(current_level, type, p_x + 80 * 1, 178 - 70, answer->piece(atoi(current_level.c_str()), 1, type));
+	frames[1] = new MBFrame(current_level, type, p_x + 80 * 1, 178 - 70, answer->piece(atoi(current_level.c_str()), 1, 1));
 	add_child(frames[1]);
 
-	type=1;
-	frames[2] = new MBFrame(current_level, type, p_x + 80 * 1, 178, answer->piece(atoi(current_level.c_str()), 1, type));
+	type = "main";
+	frames[2] = new MBFrame(current_level, type, p_x + 80 * 1, 178, answer->piece(atoi(current_level.c_str()), 1, 2));
 	add_child(frames[2]);
 
-	type=2;
-	frames[3] = new MBFrame(current_level, type, p_x + 80 * 1 + 48 , 178 + 142, answer->piece(atoi(current_level.c_str()), 1, type));
+	type = "out";
+	frames[3] = new MBFrame(current_level, type, p_x + 80 * 1 + 48 , 178 + 142, answer->piece(atoi(current_level.c_str()), 1, 3));
 	add_child(frames[3]);
 
-	type=3;
-	frames[4] = new MBFrame(current_level, type, p_x + 80 * 1 + 15, 178 + 180, answer->piece(atoi(current_level.c_str()), 1, type));
+	type = "treatment";
+	frames[4] = new MBFrame(current_level, type, p_x + 80 * 1 + 15, 178 + 180, answer->piece(atoi(current_level.c_str()), 1, 4));
 	add_child(frames[4]);
 	
 

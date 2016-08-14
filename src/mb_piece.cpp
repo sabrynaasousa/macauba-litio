@@ -1,4 +1,5 @@
 #include "mb_piece.h"
+#include "mb_frame.h"
 
 MBPiece::MBPiece(){
 
@@ -104,7 +105,13 @@ const list<Rectangle>& MBPiece::hit_boxes() const{
     return l;
 }
 
-void MBPiece::on_collision(const Collidable *, const Rectangle& r, const unsigned, const unsigned){
+void MBPiece::on_collision(const Collidable *collidable, const Rectangle& r, const unsigned, const unsigned){
+    if(auto p = dynamic_cast<const MBFrame *>(collidable)){
+        if(r.area() >= p->minimum_area() && not m_following && m_type == p->type()){
+            m_x = p->x();
+            m_y = p->y();
+        }
+    }
     //printf("MBPiece colidiu em %.2f,%.2f em %u-%u\n", where.x(), where.y(), now, last);
     printf("area do ret: %.2f\n", r.area());
 }

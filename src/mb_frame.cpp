@@ -6,7 +6,7 @@ MBFrame::MBFrame(){
 
 }
 
-MBFrame::MBFrame(std::string current_level, int type, double px, double py, int id_piece){
+MBFrame::MBFrame(std::string current_level, std::string type, double px, double py, int id_piece){
 	m_correct_piece = id_piece;
     m_sprite_speed = 0;
     m_sprite_counter = 0;
@@ -14,31 +14,28 @@ MBFrame::MBFrame(std::string current_level, int type, double px, double py, int 
 	m_is_right = false;
 	m_type = type;
 
-	if(type == 0){
+	if(type == "in"){
 		m_height = 72;
 		m_width = 66;
-	}else if(type == 1){
+        m_minimum_area = 2500;
+	}else if(type == "main"){
 		m_height = 144;
 		m_width = 173;
-	}else if(type == 2){
+        m_minimum_area = 16000;
+	}else if(type == "out"){
 		m_height = 65;
 		m_width = 72;
+        m_minimum_area = 2500;
 	}else{
 		m_height = 67;
 		m_width = 143;
+        m_minimum_area = 900;
 	}
 
     m_y = py;
     m_x = px;
 
-	if(type == 0)
-		m_texture = resources::get_texture("in.png");
-	else if(type == 1)
-		m_texture = resources::get_texture("main.png");
-	else if(type == 2)
-		m_texture = resources::get_texture("out.png");
-	else
-		m_texture = resources::get_texture("treatment.png");
+	m_texture = resources::get_texture(m_type + ".png");
 		
     m_bounding_box = Rectangle(m_x, m_y, m_width, m_height);
     m_active = true;
@@ -52,12 +49,14 @@ MBFrame::~MBFrame(){
     physics::unregister_object(this);
 }
 
-double MBFrame::x(){ return m_x; }
-double MBFrame::y(){ return m_y; }
+double MBFrame::x() const{ return m_x; }
+double MBFrame::y() const{ return m_y; }
+string MBFrame::type() const{ return m_type; }
 double MBFrame::height(){ return m_height; }
 double MBFrame::width(){ return m_width; }
 bool MBFrame::is_right() { return m_is_right; }
 shared_ptr<Texture> MBFrame::texture(){ return m_texture; }
+double MBFrame::minimum_area() const{ return m_minimum_area; }
 
 void MBFrame::set_x(double cx) { m_x = cx; }
 void MBFrame::set_y(double cy) { m_y = cy; }
@@ -100,16 +99,13 @@ void MBFrame::on_collision(const Collidable * piece, const Rectangle& rectangle,
 
         printf("Colidiu\n");
         //printf("%f x %f (%f, %f)\n", rectangle.area(), p->bounding_box().area(), rectangle.x(), rectangle.y());
-        if(rectangle.area() == p->bounding_box().area() && not p->following()){
-
+        if(rectangle.area() >= p->bounding_box().area()/2.0 && not p->following()){
 			if(id_piece == m_correct_piece){
 				m_is_right = true;
 			}else{
 				m_is_right = false;
 			}
-        }else if(id_piece == m_correct_piece){
-			m_is_right = false;
-		}
+        }
     }
     // printf("MBFrame colidiu em %.2f,%.2f em %u-%u\n", where.x(), where.y(), now, last);
 }
@@ -122,7 +118,7 @@ void MBFrame::update_self(unsigned now, unsigned) {
     m_bounding_box = Rectangle(m_x + m_width/2, m_y + m_height/2, m_width, m_height);
     l.clear();
 
-    if(m_type != 3){
+    if(m_type != "treatment"){
         l.insert(l.begin(), m_bounding_box);
     }else{
         l.insert(l.begin(), Rectangle(m_x + 35.0/2, m_y + 27.0/2, 35, 27));
