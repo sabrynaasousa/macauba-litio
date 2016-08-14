@@ -98,7 +98,8 @@ void MBFrame::on_collision(const Collidable * piece, const Rectangle& rectangle,
 
         int id_piece = p->id();
 
-        // printf("%f x %f (%f, %f)\n", rectangle.area(), p->bounding_box().area(), rectangle.x(), rectangle.y());
+        printf("Colidiu\n");
+        //printf("%f x %f (%f, %f)\n", rectangle.area(), p->bounding_box().area(), rectangle.x(), rectangle.y());
         if(rectangle.area() == p->bounding_box().area() && not p->following()){
 
 			if(id_piece == m_correct_piece){
@@ -127,5 +128,5 @@ void MBFrame::update_self(unsigned now, unsigned) {
 
 void MBFrame::draw_self(Canvas* canvas, unsigned, unsigned) {
     if(m_active)
-		canvas->draw(m_texture.get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x, m_y);
+		canvas->draw(m_texture.get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x - m_width/2, m_y - m_height/2);
 }

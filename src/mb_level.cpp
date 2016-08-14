@@ -29,11 +29,11 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 	add_child(toolbar);
 
 	m_buttons.clear();
-	m_buttons.push_back(new MBButton("Pronto!", m_current_level, 250, 220, "menu-nova-aventura.png", 299, 34));
+	//m_buttons.push_back(new MBButton("Pronto!", m_current_level, 250, 220, "menu-nova-aventura.png", 299, 34));
 
-	for(auto btn : m_buttons){
-		add_child(btn);
-	}
+	// for(auto btn : m_buttons){
+		// add_child(btn);
+	// }
 
 	event::register_listener(this);
 

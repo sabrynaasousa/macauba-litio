@@ -50,7 +50,7 @@ bool MBPiece::on_event(const GameEvent& event){
     if(event.id() == GAME_MOUSE_PRESSED){
         double mouse_x = event.get_property<double>("x");
         double mouse_y = event.get_property<double>("y");
-        if(mouse_x >= m_x && mouse_x <= m_x + m_width && mouse_y >= m_y && mouse_y <= m_y + m_height){
+        if(mouse_x >= m_x - m_width/2 && mouse_x <= m_x + m_width/2 && mouse_y >= m_y - m_height/2 && mouse_y <= m_y + m_height/2){
             m_following = !m_following;
             printf("Clicou na %d\n", m_id);
             return true;
@@ -62,8 +62,8 @@ bool MBPiece::on_event(const GameEvent& event){
     if(m_following){
         double mouse_x = event.get_property<double>("x");
         double mouse_y = event.get_property<double>("y");
-        m_x = mouse_x - m_width/2;
-        m_y = mouse_y - m_height/2;
+        m_x = mouse_x;
+        m_y = mouse_y;
 
         return true;
     }
@@ -100,7 +100,7 @@ void MBPiece::update_self(unsigned now, unsigned) {
     }
 
     //printf("%f, %f\n", m_x, m_y);
-    m_bounding_box = Rectangle(m_x-15, m_y-15, m_width, m_height);
+    m_bounding_box = Rectangle(m_x, m_y, m_width, m_height);
     l.clear();
     l.insert(l.begin(), m_bounding_box);
 
@@ -112,6 +112,6 @@ void MBPiece::update_self(unsigned now, unsigned) {
     m_start = now;
 }
 void MBPiece::draw_self(Canvas* canvas, unsigned, unsigned) {
-    if(m_active) canvas->draw(m_texture.get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x, m_y);
+    if(m_active) canvas->draw(m_texture.get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x - m_width/2, m_y - m_height/2);
 }
 

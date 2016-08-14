@@ -20,15 +20,15 @@ MBTrail::MBTrail(std::string current_level, double p_x, double p_y){
 	add_child(frames[1]);
 
 	type=1;
-	frames[2] = new MBFrame(current_level, type, p_x + 80 * 1, 178, answer->piece(atoi(current_level.c_str()), 1, type));
+	frames[2] = new MBFrame(current_level, type, p_x + 80 * 1 + 54, 106 + 106, answer->piece(atoi(current_level.c_str()), 1, type));
 	add_child(frames[2]);
 
 	type=2;
-	frames[3] = new MBFrame(current_level, type, p_x + 80 + 48 * 1, 322, answer->piece(atoi(current_level.c_str()), 1, type));
+	frames[3] = new MBFrame(current_level, type, p_x + 80 * 1 + 54, 106 + 209, answer->piece(atoi(current_level.c_str()), 1, type));
 	add_child(frames[3]);
 
 	type=3;
-	frames[4] = new MBFrame(current_level, type, p_x + 80 + 15 * 1, 387-27, answer->piece(atoi(current_level.c_str()), 1, type));
+	frames[4] = new MBFrame(current_level, type, p_x + 80 * 1 + 57, 106 + 248, answer->piece(atoi(current_level.c_str()), 1, type));
 	add_child(frames[4]);
 	
 
