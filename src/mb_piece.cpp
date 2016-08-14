@@ -89,8 +89,9 @@ const list<Rectangle>& MBPiece::hit_boxes() const{
     return l;
 }
 
-void MBPiece::on_collision(const Collidable *, const Rectangle&, const unsigned, const unsigned){
+void MBPiece::on_collision(const Collidable *, const Rectangle& r, const unsigned, const unsigned){
     //printf("MBPiece colidiu em %.2f,%.2f em %u-%u\n", where.x(), where.y(), now, last);
+    printf("area do ret: %.2f\n", r.area());
 }
 
 void MBPiece::update_self(unsigned now, unsigned) {

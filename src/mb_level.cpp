@@ -14,7 +14,7 @@ using namespace ijengine;
 MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_level, const string &audio_path)
 	: m_r(r), m_g(g), m_b(b), m_done(false), m_current_level(current), m_next(next_level), m_audio_path(audio_path), m_start(-1){
 	
-	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0, 1300, 100);
+	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0, 1600, 100);
 	
 	// auto font = resources::get_font("Forelle.ttf", 40);
 	// auto m_m_texture = resources::get_texture(m_current_level + "/collectable.png");
@@ -35,6 +35,8 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 	}
 
 	event::register_listener(this);
+
+	this->set_priority(10);
 
 
 	video::set_full_screen(0);
@@ -77,6 +79,6 @@ void MBLevel::draw_self(Canvas *canvas, unsigned, unsigned){
 	auto font = resources::get_font("Forelle.ttf", 40);
 	canvas->set_font(font);
 
-	canvas->set_draw_color(Color(255, 255, 255));
-	canvas->draw("Barra de Ferramentas", 213, 340);
+	canvas->set_draw_color(Color(0, 0, 0));
+	canvas->draw("Barra de Ferramentas", 300, 480);
 }

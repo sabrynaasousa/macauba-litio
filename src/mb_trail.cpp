@@ -6,6 +6,7 @@
 MBTrail::MBTrail(std::string current_level, double p_x, double p_y){
 	m_x = p_x;
 	m_y = p_y;
+
 	m_percentage = 0;
 
 	MBAnswer *answer = new MBAnswer();

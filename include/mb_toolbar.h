@@ -18,7 +18,7 @@ class MBToolbar : public GameObject{
 
 	private:
 		int m_r, m_g, m_b;
-		Rectangle m_rectangle;
+		int m_w, m_h, m_x, m_y;
 		vector <MBPiece *> m_pieces;
 };
 
