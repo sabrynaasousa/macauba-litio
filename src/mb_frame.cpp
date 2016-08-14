@@ -119,14 +119,21 @@ void MBFrame::update_self(unsigned now, unsigned) {
         m_start = now;
     }
 
-    m_bounding_box = Rectangle(m_x, m_y, m_width, m_height);
+    m_bounding_box = Rectangle(m_x + m_width/2, m_y + m_height/2, m_width, m_height);
     l.clear();
-    l.insert(l.begin(), m_bounding_box);
+
+    if(m_type != 3){
+        l.insert(l.begin(), m_bounding_box);
+    }else{
+        l.insert(l.begin(), Rectangle(m_x + 35.0/2, m_y + 27.0/2, 35, 27));
+        l.insert(l.begin(), Rectangle(m_x + 143.0/2, m_y + 40 + 40.0/2, 143, 40));
+        l.insert(l.begin(), Rectangle(m_x + 103 + 40.0/2, m_y + 27.0/2, 40, 27));
+    }
 
     m_start = now;
 }
 
 void MBFrame::draw_self(Canvas* canvas, unsigned, unsigned) {
     if(m_active)
-		canvas->draw(m_texture.get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x - m_width/2, m_y - m_height/2);
+		canvas->draw(m_texture.get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x, m_y);
 }
