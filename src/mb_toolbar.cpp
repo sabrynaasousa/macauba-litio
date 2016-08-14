@@ -5,8 +5,11 @@
 MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int w, int h)
 	: m_r(r), m_g(g), m_b(b), m_x(0), m_y(550), m_w(w), m_h(h){
 
-	for(int i=0; i<10; i++){
-		m_pieces.push_back(new MBPiece(current_level, 50*(i+1), 520, i+1));
+    std::vector<std::string> vs {"in", "main", "out", "treatment"};
+
+
+	for(int i=0; i<4; i++){
+		m_pieces.push_back(new MBPiece(current_level, 50*(i+1), 520, i, vs[i]));
 		add_child(m_pieces[i]);
 	}
 

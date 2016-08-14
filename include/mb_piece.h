@@ -16,11 +16,12 @@ using std::shared_ptr;
 using std::list;
 using namespace ijengine;
 using std::to_string;
+using std::string;
 
 class MBPiece : public GameObject, public Collidable, public GameEventsListener {
     public:
         MBPiece();
-        MBPiece(std::string current_level, double px, double py, int piece_id);
+        MBPiece(std::string current_level, double px, double py, int piece_id, string piece_type);
         ~MBPiece();
         double x() const;
         double y() const;
@@ -61,7 +62,8 @@ class MBPiece : public GameObject, public Collidable, public GameEventsListener 
         double m_x, m_y;
         double m_height, m_width;
         double m_sprite_counter, m_sprite_speed;
-        int m_start, m_id;
+        int m_start, m_id; 
+        string m_type;
         Rectangle m_bounding_box;
         list<Rectangle> l;
         bool m_active, m_following;

@@ -4,17 +4,32 @@ MBPiece::MBPiece(){
 
 }
 
-MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id){
-    m_sprite_speed = 1/170.0;
+MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, std::string piece_type){
+    m_sprite_speed = 0;
     m_sprite_counter = 0;
     m_start = -1;
     m_id = piece_id;
+    m_type = piece_type;
 
     m_height = m_width = 30;
     m_y = py;
     m_x = px;
 
-    m_texture = resources::get_texture(current_level + "/piece_" + to_string(m_id) + ".png");
+    if(piece_type == "in"){
+        m_height = 72;
+        m_width = 66;
+    }else if(piece_type == "main"){
+        m_height = 144;
+        m_width = 173;
+    }else if(piece_type == "out"){
+        m_height = 65;
+        m_width = 72;
+    }else{
+        m_height = 67;
+        m_width = 143;
+    }
+
+    m_texture = resources::get_texture(current_level + "/" + m_type + "_" + to_string(m_id) + ".png");
     m_bounding_box = Rectangle(m_x, m_y, m_width, m_height);
     m_active = true;
     m_following = false;
