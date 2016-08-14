@@ -16,7 +16,7 @@ MBTrail::MBTrail(std::string current_level, double p_x, double p_y){
 
 	n_frames = answer->n_frames(1); 
 	for(int i = 1; i <= n_frames; i++){
-		frames[i] = new MBFrame(current_level, type, p_x + 80 * i, p_y, answer->piece(atoi(current_level.c_str()), i, type));
+		frames[i] = new MBFrame(current_level, i%4, p_x + 80 * i, p_y, answer->piece(atoi(current_level.c_str()), i, type));
 		add_child(frames[i]);
 	}
 }

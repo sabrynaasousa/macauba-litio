@@ -31,6 +31,7 @@ class MBLevel : public Level, GameEventsListener{
 		bool m_done;
 		string m_next, m_audio_path, m_current_level;
 		int m_start;
+		shared_ptr<Texture> m_background;
 		vector< MBButton* > m_buttons;
 };
 

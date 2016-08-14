@@ -18,6 +18,7 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 	
 	// auto font = resources::get_font("Forelle.ttf", 40);
 	// auto m_m_texture = resources::get_texture(m_current_level + "/collectable.png");
+	m_background = resources::get_texture("/background.png");
 	printf("Foi\n");
 
 	MBTrail *trail = new MBTrail(m_current_level, 50, 130);
@@ -75,6 +76,8 @@ void MBLevel::update_self(unsigned now, unsigned){
 
 void MBLevel::draw_self(Canvas *canvas, unsigned, unsigned){
 	canvas->clear();
+
+	canvas->draw(m_background.get(), 0, 0);
 
 	auto font = resources::get_font("Forelle.ttf", 40);
 	canvas->set_font(font);
