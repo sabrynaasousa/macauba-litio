@@ -20,6 +20,8 @@ MBAnswer::MBAnswer(){
 		fread(m_level_answer[id_level][0], sizeof(int), m_frames[id_level], answer);
 		fread(m_level_answer[id_level][1], sizeof(int), m_frames[id_level], answer);
 		fread(m_level_answer[id_level][2], sizeof(int), m_frames[id_level], answer);
+		fread(m_level_answer[id_level][3], sizeof(int), m_frames[id_level], answer);
+		printf("%d\n", id_level);
 	}
 
 	fclose(answer);
@@ -29,16 +31,8 @@ int MBAnswer::n_frames(int level){
 	return m_frames[level]; 
 }
 
-int MBAnswer::in_trail(int level, int frame){
-	return m_level_answer[level][0][frame-1];
-}
-
-int MBAnswer::main_trail(int level, int frame){
-	return m_level_answer[level][1][frame-1];
-}
-
-int MBAnswer::out_trail(int level, int frame){
-	return m_level_answer[level][2][frame-1];
+int MBAnswer::piece(int level, int frame, int type){
+	return m_level_answer[level][type][frame-1];
 }
 
 MBAnswer::~MBAnswer(){

@@ -11,9 +11,7 @@ class MBAnswer{
 		~MBAnswer();
 
 		int n_frames(int level);
-		int in_trail(int level, int frame);
-		int main_trail(int level, int frame);
-		int out_trail(int level, int frame);
+		int piece(int level, int frame, int type);
 
 	private:
 		int m_level_answer[30][5][100];

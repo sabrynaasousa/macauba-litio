@@ -6,12 +6,13 @@ MBFrame::MBFrame(){
 
 }
 
-MBFrame::MBFrame(std::string current_level, double px, double py, int id_piece){
+MBFrame::MBFrame(std::string current_level, int type, double px, double py, int id_piece){
 	m_correct_piece = id_piece;
     m_sprite_speed = 0;
     m_sprite_counter = 0;
     m_start = -1;
 	m_is_right = false;
+	m_type = type;
 
     m_height = m_width = 60;
     m_y = py;
