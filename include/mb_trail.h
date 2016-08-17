@@ -23,6 +23,7 @@ class MBTrail : public GameObject{
 		double m_percentage;
 		int n_frames;
 		MBFrame *frames[100][100];
+        shared_ptr<Texture> m_face_texture[5];
 };
 
 #endif

@@ -8,6 +8,9 @@ MBTrail::MBTrail(std::string current_level, double p_x, double p_y){
 	m_y = p_y;
 
 	m_percentage = 0;
+	m_face_texture[0] = resources::get_texture("sad.png");
+	m_face_texture[1] = resources::get_texture("ok.png");
+	m_face_texture[2] = resources::get_texture("happy.png");
 
 	MBAnswer *answer = new MBAnswer();
 
@@ -64,11 +67,13 @@ void MBTrail::update_self(unsigned, unsigned){
 }
 
 void MBTrail::draw_self(Canvas *canvas, unsigned, unsigned){
+	canvas->draw(m_face_texture[min((int)(m_percentage/(100.0/3)+1e-8), 2)].get(), Rectangle(0, 0, 60, 60), 930, 20);
+
+/*
 	auto font = resources::get_font("Forelle.ttf", 40);
 	canvas->set_font(font);
 
-	canvas->draw("O gabarito é 6, 7, 8, 9, 10", 213, 20);
-
 	canvas->set_draw_color(Color(0, 0, 0));
 	canvas->draw(to_string(m_percentage) + " %", 800, 20);
+*/
 }
