@@ -123,7 +123,7 @@ void MBFrame::on_collision(const Collidable * piece, const Rectangle& rectangle,
 }
 
 void MBFrame::update_self(unsigned now, unsigned) {
-    printf("Entrou update frame\n");
+    // printf("Entrou update frame\n");
     if(m_start == -1){
         m_start = now;
     }
@@ -148,7 +148,7 @@ void MBFrame::update_self(unsigned now, unsigned) {
     }
 
     m_start = now;
-    printf("Saiu update frame\n");
+    // printf("Saiu update frame\n");
 }
 
 void MBFrame::draw_self(Canvas* canvas, unsigned, unsigned) {

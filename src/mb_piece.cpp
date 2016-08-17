@@ -86,6 +86,7 @@ bool MBPiece::on_event(const GameEvent& event){
         double mouse_y = event.get_property<double>("y");
         m_x = mouse_x - m_width/2;
         m_y = mouse_y - m_height/2;
+        printf("%d\n", m_id);
         set_priority(10);
 
         return true;
@@ -128,7 +129,7 @@ void MBPiece::on_collision(const Collidable *collidable, const Rectangle& r, con
 }
 
 void MBPiece::update_self(unsigned now, unsigned) {
-    printf("Entrou update piece\n");
+    // printf("Entrou update piece\n");
     if(m_start == -1){
         m_start = now;
     }
@@ -144,7 +145,7 @@ void MBPiece::update_self(unsigned now, unsigned) {
     }
 
     m_start = now;
-    printf("Saiu update piece\n");
+    // printf("Saiu update piece\n");
 }
 
 void MBPiece::draw_self(Canvas* canvas, unsigned, unsigned) {

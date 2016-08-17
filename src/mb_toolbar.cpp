@@ -7,11 +7,29 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int w, int 
 
     std::vector<std::string> vs {"in", "main", "out", "treatment"};
 
-	int piece_id = 1;
-
 	for(int i = 0; i < 4; i++){
-		m_pieces.push_back(new MBPiece(current_level, 5 + 80 * i, 520, piece_id++, "in"));
-		add_child(m_pieces[i]);
+        printf("%d %d\n", i%2, i < 1);
+		m_pieces.push_back(new MBPiece(current_level, 10 + 80 * (i%2), 450 + (i < 2 ? 1 : 0) * 80, i + 1, "in"));
+        printf("%f, %f\n", m_pieces.back()->x(), m_pieces.back()->y());
+        add_child(m_pieces.back());
+    }
+    // int x;
+    // scanf("%d", &x);
+
+    for(int i = 0; i < 4; i++){
+        m_pieces.push_back(new MBPiece(current_level, 180 + 210 * i, 450, i + 1, "main"));
+        add_child(m_pieces.back());
+    }
+        
+
+    for(int i = 0; i < 4; i++){
+        m_pieces.push_back(new MBPiece(current_level, 10 + 85 * i, 630, i + 1, "out"));
+        add_child(m_pieces.back());
+    }
+
+    for(int i = 0; i < 4; i++){
+        m_pieces.push_back(new MBPiece(current_level, 351 + 163 * i, 627, i + 1, "treatment"));
+	    add_child(m_pieces.back());
 	}
 
 
