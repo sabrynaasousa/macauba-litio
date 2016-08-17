@@ -12,62 +12,55 @@ MBTrail::MBTrail(std::string current_level, double p_x, double p_y){
 	MBAnswer *answer = new MBAnswer();
 
 	string type;
-	n_frames = answer->n_frames(1); 
+	n_frames = answer->n_frames(atoi(current_level.c_str())); 
+
+	int id_frame = 0;
 
 	type = "in";
-	n_frames = 1;
-	frames[1] = new MBFrame(current_level, type, p_x + 80 * 1, 178 - 70, answer->piece(atoi(current_level.c_str()), 1, 1), 1);
-	add_child(frames[1]);
+	for(int i = 1; i <= n_frames; i++){
+		frames[1][i] = new MBFrame(current_level, type, p_x + 210 * (i - 1), 108, answer->piece(atoi(current_level.c_str()), i, 0), id_frame++);
+		add_child(frames[1][i]);
+	}
 
 	type = "main";
-	frames[2] = new MBFrame(current_level, type, p_x + 80 * 1, 178, answer->piece(atoi(current_level.c_str()), 1, 2), 2);
-	add_child(frames[2]);
+	for(int i = 1; i <= n_frames; i++){
+		frames[2][i] = new MBFrame(current_level, type, p_x + 210 * (i - 1), 178, answer->piece(atoi(current_level.c_str()), i, 1), id_frame++);
+		add_child(frames[2][i]);
+	}
 
 	type = "out";
-	frames[3] = new MBFrame(current_level, type, p_x + 80 * 1 + 48 , 178 + 142, answer->piece(atoi(current_level.c_str()), 1, 3), 3);
-	add_child(frames[3]);
+	for(int i = 1; i <= n_frames; i++){
+		frames[3][i] = new MBFrame(current_level, type, p_x + 48 + 210 * (i - 1), 320, answer->piece(atoi(current_level.c_str()), i, 2), id_frame++);
+		add_child(frames[3][i]);
+	}
+
 
 	type = "treatment";
-	frames[4] = new MBFrame(current_level, type, p_x + 80 * 1 + 15, 178 + 180, answer->piece(atoi(current_level.c_str()), 1, 4), 4);
-	add_child(frames[4]);
-	
-
-/*
-	type = 0;
 	for(int i = 1; i <= n_frames; i++){
-		frames[i] = new MBFrame(current_level, type, p_x + 80 * i, 106, answer->piece(atoi(current_level.c_str()), i, type));
-		add_child(frames[i]);
-	}*/
-/*
-	type = 1;
-	for(int i = 1; i <= n_frames; i++){
-		frames[i] = new MBFrame(current_level, type, p_x + 80 * i, 250, answer->piece(atoi(current_level.c_str()), i, type));
-		add_child(frames[i]);
+		frames[4][i] = new MBFrame(current_level, type, p_x + 15 + 210 * (i - 1), 358, answer->piece(atoi(current_level.c_str()), i, 3), id_frame++);
+		add_child(frames[4][i]);
 	}
 
-	type = 2;
-	for(int i = 1; i <= n_frames; i++){
-		frames[i] = new MBFrame(current_level, type, p_x + 80 * i, 394, answer->piece(atoi(current_level.c_str()), i, type));
-		add_child(frames[i]);
-	}
-
-	type = 3;
-	for(int i = 1; i <= n_frames; i++){
-		frames[i] = new MBFrame(current_level, type, p_x + 80 * i, 459, answer->piece(atoi(current_level.c_str()), i, type));
-		add_child(frames[i]);
-	}
-*/
 }
 
 void MBTrail::update_self(unsigned, unsigned){
-	int count=0;
+	int n_filled_frames = 0;
+	int correct = 0;
 
-	for(int i = 1; i <= n_frames; i++){
-		if(frames[i]->is_right())
-			count++;
+	for(int type = 1; type <= 4; type++){
+		for(int i = 1; i <= n_frames; i++){
+			if(frames[type][i]->is_right())
+				correct++;
+
+			if(frames[type][i]->filled())
+				n_filled_frames++;
+		}
 	}
 
-	m_percentage = (double)count/n_frames * 100.0;
+	if(n_filled_frames)
+		m_percentage = (double)correct/n_filled_frames * 100.0;
+	else
+		m_percentage = 0;
 }
 
 void MBTrail::draw_self(Canvas *canvas, unsigned, unsigned){
@@ -76,6 +69,6 @@ void MBTrail::draw_self(Canvas *canvas, unsigned, unsigned){
 
 	canvas->draw("O gabarito é 6, 7, 8, 9, 10", 213, 20);
 
-	canvas->set_draw_color(Color(255, 255, 255));
-	canvas->draw(to_string(m_percentage) + " %", 213, 65);
+	canvas->set_draw_color(Color(0, 0, 0));
+	canvas->draw(to_string(m_percentage) + " %", 800, 20);
 }

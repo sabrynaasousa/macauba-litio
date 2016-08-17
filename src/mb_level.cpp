@@ -15,14 +15,14 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 	: m_r(r), m_g(g), m_b(b), m_done(false), m_current_level(current), m_next(next_level), m_audio_path(audio_path), m_start(-1){
 	printf("Começou a construir\n");
 	
-	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0, 1600, 100);
+	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0, 2100, 290);
 	
 	// auto font = resources::get_font("Forelle.ttf", 40);
 	// auto m_m_texture = resources::get_texture(m_current_level + "/collectable.png");
-	m_background = resources::get_texture("/background.png");
+	m_background = resources::get_texture("/background2.png");
 	printf("Foi\n");
 
-	MBTrail *trail = new MBTrail(m_current_level, 50, 130);
+	MBTrail *trail = new MBTrail(m_current_level, 5, 130);
 	trail->set_priority(2);
 	add_child(trail);
 

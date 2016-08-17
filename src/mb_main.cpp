@@ -10,7 +10,7 @@ int main(){
 	int rc;
 
 	try{
-		MBGame game("Teste", 800, 600);
+		MBGame game("Teste", 1024, 768);
 		rc = game.run("1");
 	}catch(Exception &ex){
 		cout << ex.what() << endl;

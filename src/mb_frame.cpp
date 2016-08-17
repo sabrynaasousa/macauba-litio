@@ -14,6 +14,7 @@ MBFrame::MBFrame(std::string current_level, std::string frame_type, double px, d
 	m_is_right = false;
 	m_type = frame_type;
     m_id = frame_id;
+	m_filled = false;
 
 	if(m_type == "in"){
 		m_height = 72;
@@ -61,11 +62,13 @@ double MBFrame::width(){ return m_width; }
 bool MBFrame::is_right() { return m_is_right; }
 shared_ptr<Texture> MBFrame::texture(){ return m_texture; }
 double MBFrame::minimum_area() const{ return m_minimum_area; }
+bool MBFrame::filled() { return m_filled; }
 
 void MBFrame::set_x(double cx) { m_x = cx; }
 void MBFrame::set_y(double cy) { m_y = cy; }
 void MBFrame::set_height(double ch) { m_height = ch; }    
-void MBFrame::set_right(){ m_is_right = true; }
+void MBFrame::set_right(bool is_r){ m_is_right = is_r; }
+void MBFrame::set_filled(bool is_filled){ m_filled = is_filled; }
 
 void MBFrame::register_self(int current_x){
     m_x = current_x;
@@ -104,12 +107,16 @@ void MBFrame::on_collision(const Collidable * piece, const Rectangle& rectangle,
         printf("Colidiu\n");
         //printf("%f x %f (%f, %f)\n", rectangle.area(), p->bounding_box().area(), rectangle.x(), rectangle.y());
         if(rectangle.area() >= m_minimum_area && not p->following() && m_piece == nullptr && p->type() == m_type){
+			printf("piece: %d\n", id_piece);
+			printf("correct piece: %d\n", m_correct_piece);
 			if(id_piece == m_correct_piece){
 				m_is_right = true;
 			}else{
 				m_is_right = false;
 			}
+
             m_piece = p;
+			set_filled(true);
         }
     }
     // printf("MBFrame colidiu em %.2f,%.2f em %u-%u\n", where.x(), where.y(), now, last);
@@ -135,6 +142,8 @@ void MBFrame::update_self(unsigned now, unsigned) {
     if(m_piece != nullptr){
         if(m_piece->frame_id() != m_id){
             m_piece = nullptr;
+			set_filled(false);
+			set_right(false);
         }
     }
 

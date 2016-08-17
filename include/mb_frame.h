@@ -34,12 +34,14 @@ class MBFrame : public GameObject, public Collidable, public GameEventsListener 
 		bool is_right();
         shared_ptr<Texture> texture();
         double minimum_area() const;
+		bool filled();
 
         void set_x(double px);
         void set_y(double py);
         void set_height(double ph);
-		void set_right();
+		void set_right(bool is_r);
         void register_self(int current_x);
+		void set_filled(bool is_filled);
 
         bool on_event(const GameEvent& event);
         bool active() const;
@@ -72,7 +74,7 @@ class MBFrame : public GameObject, public Collidable, public GameEventsListener 
 		std::string m_type;
         Rectangle m_bounding_box;
         list<Rectangle> l;
-        bool m_active, m_is_right;
+        bool m_active, m_is_right, m_filled;
         const MBPiece * m_piece;
         shared_ptr<Texture> m_texture;
 };
