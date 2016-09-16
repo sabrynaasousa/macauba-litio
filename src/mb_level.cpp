@@ -88,5 +88,5 @@ void MBLevel::draw_self(Canvas *canvas, unsigned, unsigned){
 	canvas->set_font(font);
 
 	canvas->set_draw_color(Color(0, 0, 0));
-	canvas->draw("Barra de Ferramentas", 300, 480);
+	canvas->draw("Nível 1", 512, 20);
 }
