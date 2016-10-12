@@ -5,14 +5,16 @@
 #include <ijengine/game_object.h>
 
 #include "mb_frame.h"
+#include "mb_activity.h"
 
 #include <string>
+#include <vector>
 
 using namespace ijengine;
 
 class MBTrail : public GameObject{
 	public:
-		MBTrail(std::string current_level, double p_x, double p_y);
+		MBTrail(std::string current_level, vector<MBActivity *> activities);
 
 	protected:
 		void update_self(unsigned now, unsigned last);

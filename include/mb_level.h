@@ -5,6 +5,7 @@
 #include <string>
 
 #include "mb_button.h"
+#include "mb_activity.h"
 
 using std::string;
 using ijengine::Level;
@@ -30,7 +31,11 @@ class MBLevel : public Level, GameEventsListener{
 		int m_r, m_g, m_b;
 		bool m_done;
 		string m_next, m_audio_path, m_current_level;
+		string m_level_name;
 		int m_start;
+		int n_activities, n_ins, n_intermediary, n_outs1, n_outs2, n_treatments;
+		int n_trail_activities;
+		vector<MBActivity *> m_activities;
 		shared_ptr<Texture> m_background;
 		vector< MBButton* > m_buttons;
 };

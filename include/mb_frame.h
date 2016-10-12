@@ -43,7 +43,7 @@ class MBFrame : public GameObject, public Collidable, public GameEventsListener 
         void register_self(int current_x);
 		void set_filled(bool is_filled);
 
-        bool on_event(const GameEvent& event);
+        bool on_event(const GameEvent&);
         bool active() const;
         pair<double, double> direction() const;
 

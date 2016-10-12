@@ -3,7 +3,7 @@
 #include <ijengine/canvas.h>
 
 MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int w, int h)
-	: m_r(r), m_g(g), m_b(b), m_x(0), m_y(580), m_w(w), m_h(h){
+	: m_r(r), m_g(g), m_b(b), m_w(w), m_h(h), m_x(0), m_y(580){
 
     std::vector<std::string> vs {"in", "main", "out", "treatment"};
 

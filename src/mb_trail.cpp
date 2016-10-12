@@ -3,10 +3,7 @@
 
 #include <ijengine/canvas.h>
 
-MBTrail::MBTrail(std::string current_level, double p_x, double p_y){
-	m_x = p_x;
-	m_y = p_y;
-
+MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities){
 	m_percentage = 0;
 	m_face_texture[0] = resources::get_texture("sad.png");
 	m_face_texture[1] = resources::get_texture("ok.png");
@@ -18,6 +15,7 @@ MBTrail::MBTrail(std::string current_level, double p_x, double p_y){
 	n_frames = answer->n_frames(atoi(current_level.c_str())); 
 
 	int id_frame = 0;
+	int p_x = 30;
 
 	type = "in";
 	for(int i = 1; i <= n_frames; i++){

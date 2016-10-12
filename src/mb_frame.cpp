@@ -6,7 +6,7 @@ MBFrame::MBFrame(){
 
 }
 
-MBFrame::MBFrame(std::string current_level, std::string frame_type, double px, double py, int id_piece, int frame_id){
+MBFrame::MBFrame(std::string, std::string frame_type, double px, double py, int id_piece, int frame_id){
 	m_correct_piece = id_piece;
     m_sprite_speed = 0;
     m_sprite_counter = 0;
@@ -77,7 +77,7 @@ void MBFrame::register_self(int current_x){
     physics::register_object(this);
 }
 
-bool MBFrame::on_event(const GameEvent& event){
+bool MBFrame::on_event(const GameEvent&){
     return false;
 }
 
@@ -98,8 +98,8 @@ const list<Rectangle>& MBFrame::hit_boxes() const{
     return l;
 }
 
-void MBFrame::on_collision(const Collidable * piece, const Rectangle& rectangle, const unsigned, const unsigned){
-	if(auto p = dynamic_cast<const MBPiece *>(piece)){
+void MBFrame::on_collision(const Collidable * c_piece, const Rectangle& rectangle, const unsigned, const unsigned){
+	if(auto p = dynamic_cast<const MBPiece *>(c_piece)){
         //printf("(%f , %f) x (%f, %f)\n", m_x, m_y, p->x(), p->y());
 
         int id_piece = p->id();
