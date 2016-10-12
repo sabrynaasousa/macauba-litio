@@ -39,6 +39,10 @@ $(TARGET): $(OBJ)
 run:
 	$(TARGET)
 
+reset:
+	make dist-clean
+	make -j
+
 crun:
 	make dist-clean
 	make -j
