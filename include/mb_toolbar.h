@@ -1,6 +1,8 @@
 #ifndef MB_TOOLBAR_H
 #define MB_TOOLBAR_H
 
+#define TOOLBAR 1
+
 #include <ijengine/rectangle.h>
 #include <ijengine/game_object.h>
 

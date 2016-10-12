@@ -1,6 +1,8 @@
 #ifndef MB_FRAME_H
 #define MB_FRAME_H
 
+#define FRAME 1
+
 #include <ijengine/engine.h>
 #include <ijengine/collidable.h>
 #include <ijengine/canvas.h>
@@ -21,6 +23,7 @@ using std::to_string;
 
 class MBFrame : public GameObject, public Collidable, public GameEventsListener {
     public:
+        typedef enum {ACTIVITY, IN, INTERMEDIARY, OUT1, OUT2, TREATMENT} Types;
         MBFrame();
         MBFrame(std::string current_level, std::string type, double px, double py, int id_piece, int frame_id);
         ~MBFrame();
@@ -71,7 +74,7 @@ class MBFrame : public GameObject, public Collidable, public GameEventsListener 
         double m_sprite_counter, m_sprite_speed;
 		int m_correct_piece, m_id;
         int m_start;
-		std::string m_type;
+		string m_type;
         Rectangle m_bounding_box;
         list<Rectangle> l;
         bool m_active, m_is_right, m_filled;

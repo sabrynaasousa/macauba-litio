@@ -1,6 +1,8 @@
 #ifndef MB_LEVEL_H
 #define MB_LEVEL_H
 
+#define LEVEL 1
+
 #include <ijengine/level.h>
 #include <string>
 
@@ -13,6 +15,7 @@ using ijengine::Canvas;
 
 class MBLevel : public Level, GameEventsListener{
 	public:
+		typedef enum {ACTIVITY, IN, INTERMEDIARY, OUT1, OUT2, TREATMENT} Types;
 		MBLevel(int r, int g, int b, const string &current, const string &next = "", const string &audio_path = "");
 
 		bool done() const;

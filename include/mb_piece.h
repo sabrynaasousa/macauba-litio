@@ -1,6 +1,8 @@
 #ifndef MB_PIECE_H
 #define MB_PIECE_H
 
+#define PIECE 1
+
 #include <ijengine/engine.h>
 #include <ijengine/collidable.h>
 #include <ijengine/canvas.h>
@@ -20,6 +22,7 @@ using std::string;
 
 class MBPiece : public GameObject, public Collidable, public GameEventsListener {
     public:
+        typedef enum {ACTIVITY, IN, INTERMEDIARY, OUT1, OUT2, TREATMENT} Types;
         MBPiece();
         MBPiece(std::string current_level, double px, double py, int piece_id, string piece_type);
         ~MBPiece();

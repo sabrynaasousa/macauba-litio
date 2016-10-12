@@ -7,6 +7,7 @@ MBFrame::MBFrame(){
 }
 
 MBFrame::MBFrame(std::string, std::string frame_type, double px, double py, int id_piece, int frame_id){
+    if(FRAME) printf("Construindo frame\n");
 	m_correct_piece = id_piece;
     m_sprite_speed = 0;
     m_sprite_counter = 0;
@@ -16,23 +17,46 @@ MBFrame::MBFrame(std::string, std::string frame_type, double px, double py, int 
     m_id = frame_id;
 	m_filled = false;
 
-	if(m_type == "in"){
-		m_height = 72;
-		m_width = 66;
-        m_minimum_area = 2500;
-	}else if(m_type == "main"){
-		m_height = 144;
-		m_width = 173;
+    if(m_type == "activity"){
+        m_height = 144;
+        m_width = 173;
         m_minimum_area = 16000;
-	}else if(m_type == "out"){
+    }
+	
+    else if(m_type == "in"){
+		m_height = 72;
+        m_width = 66;
+        m_minimum_area = 2500;
+	}
+
+    else if(m_type == "intermediary"){
+        m_height = 72;
+        m_width = 66;
+        m_minimum_area = 2500;
+    }
+
+    else if(m_type == "out1"){
 		m_height = 65;
 		m_width = 72;
         m_minimum_area = 2500;
-	}else{
+	}
+
+    else if(m_type == "out2"){
+        m_height = 65;
+        m_width = 72;
+        m_minimum_area = 2500;
+    }
+
+    else if(m_type == "treatment"){
 		m_height = 67;
 		m_width = 143;
         m_minimum_area = 500;
 	}
+
+    else{
+        printf("Invalid type of piece\n");
+        exit(0);
+    }
 
     m_y = py;
     m_x = px;
@@ -45,6 +69,7 @@ MBFrame::MBFrame(std::string, std::string frame_type, double px, double py, int 
 
     physics::register_object(this);
     event::register_listener(this);
+    if(FRAME) printf("Construiu frame\n");
 }
 
 MBFrame::~MBFrame(){
@@ -123,7 +148,7 @@ void MBFrame::on_collision(const Collidable * c_piece, const Rectangle& rectangl
 }
 
 void MBFrame::update_self(unsigned now, unsigned) {
-    // printf("Entrou update frame\n");
+    if(FRAME) printf("Entrou update frame\n");
     if(m_start == -1){
         m_start = now;
     }
@@ -148,10 +173,11 @@ void MBFrame::update_self(unsigned now, unsigned) {
     }
 
     m_start = now;
-    // printf("Saiu update frame\n");
+    if(FRAME) printf("Saiu update frame\n");
 }
 
 void MBFrame::draw_self(Canvas* canvas, unsigned, unsigned) {
-    if(m_active)
-		canvas->draw(m_texture.get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x, m_y);
+    if(FRAME) printf("Entrando draw_self frame\n");
+    if(m_active) canvas->draw(m_texture.get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x, m_y);
+    if(FRAME) printf("Saindo draw_self frame\n");
 }

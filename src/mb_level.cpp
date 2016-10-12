@@ -16,7 +16,7 @@ using namespace ijengine;
 
 MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_level, const string &audio_path)
 	: m_r(r), m_g(g), m_b(b), m_done(false), m_next(next_level), m_audio_path(audio_path), m_current_level(current), m_start(-1){
-	printf("Começou a construir\n");
+	if(LEVEL) printf("Começou a construir level\n");
 	
 	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0, 2100, 290);
 
@@ -31,7 +31,7 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 	printf("Level name = [%s]\n", m_level_name.c_str());
 
 	level_design >> n_activities >> n_ins >> n_intermediary >> n_outs1 >> n_outs2 >> n_treatments;
-	printf("Atividades: %d\nEntradas: %d\nIntermediarios: %d\nSaídas 1:%d\nSaídas 2: %d\nTratamentos: %d\n", n_activities, n_ins, n_intermediary, n_outs1, n_outs2, n_treatments);
+	printf("Atividades: %d\nEntradas: %d\nIntermediarios: %d\nSaídas 1: %d\nSaídas 2: %d\nTratamentos: %d\n", n_activities, n_ins, n_intermediary, n_outs1, n_outs2, n_treatments);
 
 	level_design >> n_trail_activities;
 	printf("Atividades da trilha: %d\n", n_trail_activities);
@@ -44,16 +44,14 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 		m_activities.push_back(activity);
 	}
 
-	exit(0);
+	//exit(0);
 
 	// auto font = resources::get_font("Forelle.ttf", 40);
 	// auto m_m_texture = resources::get_texture(m_current_level + "/collectable.png");
 	m_background = resources::get_texture("/background2.png");
 	printf("Foi\n");
 
-
-
-	MBTrail *trail = new MBTrail(m_current_level, m_activities);
+	MBTrail *trail = new MBTrail(m_current_level, m_activities, n_trail_activities);
 	trail->set_priority(2);
 	add_child(trail);
 
@@ -74,7 +72,7 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 
 	video::set_full_screen(0);
 
-	printf("Construiu level\n");
+	if(LEVEL) printf("Construiu level\n");
 }
 
 bool MBLevel::done() const{
@@ -104,13 +102,14 @@ bool MBLevel::on_event(const GameEvent&){
 }
 
 void MBLevel::update_self(unsigned now, unsigned){
-	// printf("Entrou update level\n");
+	if(LEVEL) printf("Entrou update level\n");
 	if(m_start == -1)
 		m_start=now;
-	// printf("Saiu update level\n");
+	if(LEVEL) printf("Saiu update level\n");
 }
 
 void MBLevel::draw_self(Canvas *canvas, unsigned, unsigned){
+	if(LEVEL) printf("Entrou draw_self level\n");
 	canvas->clear();
 
 	canvas->draw(m_background.get(), 0, 0);
@@ -120,4 +119,5 @@ void MBLevel::draw_self(Canvas *canvas, unsigned, unsigned){
 
 	canvas->set_draw_color(Color(0, 0, 0));
 	canvas->draw("Nível 1", 512, 20);
+	if(LEVEL) printf("Saiu draw_self level\n");
 }

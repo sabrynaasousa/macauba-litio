@@ -1,6 +1,8 @@
 #ifndef MB_TRAIL_H
 #define MB_TRAIL_H
 
+#define TRAIL 1
+
 #include <ijengine/rectangle.h>
 #include <ijengine/game_object.h>
 
@@ -14,7 +16,8 @@ using namespace ijengine;
 
 class MBTrail : public GameObject{
 	public:
-		MBTrail(std::string current_level, vector<MBActivity *> activities);
+		typedef enum {ACTIVITY, IN, INTERMEDIARY, OUT1, OUT2, TREATMENT} Types;
+		MBTrail(std::string current_level, vector<MBActivity *> activities, int number_of_activities);
 
 	protected:
 		void update_self(unsigned now, unsigned last);
@@ -24,7 +27,7 @@ class MBTrail : public GameObject{
         double m_x, m_y;
 		double m_percentage;
 		int n_frames;
-		MBFrame *frames[100][100];
+		vector<MBFrame *> frames[6];
         shared_ptr<Texture> m_face_texture[5];
 };
 

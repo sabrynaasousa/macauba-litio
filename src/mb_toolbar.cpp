@@ -4,6 +4,7 @@
 
 MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int w, int h)
 	: m_r(r), m_g(g), m_b(b), m_w(w), m_h(h), m_x(0), m_y(580){
+        if(TOOLBAR) printf("Construindo toolbar\n");
 
     std::vector<std::string> vs {"in", "main", "out", "treatment"};
 
@@ -42,13 +43,16 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int w, int 
 		add_child(m_pieces[i]);
 	}
 */
+    if(TOOLBAR) printf("Construiu toolbar\n");
 }
 
 void MBToolbar::update_self(unsigned, unsigned){
-
+    if(TOOLBAR) printf("Updating toolbar\n");
 }
 
 void MBToolbar::draw_self(Canvas *canvas, unsigned, unsigned){
+    if(TOOLBAR) printf("Entrando draw_self toolbar\n");
 	canvas->set_draw_color(Color(m_r, m_g, m_b));
 	canvas->draw(Rectangle(m_x, m_y, m_w, m_h));
+    if(TOOLBAR) printf("Saind draw_self toolbar\n");
 }

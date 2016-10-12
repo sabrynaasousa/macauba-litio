@@ -6,6 +6,7 @@ MBPiece::MBPiece(){
 }
 
 MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, std::string piece_type){
+    if(PIECE) printf("Construindo piece\n");
     m_sprite_speed = 0;
     m_sprite_counter = 0;
     m_start = -1;
@@ -17,18 +18,38 @@ MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, 
     m_x = px;
     m_frame_id = -1;
 
-    if(piece_type == "in"){
-        m_height = 72;
-        m_width = 66;
-    }else if(piece_type == "main"){
+    if(piece_type == "activity"){
         m_height = 144;
         m_width = 173;
-    }else if(piece_type == "out"){
+    }
+
+    else if(piece_type == "in"){
+        m_height = 72;
+        m_width = 66;
+    }
+
+    else if(piece_type == "intermediary"){
+        m_height = 72;
+        m_width = 66;
+    }
+
+    else if(piece_type == "out1"){
         m_height = 65;
         m_width = 72;
-    }else{
+    }
+
+    else if(piece_type == "out2"){
+        m_height = 65;
+        m_width = 72;
+    }
+
+    else if(piece_type == "treatment"){
         m_height = 67;
         m_width = 143;
+    }
+
+    else{
+        printf("Invalid piece type\n");
     }
 
     m_texture[0] = resources::get_texture(current_level + "/" + m_type + "_" + to_string(m_id) + ".png");
@@ -38,6 +59,7 @@ MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, 
     m_following = false;
     physics::register_object(this);
     event::register_listener(this);
+    if(PIECE) printf("Construiu piece\n");
 }
 
 MBPiece::~MBPiece(){
@@ -129,7 +151,7 @@ void MBPiece::on_collision(const Collidable *collidable, const Rectangle& r, con
 }
 
 void MBPiece::update_self(unsigned now, unsigned) {
-    // printf("Entrou update piece\n");
+    if(PIECE) printf("Entrou update piece\n");
     if(m_start == -1){
         m_start = now;
     }
@@ -145,10 +167,12 @@ void MBPiece::update_self(unsigned now, unsigned) {
     }
 
     m_start = now;
-    // printf("Saiu update piece\n");
+    if(PIECE) printf("Saiu update piece\n");
 }
 
 void MBPiece::draw_self(Canvas* canvas, unsigned, unsigned) {
+    if(PIECE) printf("Entrando draw_self piece\n");
     if(m_active) canvas->draw(m_texture[m_frame_id != -1].get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x, m_y);
+    if(PIECE) printf("Saindo draw self piece\n");
 }
 
