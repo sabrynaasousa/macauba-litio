@@ -14,13 +14,13 @@ MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities, int
 
 	n_frames = answer->n_frames(atoi(current_level.c_str())); 
 
-	int p_x = 300;
+	int offset = 300;
 	int id_frame = 0;
 
 	for(int i = 0; i < number_of_activities; ++i){
 		MBActivity * activity = activities[i];
 		if(activity->id_activity()){
-			MBFrame * frame = new MBFrame(current_level, "activity", p_x + 170 * (i - 1), 178, activity->id_activity(), id_frame++);
+			MBFrame * frame = new MBFrame(current_level, "activity", offset + 250 * (i - 1), 178, activity->id_activity(), id_frame++);
 			frames[ACTIVITY].push_back(frame);
 			add_child(frame);
 		}else{
@@ -29,33 +29,33 @@ MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities, int
 		}
 
 		if(activity->id_in()){
-			MBFrame * frame = new MBFrame(current_level, "in", p_x + 170 * (i - 1), 108, activity->id_in(), id_frame++);
+			MBFrame * frame = new MBFrame(current_level, "in", offset + 250 * (i - 1), 108, activity->id_in(), id_frame++);
 			frames[IN].push_back(frame);
 			add_child(frame);
 		}
 
 		if(activity->id_intermediary()){
 			//FIX MY POSITION
-			MBFrame * frame = new MBFrame(current_level, "intermediary", p_x + 50 + 170 * (i - 1), 143, activity->id_intermediary(), id_frame++);
+			MBFrame * frame = new MBFrame(current_level, "intermediary", offset + 210 + 250 * (i - 1), 210, activity->id_intermediary(), id_frame++);
 			frames[INTERMEDIARY].push_back(frame);
 			add_child(frame);
 		}
 
 		if(activity->id_out1()){
-			MBFrame * frame = new MBFrame(current_level, "out1", p_x + 48 + 170 * (i - 1), 320, activity->id_out1(), id_frame++);
+			MBFrame * frame = new MBFrame(current_level, "out1", offset + 20 + 250 * (i - 1), 320, activity->id_out1(), id_frame++);
 			frames[OUT1].push_back(frame);
 			add_child(frame);
 		}
 
 		if(activity->id_out2()){
 			//FIX MY POSITION
-			MBFrame * frame = new MBFrame(current_level, "out2", p_x + 68 + 170 * (i - 1), 320, activity->id_out2(), id_frame++);
+			MBFrame * frame = new MBFrame(current_level, "out2", offset + 145 + 250 * (i - 1), 320, activity->id_out2(), id_frame++);
 			frames[OUT2].push_back(frame);
 			add_child(frame);
 		}
 
 		if(activity->id_treatment()){
-			MBFrame * frame = new MBFrame(current_level, "treatment", p_x + 15 + 170 * (i - 1), 358, activity->id_treatment(), id_frame++);
+			MBFrame * frame = new MBFrame(current_level, "treatment", offset - 13 + 250 * (i - 1), 358, activity->id_treatment(), id_frame++);
 			frames[TREATMENT].push_back(frame);
 			add_child(frame);
 		}

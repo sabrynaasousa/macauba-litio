@@ -1,12 +1,9 @@
 #include "mb_toolbar.h"
-
 #include <ijengine/canvas.h>
 
-MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int w, int h)
-	: m_r(r), m_g(g), m_b(b), m_w(w), m_h(h), m_x(0), m_y(580){
-        if(TOOLBAR) printf("Construindo toolbar\n");
-
-    std::vector<std::string> vs {"in", "main", "out", "treatment"};
+MBToolbar::MBToolbar(std::string current_level, int r, int g, int b)
+	: m_r(r), m_g(g), m_b(b), m_x(0), m_y(440){
+    if(TOOLBAR) printf("Construindo toolbar\n");
 
 	for(int i = 0; i < 5; i++){
         printf("%d %d\n", i%2, i < 1);
@@ -22,13 +19,13 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int w, int 
     // scanf("%d", &x);
 
     for(int i = 0; i < 5; i++){
-        m_pieces.push_back(new MBPiece(current_level, 180 + 180 * i, 450, i + 1, "main"));
+        m_pieces.push_back(new MBPiece(current_level, 180 + 180 * i, 450, i + 1, "activity"));
         add_child(m_pieces.back());
     }
         
 
     for(int i = 0; i < 5; i++){
-        m_pieces.push_back(new MBPiece(current_level, 10 + 70 * i, 630, i + 1, "out"));
+        m_pieces.push_back(new MBPiece(current_level, 10 + 70 * i, 630, i + 1, "out1"));
         add_child(m_pieces.back());
     }
 
@@ -36,6 +33,8 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int w, int 
         m_pieces.push_back(new MBPiece(current_level, 351 + 140 * i, 627, i + 1, "treatment"));
 	    add_child(m_pieces.back());
 	}
+
+    m_background = resources::get_texture(current_level + "/toolbar.png");
 
 
 /*	for(int i=0; i<4; i++){
@@ -53,6 +52,6 @@ void MBToolbar::update_self(unsigned, unsigned){
 void MBToolbar::draw_self(Canvas *canvas, unsigned, unsigned){
     if(TOOLBAR) printf("Entrando draw_self toolbar\n");
 	canvas->set_draw_color(Color(m_r, m_g, m_b));
-	canvas->draw(Rectangle(m_x, m_y, m_w, m_h));
+    canvas->draw(m_background.get(), m_x, m_y);
     if(TOOLBAR) printf("Saind draw_self toolbar\n");
 }

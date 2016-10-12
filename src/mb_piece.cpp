@@ -18,9 +18,10 @@ MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, 
     m_x = px;
     m_frame_id = -1;
 
+    set_priority(1);
     if(piece_type == "activity"){
         m_height = 144;
-        m_width = 173;
+        m_width = 253;
     }
 
     else if(piece_type == "in"){
@@ -29,8 +30,8 @@ MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, 
     }
 
     else if(piece_type == "intermediary"){
-        m_height = 72;
-        m_width = 66;
+        m_height = 80;
+        m_width = 80;
     }
 
     else if(piece_type == "out1"){
@@ -51,6 +52,8 @@ MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, 
     else{
         printf("Invalid piece type\n");
     }
+
+    set_priority(1);
 
     m_texture[0] = resources::get_texture(current_level + "/" + m_type + "_" + to_string(m_id) + ".png");
     m_texture[1] = resources::get_texture(current_level + "/" + m_type + "_" + to_string(m_id) + "_placed.png");

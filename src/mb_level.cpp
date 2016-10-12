@@ -18,7 +18,7 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 	: m_r(r), m_g(g), m_b(b), m_done(false), m_next(next_level), m_audio_path(audio_path), m_current_level(current), m_start(-1){
 	if(LEVEL) printf("Começou a construir level\n");
 	
-	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0, 2100, 290);
+	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0);
 
 	fstream level_design("res/" + m_current_level + "/level_design.txt");
 
@@ -48,8 +48,7 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 
 	// auto font = resources::get_font("Forelle.ttf", 40);
 	// auto m_m_texture = resources::get_texture(m_current_level + "/collectable.png");
-	m_background = resources::get_texture("/background2.png");
-	printf("Foi\n");
+	m_background = resources::get_texture(m_current_level + "/background.png");
 
 	MBTrail *trail = new MBTrail(m_current_level, m_activities, n_trail_activities);
 	trail->set_priority(2);
@@ -118,6 +117,6 @@ void MBLevel::draw_self(Canvas *canvas, unsigned, unsigned){
 	canvas->set_font(font);
 
 	canvas->set_draw_color(Color(0, 0, 0));
-	canvas->draw("Nível 1", 512, 20);
+	canvas->draw(m_level_name, 512, 20);
 	if(LEVEL) printf("Saiu draw_self level\n");
 }

@@ -12,7 +12,7 @@ using namespace ijengine;
 
 class MBToolbar : public GameObject{
 	public:
-		MBToolbar(std::string current_level, int r, int g, int b, int w, int h);
+		MBToolbar(std::string current_level, int r, int g, int b);
 
 	protected:
 		void update_self(unsigned now, unsigned last);
@@ -22,6 +22,7 @@ class MBToolbar : public GameObject{
 		int m_r, m_g, m_b;
 		int m_w, m_h, m_x, m_y;
 		vector <MBPiece *> m_pieces;
+        shared_ptr<Texture> m_background;
 };
 
 #endif

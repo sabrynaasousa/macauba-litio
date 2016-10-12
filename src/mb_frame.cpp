@@ -17,9 +17,11 @@ MBFrame::MBFrame(std::string, std::string frame_type, double px, double py, int 
     m_id = frame_id;
 	m_filled = false;
 
+    set_priority(2);
+
     if(m_type == "activity"){
         m_height = 144;
-        m_width = 173;
+        m_width = 253;
         m_minimum_area = 16000;
     }
 	
@@ -30,9 +32,10 @@ MBFrame::MBFrame(std::string, std::string frame_type, double px, double py, int 
 	}
 
     else if(m_type == "intermediary"){
-        m_height = 72;
-        m_width = 66;
+        m_height = 80;
+        m_width = 80;
         m_minimum_area = 2500;
+        set_priority(4);
     }
 
     else if(m_type == "out1"){
