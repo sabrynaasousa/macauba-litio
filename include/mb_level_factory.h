@@ -2,6 +2,7 @@
 #define MB_LEVEL_FACTORY_H
 
 #include <ijengine/level_factory.h>
+#include "mb_playable_level.h"
 
 using namespace ijengine;
 

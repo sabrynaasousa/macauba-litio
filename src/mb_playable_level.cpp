@@ -1,21 +1,22 @@
-#include "mb_level.h"
+#include "mb_playable_level.h"
 #include "mb_toolbar.h"
 #include "mb_piece.h"
 #include "mb_trail.h"
-#include "mb_activity.h"
-
-#include <ijengine/canvas.h>
-#include <ijengine/engine.h>
-#include <ijengine/rectangle.h>
 
 #include <iostream>
 #include <fstream>
 
-using namespace std;
-using namespace ijengine;
+MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, const string &next_level, const string &audio_path){	
+	
+	m_r = r;
+	m_g = g;
+	m_b = b;
+	m_done = false;
+	m_next = next_level;
+	m_audio_path = audio_path;
+	m_current_level = current;
+	m_start = -1;
 
-MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_level, const string &audio_path)
-	: m_r(r), m_g(g), m_b(b), m_done(false), m_next(next_level), m_audio_path(audio_path), m_current_level(current), m_start(-1){
 	if(LEVEL) printf("Começou a construir level\n");
 	
 	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0);
@@ -74,40 +75,40 @@ MBLevel::MBLevel(int r, int g, int b, const string &current, const string &next_
 	if(LEVEL) printf("Construiu level\n");
 }
 
-bool MBLevel::done() const{
+bool MBPlayableLevel::done() const{
 	return m_done;
 }
 
-string MBLevel::next() const{
+string MBPlayableLevel::next() const{
 	return m_next;
 }
 
-string MBLevel::audio() const{
+string MBPlayableLevel::audio() const{
 	return m_audio_path;
 }
 
-string MBLevel::current_level() const{
+string MBPlayableLevel::current_level() const{
 	return m_current_level;
 }
 
-void MBLevel::do_action(string label){
+void MBPlayableLevel::do_action(string label){
 	if(label == "Pronto!"){
 		m_done = true;
 	}
 }
 
-bool MBLevel::on_event(const GameEvent&){
+bool MBPlayableLevel::on_event(const GameEvent&){
 	return false;
 }
 
-void MBLevel::update_self(unsigned now, unsigned){
+void MBPlayableLevel::update_self(unsigned now, unsigned){
 	if(LEVEL) printf("Entrou update level\n");
 	if(m_start == -1)
 		m_start=now;
 	if(LEVEL) printf("Saiu update level\n");
 }
 
-void MBLevel::draw_self(Canvas *canvas, unsigned, unsigned){
+void MBPlayableLevel::draw_self(Canvas *canvas, unsigned, unsigned){
 	if(LEVEL) printf("Entrou draw_self level\n");
 	canvas->clear();
 

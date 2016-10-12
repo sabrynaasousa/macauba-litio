@@ -1,5 +1,5 @@
 #include "mb_button.h"
-#include "mb_level.h"
+#include "mb_playable_level.h"
 
 #include <ijengine/canvas.h>
 
@@ -44,7 +44,7 @@ bool MBButton::on_event(const GameEvent& event){
                 auto p = this->parent();
 
                 if(m_level == "1"){
-                    auto parent_class = dynamic_cast <MBLevel *>(p);
+                    auto parent_class = dynamic_cast <MBPlayableLevel *>(p);
                     parent_class -> do_action(m_label);
                 }
 

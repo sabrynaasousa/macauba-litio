@@ -1,46 +1,40 @@
 #ifndef MB_LEVEL_H
 #define MB_LEVEL_H
 
-#define LEVEL 1
-
-#include <ijengine/level.h>
-#include <string>
-
 #include "mb_button.h"
-#include "mb_activity.h"
 
-using std::string;
-using ijengine::Level;
-using ijengine::Canvas;
+#include <string>
+#include <memory>
+#include <ijengine/level.h>
+#include <ijengine/texture.h>
+#include <ijengine/events_translator.h>
+#include <ijengine/game_events_listener.h>
+#include <ijengine/game_object.h>
 
-class MBLevel : public Level, GameEventsListener{
+#include <ijengine/canvas.h>
+#include <ijengine/engine.h>
+#include <ijengine/rectangle.h>
+
+#include <deque>
+#include <vector>
+
+using namespace std;
+using namespace ijengine;
+
+class MBLevel : public Level, public GameEventsListener {
 	public:
-		typedef enum {ACTIVITY, IN, INTERMEDIARY, OUT1, OUT2, TREATMENT} Types;
-		MBLevel(int r, int g, int b, const string &current, const string &next = "", const string &audio_path = "");
-
-		bool done() const;
-		string next() const;
-		string audio() const;
-		string current_level() const;
-		void do_action(string label);
-
-		bool on_event(const GameEvent& event);
+		~MBLevel(){}
 
 	protected:
-		void update_self(unsigned now, unsigned last);
-		void draw_self(Canvas *canvas, unsigned now, unsigned last);
+        typedef enum { ACTIVITY, IN, INTERMEDIARY, OUT1, OUT2, TREATMENT } Types;
 
-	private:
-		int m_r, m_g, m_b;
-		bool m_done;
-		string m_next, m_audio_path, m_current_level;
-		string m_level_name;
-		int m_start;
-		int n_activities, n_ins, n_intermediary, n_outs1, n_outs2, n_treatments;
-		int n_trail_activities;
-		vector<MBActivity *> m_activities;
-		shared_ptr<Texture> m_background;
-		vector< MBButton* > m_buttons;
+        int m_r, m_g, m_b;
+        bool m_done;
+        string m_next, m_audio_path, m_current_level;
+        string m_level_name;
+        int m_start;
+        shared_ptr<Texture> m_background;
+        vector< MBButton* > m_buttons;
 };
 
 #endif
