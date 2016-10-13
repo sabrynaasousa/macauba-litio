@@ -16,6 +16,7 @@ using std::string;
 class MBButton : public GameObject, public GameEventsListener {
     public:
         MBButton(string label, string cur_level, double b_x, double b_y, string img, double b_w, double b_h);
+        MBButton(string btn_text, string label, string cur_level, double b_x, double b_y, double b_w, double b_h);
         MBButton() {}
         ~MBButton();
         double w();
@@ -42,7 +43,7 @@ class MBButton : public GameObject, public GameEventsListener {
         ClickState m_click_state;
         HoverState m_hover_state;
         string m_label, m_texture_label;
-        string m_img, m_action, m_level;
+        string m_img, m_action, m_level, m_text;
         double m_x, m_y, m_h, m_w;
         shared_ptr<Texture> m_texture;
 };

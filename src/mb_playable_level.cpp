@@ -114,7 +114,7 @@ void MBPlayableLevel::draw_self(Canvas *canvas, unsigned, unsigned){
 
 	canvas->draw(m_background.get(), 0, 0);
 
-	auto font = resources::get_font("Forelle.ttf", 40);
+	auto font = resources::get_font("Aller_Bd.ttf", 40);
 	canvas->set_font(font);
 
 	canvas->set_draw_color(Color(0, 0, 0));

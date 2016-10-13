@@ -2,6 +2,7 @@
 #define MB_MENU_H
 
 #include "mb_level.h"
+#include "mb_button.h"
 
 #include <ijengine/canvas.h>
 #include <ijengine/engine.h>
@@ -28,11 +29,6 @@ class MBMenu : public MBLevel {
     protected:
         void update_self(unsigned, unsigned last);
         void draw_self(Canvas *canvas, unsigned, unsigned last);
-
-    private:
-        // FIXME
-        // shared_ptr<Texture> m_credits;
-        // bool on_credit;
 };
 
 #endif
