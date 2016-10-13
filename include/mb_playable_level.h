@@ -6,7 +6,7 @@
 #include "mb_level.h"
 #include "mb_activity.h"
 
-class MBPlayableLevel : public MBLevel{
+class MBPlayableLevel : public MBLevel {
     public:
         MBPlayableLevel(int r, int g, int b, const string &current, const string &next = "", const string &audio_path = "");
 

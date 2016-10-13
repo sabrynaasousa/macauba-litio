@@ -10,8 +10,8 @@ int main(){
 	int rc;
 
 	try{
-		MBGame game("Teste", 1366, 768);
-		rc = game.run("1");
+		MBGame game("Macaúba", 1366, 768);
+		rc = game.run("menu");
 	}catch(Exception &ex){
 		cout << ex.what() << endl;
 	}
