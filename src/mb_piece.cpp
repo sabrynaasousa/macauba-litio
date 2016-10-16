@@ -21,36 +21,39 @@ MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, 
     set_priority(1);
     if(piece_type == "activity"){
         m_height = 144;
-        m_width = 253;
+        m_width = m_draw_width = 253;
+        m_draw_height = 163;
     }
 
     else if(piece_type == "in"){
         m_height = 72;
-        m_width = 66;
+        m_width = m_draw_width = 66;
+        m_draw_height = 91;
     }
 
     else if(piece_type == "intermediary"){
-        m_height = 80;
-        m_width = 80;
+        m_height = m_draw_height = 80;
+        m_width = m_draw_width = 80;
     }
 
     else if(piece_type == "out1"){
-        m_height = 65;
-        m_width = 72;
+        m_height = m_draw_height = 65;
+        m_width = m_draw_width = 72;
     }
 
     else if(piece_type == "out2"){
-        m_height = 65;
-        m_width = 72;
+        m_height = m_draw_height = 65;
+        m_width = m_draw_width = 73;
     }
 
     else if(piece_type == "treatment"){
-        m_height = 67;
-        m_width = 143;
+        m_height = m_draw_height = 67;
+        m_width = m_draw_width = 143;
     }
 
     else{
         printf("Invalid piece type\n");
+        exit(-1);
     }
 
     set_priority(1);
@@ -175,7 +178,7 @@ void MBPiece::update_self(unsigned now, unsigned) {
 
 void MBPiece::draw_self(Canvas* canvas, unsigned, unsigned) {
     if(PIECE) printf("Entrando draw_self piece\n");
-    if(m_active) canvas->draw(m_texture[m_frame_id != -1].get(), Rectangle(m_width * ((int) m_sprite_counter), 0, m_width, m_height), m_x, m_y);
+    if(m_active) canvas->draw(m_texture[m_frame_id != -1].get(), Rectangle(m_draw_width * ((int) m_sprite_counter), 0, m_draw_width, m_draw_height), m_x, m_y);
     if(PIECE) printf("Saindo draw self piece\n");
 }
 

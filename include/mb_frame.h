@@ -25,7 +25,7 @@ class MBFrame : public GameObject, public Collidable, public GameEventsListener 
     public:
         typedef enum {ACTIVITY, IN, INTERMEDIARY, OUT1, OUT2, TREATMENT} Types;
         MBFrame();
-        MBFrame(std::string current_level, std::string type, double px, double py, int id_piece, int frame_id);
+        MBFrame(std::string current_level, std::string type, double px, double py, int id_piece, int frame_id, int mask);
         ~MBFrame();
         double x() const;
         double y() const;
@@ -70,7 +70,7 @@ class MBFrame : public GameObject, public Collidable, public GameEventsListener 
         ClickState m_click_state;
         HoverState m_hover_state;
         double m_x, m_y;
-        double m_height, m_width, m_minimum_area;
+        double m_height, m_width, m_minimum_area, m_draw_height, m_draw_width;
         double m_sprite_counter, m_sprite_speed;
 		int m_correct_piece, m_id;
         int m_start;

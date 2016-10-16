@@ -36,12 +36,6 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b)
 
     m_background = resources::get_texture(current_level + "/toolbar.png");
 
-
-/*	for(int i=0; i<4; i++){
-		m_pieces.push_back(new MBPiece(current_level, 200*(i+1), 520, i, vs[i]));
-		add_child(m_pieces[i]);
-	}
-*/
     if(TOOLBAR) printf("Construiu toolbar\n");
 }
 

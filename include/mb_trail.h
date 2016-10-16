@@ -16,7 +16,7 @@ using namespace ijengine;
 
 class MBTrail : public GameObject{
 	public:
-		typedef enum {ACTIVITY, IN, INTERMEDIARY, OUT1, OUT2, TREATMENT} Types;
+		typedef enum {OUT2 = 0, OUT1 = 1, INTERMEDIARY = 2, IN = 3, ACTIVITY = 4, TREATMENT = 5} Types;
 		MBTrail(std::string current_level, vector<MBActivity *> activities, int number_of_activities);
 
 	protected:

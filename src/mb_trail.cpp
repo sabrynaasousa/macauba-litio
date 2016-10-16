@@ -19,8 +19,17 @@ MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities, int
 
 	for(int i = 0; i < number_of_activities; ++i){
 		MBActivity * activity = activities[i];
+
+		int mask = 0;
+		if(i > 0){
+			if(activities[i-1]->id_intermediary()) mask += 1 << ACTIVITY;
+		}
+
+		mask += (activity->id_in() << IN) + (activity->id_intermediary() << INTERMEDIARY) + (activity->id_out1() << OUT1) + (activity->id_out2() << OUT2);
+		printf("Mask = %d\n", mask);
+
 		if(activity->id_activity()){
-			MBFrame * frame = new MBFrame(current_level, "activity", offset + 250 * (i - 1), 178, activity->id_activity(), id_frame++);
+			MBFrame * frame = new MBFrame(current_level, "activity", offset + 250 * (i - 1), 178, activity->id_activity(), id_frame++, mask);
 			frames[ACTIVITY].push_back(frame);
 			add_child(frame);
 		}else{
@@ -29,33 +38,33 @@ MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities, int
 		}
 
 		if(activity->id_in()){
-			MBFrame * frame = new MBFrame(current_level, "in", offset + 250 * (i - 1), 108, activity->id_in(), id_frame++);
+			MBFrame * frame = new MBFrame(current_level, "in", offset + 250 * (i - 1), 108, activity->id_in(), id_frame++, mask);
 			frames[IN].push_back(frame);
 			add_child(frame);
 		}
 
 		if(activity->id_intermediary()){
 			//FIX MY POSITION
-			MBFrame * frame = new MBFrame(current_level, "intermediary", offset + 210 + 250 * (i - 1), 210, activity->id_intermediary(), id_frame++);
+			MBFrame * frame = new MBFrame(current_level, "intermediary", offset + 210 + 250 * (i - 1), 210, activity->id_intermediary(), id_frame++, mask);
 			frames[INTERMEDIARY].push_back(frame);
 			add_child(frame);
 		}
 
 		if(activity->id_out1()){
-			MBFrame * frame = new MBFrame(current_level, "out1", offset + 20 + 250 * (i - 1), 320, activity->id_out1(), id_frame++);
+			MBFrame * frame = new MBFrame(current_level, "out1", offset + 20 + 250 * (i - 1), 320, activity->id_out1(), id_frame++, mask);
 			frames[OUT1].push_back(frame);
 			add_child(frame);
 		}
 
 		if(activity->id_out2()){
 			//FIX MY POSITION
-			MBFrame * frame = new MBFrame(current_level, "out2", offset + 145 + 250 * (i - 1), 320, activity->id_out2(), id_frame++);
+			MBFrame * frame = new MBFrame(current_level, "out2", offset + 145 + 250 * (i - 1), 320, activity->id_out2(), id_frame++, mask);
 			frames[OUT2].push_back(frame);
 			add_child(frame);
 		}
 
 		if(activity->id_treatment()){
-			MBFrame * frame = new MBFrame(current_level, "treatment", offset - 13 + 250 * (i - 1), 358, activity->id_treatment(), id_frame++);
+			MBFrame * frame = new MBFrame(current_level, "treatment", offset - 13 + 250 * (i - 1), 358, activity->id_treatment(), id_frame++, mask);
 			frames[TREATMENT].push_back(frame);
 			add_child(frame);
 		}

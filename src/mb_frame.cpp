@@ -6,7 +6,7 @@ MBFrame::MBFrame(){
 
 }
 
-MBFrame::MBFrame(std::string, std::string frame_type, double px, double py, int id_piece, int frame_id){
+MBFrame::MBFrame(std::string, std::string frame_type, double px, double py, int id_piece, int frame_id, int mask){
     if(FRAME) printf("Construindo frame\n");
 	m_correct_piece = id_piece;
     m_sprite_speed = 0;
@@ -19,40 +19,45 @@ MBFrame::MBFrame(std::string, std::string frame_type, double px, double py, int 
 
     set_priority(2);
 
+    string mask_string = "";
+
     if(m_type == "activity"){
         m_height = 144;
-        m_width = 253;
+        m_width = m_draw_width = 253;
+        m_draw_height = 163;
         m_minimum_area = 16000;
+        mask_string = "_" + to_string(mask);
     }
 	
     else if(m_type == "in"){
 		m_height = 72;
-        m_width = 66;
+        m_width = m_draw_width = 66;
+        m_draw_height = 91;
         m_minimum_area = 2500;
 	}
 
     else if(m_type == "intermediary"){
-        m_height = 80;
-        m_width = 80;
+        m_height = m_draw_height = 80;
+        m_width = m_draw_width = 80;
         m_minimum_area = 2500;
         set_priority(4);
     }
 
     else if(m_type == "out1"){
-		m_height = 65;
-		m_width = 72;
+		m_height = m_draw_height = 65;
+        m_width = m_draw_width = 72;
         m_minimum_area = 2500;
 	}
 
     else if(m_type == "out2"){
-        m_height = 65;
-        m_width = 72;
+        m_height = m_draw_height = 65;
+        m_width = m_draw_width = 73;
         m_minimum_area = 2500;
     }
 
     else if(m_type == "treatment"){
-		m_height = 67;
-		m_width = 143;
+		m_height = m_draw_height = 67;
+        m_width = m_draw_width = 143;
         m_minimum_area = 500;
 	}
 
@@ -64,7 +69,7 @@ MBFrame::MBFrame(std::string, std::string frame_type, double px, double py, int 
     m_y = py;
     m_x = px;
 
-	m_texture = resources::get_texture(m_type + ".png");
+	m_texture = resources::get_texture("frames/frame_" + m_type + mask_string + ".png");
 		
     m_bounding_box = Rectangle(m_x, m_y, m_width, m_height);
     m_active = true;

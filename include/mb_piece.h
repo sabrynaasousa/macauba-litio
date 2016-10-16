@@ -66,6 +66,7 @@ class MBPiece : public GameObject, public Collidable, public GameEventsListener 
         HoverState m_hover_state;
         double m_x, m_y;
         double m_height, m_width;
+        double m_draw_height, m_draw_width;
         double m_sprite_counter, m_sprite_speed;
         int m_start, m_id, m_frame_id; 
         string m_type;
