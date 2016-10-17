@@ -4,6 +4,8 @@ MBMenu::MBMenu(const string &current_level, const string& next_level, const stri
 }
 
 MBMenu::MBMenu(int r, int g, int b, const string &current, const string&, const string&){
+	video::set_full_screen(1);
+
     m_r = r;
     m_g = g;
     m_b = b;
