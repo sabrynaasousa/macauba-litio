@@ -93,7 +93,7 @@ void MBButton::draw_self(Canvas *canvas, unsigned, unsigned){
         canvas->set_font(font);
         canvas->set_draw_color(Color(255, 255, 255));
 
-        double len = m_label.size() * 35.826;
+        double len = 0.6 * m_label.size() * font_size - 1;
         canvas->draw(m_text, m_x + m_w/2 - len/2, m_y + 25);
     }
 }

@@ -45,11 +45,17 @@ string MBMenu::audio() const{
 }
 
 void MBMenu::do_action(string label){
-    if(label == "level-1"){
+    if(label == "iniciar"){
         m_next = "1";
         m_done = true;
     }
-    if(label == "exit"){
+    if(label == "opcoes"){
+
+    }
+    if(label == "creditos"){
+
+    }
+    if(label == "sair"){
         exit(0);
     }
 }

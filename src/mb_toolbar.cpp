@@ -41,11 +41,11 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b)
     eita:
     int font_size = 20;
 
-    m_buttons.push_back(new MBButton(" Atividades", "activities", "toolbar", 0, m_y + 0, 150, 66, font_size));
-    m_buttons.push_back(new MBButton(" Entradas", "ins", "toolbar", 0, m_y + 66, 150, 66, font_size));
-    m_buttons.push_back(new MBButton(" Intermediários", "intermediaries", "toolbar", 0, m_y + 132, 150, 66, font_size));
-    m_buttons.push_back(new MBButton(" Saídas", "outs", "toolbar", 0, m_y + 198, 150, 66, font_size));
-    m_buttons.push_back(new MBButton(" Tratamentos", "treatments", "toolbar", 0, m_y + 264, 150, 66, font_size));
+    m_buttons.push_back(new MBButton("Atividades", "atividades", "toolbar", 0, m_y + 0, 180, 66, font_size));
+    m_buttons.push_back(new MBButton("Entradas", "entradas", "toolbar", 0, m_y + 66, 180, 66, font_size));
+    m_buttons.push_back(new MBButton("Intermediários", "intermediarios", "toolbar", 0, m_y + 132, 180, 66, font_size));
+    m_buttons.push_back(new MBButton("Saídas", "saidas", "toolbar", 0, m_y + 198, 180, 66, font_size));
+    m_buttons.push_back(new MBButton("Tratamentos", "tratamentos", "toolbar", 0, m_y + 264, 180, 66, font_size));
 
     for(auto button : m_buttons){
         button->set_priority(20);
@@ -59,13 +59,13 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b)
 }
 
 void MBToolbar::do_action(string label){
-    if(label == "activities"){
+    if(label == "atividades"){
         m_active_rectangle = 0;
-    }else if(label == "ins"){
+    }else if(label == "entradas"){
         m_active_rectangle = 1;
-    }else if(label == "intermediaries"){
+    }else if(label == "intermediarios"){
         m_active_rectangle = 2;
-    }else if(label == "outs"){
+    }else if(label == "saidas"){
         m_active_rectangle = 3;
     }else{
         m_active_rectangle = 4;
