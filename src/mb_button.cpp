@@ -58,7 +58,9 @@ void MBButton::set_texture(string btn_texture){
 void MBButton::update_self(unsigned, unsigned){}
 
 bool MBButton::on_event(const GameEvent& event){
-    if(event.id() == GAME_MOUSE_CLICK){
+    if(not m_active) return false;
+
+    if(event.id() == GAME_MOUSE_PRESSED){
         double mouse_x = event.get_property<double>("x");
         double mouse_y = event.get_property<double>("y");
 
@@ -66,18 +68,33 @@ bool MBButton::on_event(const GameEvent& event){
         int min_y = m_y, max_y = m_y + m_h;
 
         if(mouse_x >= min_x && mouse_x <= max_x && mouse_y >= min_y && mouse_y <= max_y){
-            auto p = this->parent();
+            m_click_state = CLICKING;
+            return true;
+        }
+    }
 
-            if(m_level == "1"){
-                auto parent_class = dynamic_cast <MBPlayableLevel *>(p);
-                parent_class -> do_action(m_label);
-            }
-            else if(m_level == "menu"){
-                auto parent_class = dynamic_cast <MBMenu *>(p);
-                parent_class -> do_action(m_label);
-            }else if(m_level == "toolbar"){
-                auto parent_class = dynamic_cast <MBToolbar *>(p);
-                parent_class -> do_action(m_label);
+    if(event.id() == GAME_MOUSE_RELEASED){
+        double mouse_x = event.get_property<double>("x");
+        double mouse_y = event.get_property<double>("y");
+
+        int min_x = m_x, max_x = m_x + m_w;
+        int min_y = m_y, max_y = m_y + m_h;
+
+        if(mouse_x >= min_x && mouse_x <= max_x && mouse_y >= min_y && mouse_y <= max_y){
+            if(m_click_state == CLICKING){
+                auto p = this->parent();
+
+                if(m_level == "1"){
+                    auto parent_class = dynamic_cast <MBPlayableLevel *>(p);
+                    parent_class -> do_action(m_label);
+                }
+                else if(m_level == "menu"){
+                    auto parent_class = dynamic_cast <MBMenu *>(p);
+                    parent_class -> do_action(m_label);
+                }else if(m_level == "toolbar"){
+                    auto parent_class = dynamic_cast <MBToolbar *>(p);
+                    parent_class -> do_action(m_label);
+                }
             }
         }
     }
@@ -88,7 +105,7 @@ bool MBButton::on_event(const GameEvent& event){
 void MBButton::draw_self(Canvas *canvas, unsigned, unsigned){
     if(m_active){
         if(m_texture)
-            canvas->draw(m_texture.get(), m_x, m_y);
+            canvas->draw(m_texture.get(), Rectangle(0, 0, m_w, m_h), m_x, m_y);
 
         if(not m_text.empty()){
             int font_size = m_font_size == -1 ? 60 : m_font_size;

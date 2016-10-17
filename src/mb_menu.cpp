@@ -1,6 +1,9 @@
 #include "mb_menu.h"
 
-MBMenu::MBMenu(const string &current_level, const string& next_level, const string audio_path, int){
+vector<int> label_buttons[] = { {0, 1, 2, 3}, {4, 5}, {}, {} };
+map<string, int> idx_names = { {"principal",0}, {"iniciar", 1}, {"opcoes", 2}, {"creditos", 3} };
+
+MBMenu::MBMenu(const string&, const string&, const string, int){
 }
 
 MBMenu::MBMenu(int r, int g, int b, const string &current, const string&, const string&){
@@ -21,8 +24,15 @@ MBMenu::MBMenu(int r, int g, int b, const string &current, const string&, const 
     m_buttons.push_back(new MBButton("Créditos", "creditos", m_current_level, "btn_background.png", 433, m_buttons[1]->y() + m_buttons[1]->h() + 20, 500, 112));
     m_buttons.push_back(new MBButton("Sair", "sair", m_current_level, "btn_background.png", 433, m_buttons[2]->y() + m_buttons[2]->h() + 20, 500, 112));
 
-    for(auto btn : m_buttons)
-        add_child(btn);
+    m_buttons.push_back(new MBButton("Macaúba", "macauba", m_current_level, "btn_background.png", 433, 320, 500, 112));
+    m_buttons.push_back(new MBButton("Lítio", "litio", m_current_level, "btn_background.png", 433, m_buttons[4]->y() + m_buttons[4]->h() + 20, 500, 112));
+    m_buttons.push_back(new MBButton("Voltar", "voltar", m_current_level, "btn_background.png", 30, m_buttons[5]->y() + m_buttons[5]->h() + 40, 250, 112));
+
+    int tam = m_buttons.size();
+    for(int i=0;i<tam;i++){
+        add_child(m_buttons[i]);
+        if(i >= 4) m_buttons[i]->set_active(false);
+    }
 
     event::register_listener(this);
 }
@@ -45,24 +55,21 @@ string MBMenu::audio() const{
 }
 
 void MBMenu::do_action(string label){
+    for(auto btn : m_buttons){
+        btn->set_active(false);
+    }
+
+    for(auto idx : label_buttons[idx_names[label]]){
+        m_buttons[idx]->set_active(true);
+    }
+
+    if(label == "iniciar" || label == "opcoes" || label == "creditos"){
+        m_buttons[6]->set_active(true);
+    }
+
     if(label == "iniciar"){
-        for(auto btn : m_buttons)
-            btn->set_active(false);
-
-        int qt_buttons = m_buttons.size();
-
+        m_buttons[6]->set_active(true);
         m_placeholder = "Escolha o ciclo de vida:";
-        m_buttons.push_back(new MBButton("Macaúba", "macauba", m_current_level, "btn_background.png", 433, 320, 500, 112));
-        m_buttons.push_back(new MBButton("Lítio", "litio", m_current_level, "btn_background.png", 433, m_buttons[qt_buttons]->y() + m_buttons[qt_buttons]->h() + 20, 500, 112));
-
-        for(auto btn : m_buttons)
-            add_child(btn);
-    }
-    else if(label == "opcoes"){
-
-    }
-    else if(label == "creditos"){
-
     }
     else if(label == "sair"){
         exit(0);
@@ -73,6 +80,12 @@ void MBMenu::do_action(string label){
     }
     else if(label == "litio"){
 
+    }
+    else if(label == "voltar"){
+        for(auto idx : label_buttons[idx_names["principal"]])
+            m_buttons[idx]->set_active(true);
+
+        m_placeholder = "";
     }
 }
 
@@ -97,7 +110,7 @@ void MBMenu::draw_self(Canvas *canvas, unsigned, unsigned){
     canvas->draw("Simuladores EA / GA", 350, 50);
 
     if(not m_placeholder.empty()){
-        auto font = resources::get_font("MonospaceBold.ttf", 40);
+        font = resources::get_font("MonospaceBold.ttf", 40);
         canvas->set_font(font);
         canvas->set_draw_color(Color(0, 0, 0));
         canvas->draw(m_placeholder, 400, 230);

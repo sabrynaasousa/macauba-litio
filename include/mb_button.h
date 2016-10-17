@@ -42,8 +42,8 @@ class MBButton : public GameObject, public GameEventsListener {
         void draw_self(Canvas *canvas, unsigned now, unsigned last);        
 
     private:
-        static const int GAME_MOUSE_CLICK = 1 << 8;
-        static const int GAME_MOUSE_MOTION = 1 << 10;
+        static const unsigned GAME_MOUSE_PRESSED = 1 << 8;
+        static const unsigned GAME_MOUSE_RELEASED = 1 << 20;
         ClickState m_click_state;
         HoverState m_hover_state;
         string m_label, m_texture_label;
