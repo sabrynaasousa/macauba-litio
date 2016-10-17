@@ -7,6 +7,7 @@
 #include <ijengine/game_object.h>
 
 #include "mb_piece.h"
+#include "mb_button.h"
 
 using namespace ijengine;
 
@@ -15,6 +16,7 @@ class MBToolbar : public GameObject{
 		MBToolbar(std::string current_level, int r, int g, int b);
         void set_following(bool following);
         bool get_following();
+        void do_action(string label);
 
 	protected:
 		void update_self(unsigned now, unsigned last);
@@ -25,7 +27,10 @@ class MBToolbar : public GameObject{
 		int m_w, m_h, m_x, m_y;
         bool m_following;
 		vector <MBPiece *> m_pieces;
+        vector <MBButton *> m_buttons;
         shared_ptr<Texture> m_background;
+        shared_ptr<Texture> m_rectangle;
+        int m_active_rectangle;
 };
 
 #endif
