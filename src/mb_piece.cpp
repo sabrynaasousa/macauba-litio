@@ -1,5 +1,6 @@
 #include "mb_piece.h"
 #include "mb_frame.h"
+#include "mb_toolbar.h"
 
 MBPiece::MBPiece(){
 
@@ -95,11 +96,19 @@ void MBPiece::register_self(int current_x){
 }
 
 bool MBPiece::on_event(const GameEvent& event){
-    if(event.id() == GAME_MOUSE_PRESSED){
+    MBToolbar * p;
+    if( !(p = dynamic_cast<MBToolbar *>( parent() ) ) ){
+        printf("Invalid toolbar parent\n");
+        exit(-5);
+    }
+
+    if(event.id() == GAME_MOUSE_PRESSED ) printf("Clicou %d %d\n", p->get_following(), m_following);
+    if(event.id() == GAME_MOUSE_PRESSED && (p->get_following() == m_following)){
         double mouse_x = event.get_property<double>("x");
         double mouse_y = event.get_property<double>("y");
         if(mouse_x >= m_x && mouse_x <= m_x + m_width && mouse_y >= m_y && mouse_y <= m_y + m_height){
             m_following = !m_following;
+            p->set_following(m_following);
             m_frame_id = -1;
 
             printf("Clicou na %d\n", m_id);

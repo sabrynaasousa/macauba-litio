@@ -2,7 +2,7 @@
 #include <ijengine/canvas.h>
 
 MBToolbar::MBToolbar(std::string current_level, int r, int g, int b)
-	: m_r(r), m_g(g), m_b(b), m_x(0), m_y(440){
+	: m_r(r), m_g(g), m_b(b), m_x(0), m_y(440), m_following(false) {
     if(TOOLBAR) printf("Construindo toolbar\n");
 
 	for(int i = 0; i < 5; i++){
@@ -48,4 +48,12 @@ void MBToolbar::draw_self(Canvas *canvas, unsigned, unsigned){
 	canvas->set_draw_color(Color(m_r, m_g, m_b));
     canvas->draw(m_background.get(), m_x, m_y);
     if(TOOLBAR) printf("Saind draw_self toolbar\n");
+}
+
+void MBToolbar::set_following(bool following){
+    m_following = following;
+}
+
+bool MBToolbar::get_following(){
+    return m_following;
 }

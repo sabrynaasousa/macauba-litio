@@ -1,7 +1,7 @@
 #ifndef MB_TRAIL_H
 #define MB_TRAIL_H
 
-#define TRAIL 1
+#define TRAIL 0
 
 #include <ijengine/rectangle.h>
 #include <ijengine/game_object.h>

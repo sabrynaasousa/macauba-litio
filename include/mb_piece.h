@@ -1,7 +1,7 @@
 #ifndef MB_PIECE_H
 #define MB_PIECE_H
 
-#define PIECE 1
+#define PIECE 0
 
 #include <ijengine/engine.h>
 #include <ijengine/collidable.h>

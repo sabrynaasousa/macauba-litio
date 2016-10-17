@@ -1,7 +1,7 @@
 #ifndef MB_PLAYABLE_LEVEL_H
 #define MB_PLAYABLE_LEVEL_H
 
-#define LEVEL 1
+#define LEVEL 0
 
 #include "mb_level.h"
 #include "mb_activity.h"

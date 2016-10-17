@@ -1,7 +1,7 @@
 #ifndef MB_FRAME_H
 #define MB_FRAME_H
 
-#define FRAME 1
+#define FRAME 0
 
 #include <ijengine/engine.h>
 #include <ijengine/collidable.h>
