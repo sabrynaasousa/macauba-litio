@@ -31,6 +31,8 @@ class MBButton : public GameObject, public GameEventsListener {
         string texture();
         void set_texture(string btn_texture);
         void set_active(bool act);
+        bool active_texture();
+        void set_active_texture(bool active_texture);
 
         bool on_event(const GameEvent& event);
 
@@ -51,7 +53,7 @@ class MBButton : public GameObject, public GameEventsListener {
         double m_x, m_y, m_h, m_w;
         int m_font_size;
         shared_ptr<Texture> m_texture;
-        bool m_active;
+        bool m_active, m_active_texture;
 };
 
 #endif

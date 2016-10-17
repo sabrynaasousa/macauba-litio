@@ -9,14 +9,15 @@ MBPiece::MBPiece(){
 MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, std::string piece_type){
     if(PIECE) printf("Construindo piece\n");
     m_sprite_speed = 0;
+    m_speed = 1.2;
     m_sprite_counter = 0;
     m_start = -1;
     m_id = piece_id;
     m_type = piece_type;
 
     m_height = m_width = 30;
-    m_y = py;
-    m_x = px;
+    m_y = m_original_y = py;
+    m_x = m_original_x = px;
     m_frame_id = -1;
 
     set_priority(1);
@@ -175,6 +176,14 @@ void MBPiece::update_self(unsigned now, unsigned) {
     m_bounding_box = Rectangle(m_x + m_width/2, m_y + m_height/2, m_width, m_height);
     l.clear();
     l.insert(l.begin(), m_bounding_box);
+
+    if(not m_following && m_frame_id == -1){
+        if(abs(m_x - m_original_x) > 1e-8)
+            m_x += (now - m_start) * m_speed * (m_x - m_original_x > 0 ? -1 : 1);
+
+        if(abs(m_y - m_original_y) > 1e-8)
+            m_y += (now - m_start) * m_speed * (m_y - m_original_y > 0 ? -1 : 1);
+    }
 
     m_sprite_counter += (now - m_start) * m_sprite_speed;
     if(m_sprite_counter > 5.9){

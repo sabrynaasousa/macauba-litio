@@ -57,7 +57,6 @@ MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities, int
 		}
 
 		if(activity->id_out2()){
-			//FIX MY POSITION
 			MBFrame * frame = new MBFrame(current_level, "out2", offset + 145 + 250 * (i - 1), 320, activity->id_out2(), id_frame++, mask);
 			frames[OUT2].push_back(frame);
 			add_child(frame);
