@@ -46,17 +46,33 @@ string MBMenu::audio() const{
 
 void MBMenu::do_action(string label){
     if(label == "iniciar"){
+        for(auto btn : m_buttons)
+            btn->set_active(false);
+
+        int qt_buttons = m_buttons.size();
+
+        m_placeholder = "Escolha o ciclo de vida:";
+        m_buttons.push_back(new MBButton("Macaúba", "macauba", m_current_level, "btn_background.png", 433, 320, 500, 112));
+        m_buttons.push_back(new MBButton("Lítio", "litio", m_current_level, "btn_background.png", 433, m_buttons[qt_buttons]->y() + m_buttons[qt_buttons]->h() + 20, 500, 112));
+
+        for(auto btn : m_buttons)
+            add_child(btn);
+    }
+    else if(label == "opcoes"){
+
+    }
+    else if(label == "creditos"){
+
+    }
+    else if(label == "sair"){
+        exit(0);
+    }
+    else if(label == "macauba"){
         m_next = "1";
         m_done = true;
     }
-    if(label == "opcoes"){
+    else if(label == "litio"){
 
-    }
-    if(label == "creditos"){
-
-    }
-    if(label == "sair"){
-        exit(0);
     }
 }
 
@@ -74,9 +90,16 @@ void MBMenu::draw_self(Canvas *canvas, unsigned, unsigned){
     if(m_background)
         canvas->draw(m_background.get(), 0, 0);
 
-    auto font = resources::get_font("Aller_Bd.ttf", 80);
+    auto font = resources::get_font("MonospaceBold.ttf", 80);
     canvas->set_font(font);
     canvas->set_draw_color(Color(255, 255, 255));
 
     canvas->draw("Simuladores EA / GA", 350, 50);
+
+    if(not m_placeholder.empty()){
+        auto font = resources::get_font("MonospaceBold.ttf", 40);
+        canvas->set_font(font);
+        canvas->set_draw_color(Color(0, 0, 0));
+        canvas->draw(m_placeholder, 400, 230);
+    }
 }

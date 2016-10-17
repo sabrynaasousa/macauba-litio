@@ -29,6 +29,9 @@ class MBMenu : public MBLevel {
     protected:
         void update_self(unsigned, unsigned last);
         void draw_self(Canvas *canvas, unsigned, unsigned last);
+
+    private:
+        string m_placeholder;
 };
 
 #endif
