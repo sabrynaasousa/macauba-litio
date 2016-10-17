@@ -69,9 +69,6 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 
 	this->set_priority(10);
 
-
-	video::set_full_screen(0);
-
 	if(LEVEL) printf("Construiu level\n");
 }
 
