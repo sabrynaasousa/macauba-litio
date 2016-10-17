@@ -17,8 +17,10 @@ class MBButton : public GameObject, public GameEventsListener {
     public:
         MBButton(string label, string cur_level, double b_x, double b_y, string img, double b_w, double b_h);
         MBButton(string btn_text, string label, string cur_level, double b_x, double b_y, double b_w, double b_h, int font_size = 40);
+        MBButton(string btn_text, string btn_label, string cur_level, string img, double b_x, double b_y, double b_w, double b_h);
         MBButton() {}
         ~MBButton();
+
         double w();
         double h();
         double x();

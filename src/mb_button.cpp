@@ -7,7 +7,7 @@
 
 MBButton::MBButton(string btn_label, string cur_level, double b_x, double b_y, string img, double b_w, double b_h) :
     m_click_state(NOT_CLICKING), m_hover_state(NOT_HOVERING), m_label(btn_label), m_img(img), m_level(cur_level),
-    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w) {
+    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(-1) {
     
     m_texture_label = img;
     m_texture = resources::get_texture(cur_level + "/" + m_texture_label);
@@ -20,6 +20,18 @@ MBButton::MBButton(string btn_text, string btn_label, string cur_level, double b
     m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(font_size) {
 
     m_text = btn_text;
+
+    event::register_listener(this);
+}
+
+// button with text and background
+MBButton::MBButton(string btn_text, string btn_label, string cur_level, string img, double b_x, double b_y, double b_w, double b_h) :
+    m_click_state(NOT_CLICKING), m_hover_state(NOT_HOVERING), m_label(btn_label), m_img(img), m_level(cur_level),
+    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(-1) {
+
+    m_text = btn_text;
+    m_texture_label = img;
+    m_texture = resources::get_texture(cur_level + "/" + m_texture_label);
 
     event::register_listener(this);
 }
@@ -72,13 +84,16 @@ bool MBButton::on_event(const GameEvent& event){
 }
 
 void MBButton::draw_self(Canvas *canvas, unsigned, unsigned){
-    if(m_text.empty()){
+    if(m_texture)
         canvas->draw(m_texture.get(), m_x, m_y);
-    }
-    else{
-        auto font = resources::get_font("Aller_Bd.ttf", m_font_size);
+
+    if(not m_text.empty()){
+        int font_size = m_font_size == -1 ? 60 : m_font_size;
+        auto font = resources::get_font("MonospaceBold.ttf", font_size);
         canvas->set_font(font);
         canvas->set_draw_color(Color(255, 255, 255));
-        canvas->draw(m_text, m_x, m_y);
+
+        double len = m_label.size() * 35.826;
+        canvas->draw(m_text, m_x + m_w/2 - len/2, m_y + 25);
     }
 }

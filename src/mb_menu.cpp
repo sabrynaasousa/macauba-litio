@@ -12,11 +12,14 @@ MBMenu::MBMenu(int r, int g, int b, const string &current, const string&, const 
     m_current_level = current;
     m_start = -1;
     m_done = false;
+    m_background = resources::get_texture("menu/background.png");
 
     m_buttons.clear();
 
-    m_buttons.push_back(new MBButton("Fase 1", "level-1", m_current_level, 50, 240, 299, 34));
-    m_buttons.push_back(new MBButton("Sair", "exit", m_current_level, 1200, 650, 299, 34));
+    m_buttons.push_back(new MBButton("Iniciar", "iniciar", m_current_level, "btn_background.png", 433, 220, 500, 112));
+    m_buttons.push_back(new MBButton("Opções", "opcoes", m_current_level, "btn_background.png", 433, m_buttons[0]->y() + m_buttons[0]->h() + 20, 500, 112));
+    m_buttons.push_back(new MBButton("Créditos", "creditos", m_current_level, "btn_background.png", 433, m_buttons[1]->y() + m_buttons[1]->h() + 20, 500, 112));
+    m_buttons.push_back(new MBButton("Sair", "sair", m_current_level, "btn_background.png", 433, m_buttons[2]->y() + m_buttons[2]->h() + 20, 500, 112));
 
     for(auto btn : m_buttons)
         add_child(btn);
@@ -62,12 +65,12 @@ void MBMenu::draw_self(Canvas *canvas, unsigned, unsigned){
     canvas->clear();
     canvas->set_clear_color(Color(m_r, m_g, m_b));
 
-    auto font = resources::get_font("Aller_Bd.ttf", 40);
-    canvas->set_font(font);
-    canvas->set_draw_color(Color(255, 255, 255));
-
     if(m_background)
         canvas->draw(m_background.get(), 0, 0);
 
-    canvas->draw("Projeto EA / GA", 512, 20);
+    auto font = resources::get_font("Aller_Bd.ttf", 80);
+    canvas->set_font(font);
+    canvas->set_draw_color(Color(255, 255, 255));
+
+    canvas->draw("Simuladores EA / GA", 350, 50);
 }
