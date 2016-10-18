@@ -74,7 +74,7 @@ class MBPiece : public GameObject, public Collidable, public GameEventsListener 
         string m_type;
         Rectangle m_bounding_box;
         list<Rectangle> l;
-        bool m_active, m_following;
+        bool m_active, m_following, m_moving;
         shared_ptr<Texture> m_texture[2];
 };
 

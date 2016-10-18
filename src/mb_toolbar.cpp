@@ -86,6 +86,11 @@ void MBToolbar::do_action(string label){
 
     for(auto piece : m_pieces){
         piece->set_active(equals(type, piece->type()));
+        if(equals(type, piece->type())){
+            printf("Piece %s ativada\n", piece->type().c_str());
+        }else{
+            printf("Piece %s desativada\n", piece->type().c_str());
+        }
     }
 }
 

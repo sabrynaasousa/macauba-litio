@@ -17,6 +17,7 @@ MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, 
     m_y = m_original_y = py;
     m_x = m_original_x = px;
     m_frame_id = -1;
+    m_moving = false;
 
     set_priority(1);
     if(piece_type == "activity"){
@@ -95,6 +96,8 @@ void MBPiece::register_self(int current_x){
 }
 
 bool MBPiece::on_event(const GameEvent& event){
+    if(not active()) return false;
+
     MBToolbar * p;
     if( !(p = dynamic_cast<MBToolbar *>( parent() ) ) ){
         printf("Invalid toolbar parent\n");
@@ -139,7 +142,7 @@ void MBPiece::set_active(bool c_active){
 }
 
 bool MBPiece::active() const{
-    return m_active;
+    return m_active or m_moving;
 }
 
 pair<double, double> MBPiece::direction() const{
@@ -180,11 +183,16 @@ void MBPiece::update_self(unsigned now, unsigned) {
     l.insert(l.begin(), m_bounding_box);
 
     if(not m_following && m_frame_id == -1){
-        if(abs(m_x - m_original_x) > 1)
+        m_moving = false;
+        if(abs(m_x - m_original_x) > 1){
             m_x += (now - m_start) * m_speed * (m_x - m_original_x > 0 ? -1 : 1);
+            m_moving = true;
+        }
 
-        if(abs(m_y - m_original_y) > 1)
+        if(abs(m_y - m_original_y) > 1){
             m_y += (now - m_start) * m_speed * (m_y - m_original_y > 0 ? -1 : 1);
+            m_moving = true;
+        }
     }
 
     m_start = now;
@@ -193,6 +201,6 @@ void MBPiece::update_self(unsigned now, unsigned) {
 
 void MBPiece::draw_self(Canvas* canvas, unsigned, unsigned) {
     if(PIECE) printf("Entrando draw_self piece\n");
-    if(m_active) canvas->draw(m_texture[m_frame_id != -1].get(), Rectangle(0, 0, m_draw_width, m_draw_height), m_x, m_y);
+    if(active()) canvas->draw(m_texture[m_frame_id != -1].get(), Rectangle(0, 0, m_draw_width, m_draw_height), m_x, m_y);
     if(PIECE) printf("Saindo draw self piece\n");
 }
