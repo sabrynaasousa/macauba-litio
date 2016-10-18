@@ -8,14 +8,13 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b)
 
     // TODO fixme
     goto eita;
-
     eita:
 	for(int i = 0; i < 5; i++){
         printf("%d %d\n", i%2, i < 1);
 		if(i != 4)
-            m_pieces.push_back(new MBPiece(current_level, 10 + 80 * (i%2), 450 + (i < 2 ? 1 : 0) * 80, i + 1, "in"));
+            m_pieces.push_back(new MBPiece(current_level, 210 + 80 * (i%2), 450 + (i < 2 ? 1 : 0) * 80, i + 1, "in"));
         else
-            m_pieces.push_back(new MBPiece(current_level, 10 + 80 * (i%2) + 30, 450 + (i < 2 ? 1 : 0) * 80, i + 1, "in"));
+            m_pieces.push_back(new MBPiece(current_level, 210 + 80 * (i%2) + 30, 450 + (i < 2 ? 1 : 0) * 80, i + 1, "in"));
         
         printf("%f, %f\n", m_pieces.back()->x(), m_pieces.back()->y());
         add_child(m_pieces.back());
@@ -30,7 +29,7 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b)
         
 
     for(int i = 0; i < 5; i++){
-        m_pieces.push_back(new MBPiece(current_level, 10 + 70 * i, 630, i + 1, "out1"));
+        m_pieces.push_back(new MBPiece(current_level, 210 + 70 * i, 630, i + 1, "out1"));
         add_child(m_pieces.back());
     }
 

@@ -10,7 +10,7 @@ int main(){
 	int rc;
 
 	try{
-		MBGame game("Macaúba", 1366, 768);
+		MBGame game("Simulação EA / GA", 1366, 768);
 		rc = game.run("menu");
 	}catch(Exception &ex){
 		cout << ex.what() << endl;

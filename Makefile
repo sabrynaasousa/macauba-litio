@@ -43,6 +43,10 @@ reset:
 	make dist-clean
 	make -j
 
+mrun:
+	make -j
+	make run
+
 crun:
 	make dist-clean
 	make -j

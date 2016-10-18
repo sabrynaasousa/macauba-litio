@@ -8,9 +8,7 @@ MBPiece::MBPiece(){
 
 MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, std::string piece_type){
     if(PIECE) printf("Construindo piece\n");
-    m_sprite_speed = 0;
-    m_speed = 1.2;
-    m_sprite_counter = 0;
+    m_speed = 1.5;
     m_start = -1;
     m_id = piece_id;
     m_type = piece_type;
@@ -185,18 +183,13 @@ void MBPiece::update_self(unsigned now, unsigned) {
             m_y += (now - m_start) * m_speed * (m_y - m_original_y > 0 ? -1 : 1);
     }
 
-    m_sprite_counter += (now - m_start) * m_sprite_speed;
-    if(m_sprite_counter > 5.9){
-        m_sprite_counter -= 5.9;
-    }
-
     m_start = now;
     if(PIECE) printf("Saiu update piece\n");
 }
 
 void MBPiece::draw_self(Canvas* canvas, unsigned, unsigned) {
     if(PIECE) printf("Entrando draw_self piece\n");
-    if(m_active) canvas->draw(m_texture[m_frame_id != -1].get(), Rectangle(m_draw_width * ((int) m_sprite_counter), 0, m_draw_width, m_draw_height), m_x, m_y);
+    if(m_active) canvas->draw(m_texture[m_frame_id != -1].get(), Rectangle(0, 0, m_draw_width, m_draw_height), m_x, m_y);
     if(PIECE) printf("Saindo draw self piece\n");
 }
 

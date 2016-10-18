@@ -60,8 +60,8 @@ bool MBButton::active_texture(){
     return m_active_texture;
 }
 
-void MBButton::set_active_texture(bool active_texture){
-    m_active_texture = active_texture;
+void MBButton::set_active_texture(bool c_active_texture){
+    m_active_texture = c_active_texture;
 }
 
 void MBButton::update_self(unsigned, unsigned){}

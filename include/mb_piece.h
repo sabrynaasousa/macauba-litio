@@ -68,7 +68,7 @@ class MBPiece : public GameObject, public Collidable, public GameEventsListener 
         double m_original_x, m_original_y;
         double m_height, m_width;
         double m_draw_height, m_draw_width;
-        double m_sprite_counter, m_sprite_speed, m_speed;
+        double m_speed;
         int m_start, m_id, m_frame_id; 
         string m_type;
         Rectangle m_bounding_box;
