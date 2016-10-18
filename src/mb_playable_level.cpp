@@ -111,10 +111,10 @@ void MBPlayableLevel::draw_self(Canvas *canvas, unsigned, unsigned){
 
 	canvas->draw(m_background.get(), 0, 0);
 
-	auto font = resources::get_font("Aller_Bd.ttf", 40);
+	auto font = resources::get_font("MonospaceBold.ttf", 40);
 	canvas->set_font(font);
 
-	canvas->set_draw_color(Color(0, 0, 0));
+	canvas->set_draw_color(Color(255, 255, 255));
 	canvas->draw(m_level_name, 512, 20);
 	if(LEVEL) printf("Saiu draw_self level\n");
 }

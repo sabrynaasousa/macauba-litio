@@ -120,7 +120,7 @@ void MBTrail::update_self(unsigned, unsigned){
 
 void MBTrail::draw_self(Canvas *canvas, unsigned, unsigned){
 	if(TRAIL) printf("Entrando draw_self trail\n");
-	canvas->draw(m_face_texture[min((int)(m_percentage/(100.0/3)+1e-8), 2)].get(), Rectangle(0, 0, 60, 60), 930, 20);
+	canvas->draw(m_face_texture[min((int)(m_percentage/(100.0/3)+1e-8), 2)].get(), Rectangle(0, 0, 60, 60), 1290, 80);
 
 /*
 	auto font = resources::get_font("Forelle.ttf", 40);
