@@ -31,7 +31,7 @@ class MBMenu : public MBLevel {
         void draw_self(Canvas *canvas, unsigned, unsigned last);
 
     private:
-        string m_placeholder;
+        vector<string> m_placeholders;
 };
 
 #endif

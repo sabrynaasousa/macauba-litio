@@ -1,7 +1,7 @@
 #include "mb_menu.h"
 
 vector<int> label_buttons[] = { {0, 1, 2, 3}, {4, 5}, {}, {} };
-map<string, int> idx_names = { {"principal",0}, {"iniciar", 1}, {"opcoes", 2}, {"creditos", 3} };
+map<string, int> idx_names = { {"principal",0}, {"iniciar", 1}, {"opcoes", 2}, {"creditos", 3}, {"macauba", 4}, {"litio", 5} };
 
 MBMenu::MBMenu(const string&, const string&, const string, int){
 }
@@ -59,17 +59,21 @@ void MBMenu::do_action(string label){
         btn->set_active(false);
     }
 
-    for(auto idx : label_buttons[idx_names[label]]){
-        m_buttons[idx]->set_active(true);
-    }
-
-    if(label == "iniciar" || label == "opcoes" || label == "creditos"){
+    if(label == "iniciar" || label == "opcoes"){
         m_buttons[6]->set_active(true);
     }
 
     if(label == "iniciar"){
         m_buttons[6]->set_active(true);
-        m_placeholder = "Escolha o ciclo de vida:";
+        m_placeholders.clear();
+        m_placeholders.push_back("Escolha o ciclo de vida:");
+    }
+    else if(label == "creditos"){
+        m_buttons[6]->set_active(true);
+        m_placeholders.clear();
+        m_placeholders.push_back("Igor Ribeiro Barbosa Duarte");
+        m_placeholders.push_back("João Vitor Araujo Moura");
+        m_placeholders.push_back("Vítor Barbosa de Araujo");
     }
     else if(label == "sair"){
         exit(0);
@@ -79,13 +83,17 @@ void MBMenu::do_action(string label){
         m_done = true;
     }
     else if(label == "litio"){
-
+        //FIXME
     }
     else if(label == "voltar"){
+        m_placeholders.clear();
+
         for(auto idx : label_buttons[idx_names["principal"]])
             m_buttons[idx]->set_active(true);
+    }
 
-        m_placeholder = "";
+    for(auto idx : label_buttons[idx_names[label]]){
+        m_buttons[idx]->set_active(true);
     }
 }
 
@@ -109,10 +117,13 @@ void MBMenu::draw_self(Canvas *canvas, unsigned, unsigned){
 
     canvas->draw("Simuladores EA / GA", 350, 50);
 
-    if(not m_placeholder.empty()){
+    if(not m_placeholders.empty()){
         font = resources::get_font("MonospaceBold.ttf", 40);
         canvas->set_font(font);
         canvas->set_draw_color(Color(0, 0, 0));
-        canvas->draw(m_placeholder, 400, 230);
+
+        int tam = m_placeholders.size();
+        for(int i=0;i<tam;i++)
+            canvas->draw(m_placeholders[i], 400, 230 + 80 * i);
     }
 }
