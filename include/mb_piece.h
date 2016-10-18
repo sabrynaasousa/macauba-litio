@@ -42,6 +42,7 @@ class MBPiece : public GameObject, public Collidable, public GameEventsListener 
 
         bool following() const;
         bool on_event(const GameEvent& event);
+        void set_active(bool c_active);
         bool active() const;
         pair<double, double> direction() const;
 

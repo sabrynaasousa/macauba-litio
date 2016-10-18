@@ -8,7 +8,7 @@ MBPiece::MBPiece(){
 
 MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, std::string piece_type){
     if(PIECE) printf("Construindo piece\n");
-    m_speed = 1.5;
+    m_speed = 2;
     m_start = -1;
     m_id = piece_id;
     m_type = piece_type;
@@ -134,6 +134,10 @@ bool MBPiece::on_event(const GameEvent& event){
     return false;
 }
 
+void MBPiece::set_active(bool c_active){
+    m_active = c_active;
+}
+
 bool MBPiece::active() const{
     return m_active;
 }
@@ -176,10 +180,10 @@ void MBPiece::update_self(unsigned now, unsigned) {
     l.insert(l.begin(), m_bounding_box);
 
     if(not m_following && m_frame_id == -1){
-        if(abs(m_x - m_original_x) > 1e-8)
+        if(abs(m_x - m_original_x) > 1)
             m_x += (now - m_start) * m_speed * (m_x - m_original_x > 0 ? -1 : 1);
 
-        if(abs(m_y - m_original_y) > 1e-8)
+        if(abs(m_y - m_original_y) > 1)
             m_y += (now - m_start) * m_speed * (m_y - m_original_y > 0 ? -1 : 1);
     }
 
@@ -192,4 +196,3 @@ void MBPiece::draw_self(Canvas* canvas, unsigned, unsigned) {
     if(m_active) canvas->draw(m_texture[m_frame_id != -1].get(), Rectangle(0, 0, m_draw_width, m_draw_height), m_x, m_y);
     if(PIECE) printf("Saindo draw self piece\n");
 }
-

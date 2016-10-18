@@ -10,31 +10,32 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b)
     goto eita;
     eita:
 	for(int i = 0; i < 5; i++){
-        printf("%d %d\n", i%2, i < 1);
-		if(i != 4)
-            m_pieces.push_back(new MBPiece(current_level, 210 + 80 * (i%2), 450 + (i < 2 ? 1 : 0) * 80, i + 1, "in"));
-        else
-            m_pieces.push_back(new MBPiece(current_level, 210 + 80 * (i%2) + 30, 450 + (i < 2 ? 1 : 0) * 80, i + 1, "in"));
-        
-        printf("%f, %f\n", m_pieces.back()->x(), m_pieces.back()->y());
+        m_pieces.push_back(new MBPiece(current_level, 210 + 80 * (i%11), 445 + 100 * (i/11), i + 1, "in"));        
         add_child(m_pieces.back());
     }
     // int x;
     // scanf("%d", &x);
 
     for(int i = 0; i < 5; i++){
-        m_pieces.push_back(new MBPiece(current_level, 180 + 180 * i, 450, i + 1, "activity"));
+        m_pieces.push_back(new MBPiece(current_level, 210 + 280 * (i%4), 445 + 170 * (i/4), i + 1, "activity"));
         add_child(m_pieces.back());
     }
         
 
     for(int i = 0; i < 5; i++){
-        m_pieces.push_back(new MBPiece(current_level, 210 + 70 * i, 630, i + 1, "out1"));
+        m_pieces.push_back(new MBPiece(current_level, 210 + 80 * (i%11), 445 + 70 * (i/11), i + 1, "out1"));
         add_child(m_pieces.back());
     }
 
+    /* //For das out2
     for(int i = 0; i < 5; i++){
-        m_pieces.push_back(new MBPiece(current_level, 351 + 140 * i, 627, i + 1, "treatment"));
+        m_pieces.push_back(new MBPiece(current_level, 210 + 80 * (i%11), 585 + 70 * (i/11), i + 1, "out2"));
+        add_child(m_pieces.back());
+    }
+    */
+
+    for(int i = 0; i < 5; i++){
+        m_pieces.push_back(new MBPiece(current_level, 210 + 160 * (i%7), 445 + 72 * (i/7), i + 1, "treatment"));
 	    add_child(m_pieces.back());
 	}
 
@@ -53,14 +54,38 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b)
         add_child(button);
     }
 
+    do_action("atividades");
+
     m_background = resources::get_texture(current_level + "/toolbar.png");
 
     if(TOOLBAR) printf("Construiu toolbar\n");
 }
 
+bool MBToolbar::equals(string type, string piece_type){
+    printf("[%s] [%s]\n", type.c_str(), piece_type.c_str());
+    return ((type == piece_type) or (type == "out" and (piece_type == "out1" or piece_type == "out2")));
+}
+
 void MBToolbar::do_action(string label){
     for(auto button : m_buttons){
         button->set_active_texture(label != button->label());
+    }
+
+    string type;
+    if(label == "atividades"){
+        type = "activity";
+    }else if(label == "entradas"){
+        type = "in";
+    }else if(label == "intermediarios"){
+        type = "intermediary";
+    }else if(label == "saidas"){
+        type = "out";
+    }else if(label == "tratamentos"){
+        type = "treatment";
+    }
+
+    for(auto piece : m_pieces){
+        piece->set_active(equals(type, piece->type()));
     }
 }
 

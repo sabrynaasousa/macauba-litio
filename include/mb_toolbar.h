@@ -17,6 +17,7 @@ class MBToolbar : public GameObject{
         void set_following(bool following);
         bool get_following();
         void do_action(string label);
+        bool equals(string type, string piece_type);
 
 	protected:
 		void update_self(unsigned now, unsigned last);
