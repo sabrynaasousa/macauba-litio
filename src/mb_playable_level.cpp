@@ -7,7 +7,6 @@
 #include <fstream>
 
 MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, const string &next_level, const string &audio_path){	
-	
 	m_r = r;
 	m_g = g;
 	m_b = b;
@@ -101,7 +100,7 @@ bool MBPlayableLevel::on_event(const GameEvent&){
 void MBPlayableLevel::update_self(unsigned now, unsigned){
 	if(LEVEL) printf("Entrou update level\n");
 	if(m_start == -1)
-		m_start=now;
+		m_start = now;
 	if(LEVEL) printf("Saiu update level\n");
 }
 

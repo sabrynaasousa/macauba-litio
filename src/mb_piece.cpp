@@ -12,6 +12,7 @@ MBPiece::MBPiece(std::string current_level, double px, double py, int piece_id, 
     m_start = -1;
     m_id = piece_id;
     m_type = piece_type;
+    m_last_following = -1;
 
     m_height = m_width = 30;
     m_y = m_original_y = py;
@@ -80,6 +81,8 @@ double MBPiece::y() const{ return m_y; }
 std::string MBPiece::type() const{ return m_type; }
 double MBPiece::height(){ return m_height; }
 double MBPiece::width(){ return m_width; }
+bool MBPiece::moving() const{ return m_moving; }
+double MBPiece::last_following() const{ return m_last_following; }
 int MBPiece::frame_id() const{ return m_frame_id; }
 int MBPiece::id() const{ return m_id; }
 shared_ptr<Texture> MBPiece::texture(){ return m_texture[0]; }
@@ -110,6 +113,9 @@ bool MBPiece::on_event(const GameEvent& event){
         double mouse_y = event.get_property<double>("y");
         if(mouse_x >= m_x && mouse_x <= m_x + m_width && mouse_y >= m_y && mouse_y <= m_y + m_height){
             m_following = !m_following;
+            if(not m_following){
+                m_last_following = m_start;
+            }
             p->set_following(m_following);
             m_frame_id = -1;
 
@@ -158,14 +164,14 @@ const list<Rectangle>& MBPiece::hit_boxes() const{
     return l;
 }
 
-void MBPiece::on_collision(const Collidable *collidable, const Rectangle& r, const unsigned, const unsigned){
+void MBPiece::on_collision(const Collidable *collidable, const Rectangle& r, const unsigned now, const unsigned){
     if(auto p = dynamic_cast<const MBFrame *>(collidable)){
-        if(r.area() >= p->minimum_area() && not m_following && p->piece() == nullptr && m_type == p->type()){
+        if(r.area() >= p->minimum_area() && not m_following && (now - m_last_following) < 20 && p->piece() == nullptr && m_type == p->type()){
             m_x = p->x();
             m_y = p->y();
             m_frame_id = p->id();
         }
-        printf("area do ret: %.2f\n", r.area());
+        //printf("area do ret: %.2f\n", r.area());
     }
     //printf("MBPiece colidiu em %.2f,%.2f em %u-%u\n", where.x(), where.y(), now, last);
     
@@ -184,6 +190,7 @@ void MBPiece::update_self(unsigned now, unsigned) {
 
     if(not m_following && m_frame_id == -1){
         m_moving = false;
+
         if(abs(m_x - m_original_x) > 1){
             m_x += (now - m_start) * m_speed * (m_x - m_original_x > 0 ? -1 : 1);
             m_moving = true;
