@@ -25,11 +25,12 @@ MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities, int
 			if(activities[i-1]->id_intermediary()) mask += 1 << ACTIVITY;
 		}
 
-		mask += (activity->id_in() << IN) + (activity->id_intermediary() << INTERMEDIARY) + (activity->id_out1() << OUT1) + (activity->id_out2() << OUT2);
+		mask += ((activity->id_in() != 0) << IN) + ((activity->id_intermediary()!= 0) << INTERMEDIARY) + ((activity->id_out1()!= 0) << OUT1) + ((activity->id_out2()!= 0) << OUT2);
 		printf("Mask = %d\n", mask);
 
 		if(activity->id_activity()){
-			MBFrame * frame = new MBFrame(current_level, "activity", offset + 250 * (i - 1), 178, activity->id_activity(), id_frame++, mask);
+			int activity_x = offset + ACTIVITY_DISTANCE * (i - 1);
+			MBFrame * frame = new MBFrame(current_level, "activity", activity_x, ACTIVITY_Y, activity->id_activity(), id_frame++, mask);
 			frames[ACTIVITY].push_back(frame);
 			add_child(frame);
 		}else{
@@ -38,61 +39,41 @@ MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities, int
 		}
 
 		if(activity->id_in()){
-			MBFrame * frame = new MBFrame(current_level, "in", offset + 250 * (i - 1), 108, activity->id_in(), id_frame++, mask);
+			int in_x = offset + ACTIVITY_DISTANCE * (i - 1);
+			MBFrame * frame = new MBFrame(current_level, "in", in_x, IN_Y, activity->id_in(), id_frame++, mask);
 			frames[IN].push_back(frame);
 			add_child(frame);
 		}
 
 		if(activity->id_intermediary()){
-			//FIX MY POSITION
-			MBFrame * frame = new MBFrame(current_level, "intermediary", offset + 210 + 250 * (i - 1), 210, activity->id_intermediary(), id_frame++, mask);
+			int intermediary_x = offset + INTERMEDIARY_OFFSET + ACTIVITY_DISTANCE * (i - 1);
+			MBFrame * frame = new MBFrame(current_level, "intermediary", intermediary_x, INTERMEDIARY_Y, activity->id_intermediary(), id_frame++, mask);
 			frames[INTERMEDIARY].push_back(frame);
 			add_child(frame);
 		}
 
 		if(activity->id_out1()){
-			MBFrame * frame = new MBFrame(current_level, "out1", offset + 20 + 250 * (i - 1), 320, activity->id_out1(), id_frame++, mask);
+			int out1_x = offset + OUT1_OFFSET + ACTIVITY_DISTANCE * (i - 1);
+			MBFrame * frame = new MBFrame(current_level, "out1", out1_x, OUT1_Y, activity->id_out1(), id_frame++, mask);
 			frames[OUT1].push_back(frame);
 			add_child(frame);
 		}
 
 		if(activity->id_out2()){
-			MBFrame * frame = new MBFrame(current_level, "out2", offset + 145 + 250 * (i - 1), 320, activity->id_out2(), id_frame++, mask);
+			int out2_x = offset + OUT2_OFFSET + ACTIVITY_DISTANCE * (i - 1);
+			MBFrame * frame = new MBFrame(current_level, "out2", out2_x, OUT2_Y, activity->id_out2(), id_frame++, mask);
 			frames[OUT2].push_back(frame);
 			add_child(frame);
 		}
 
 		if(activity->id_treatment()){
-			MBFrame * frame = new MBFrame(current_level, "treatment", offset - 13 + 250 * (i - 1), 358, activity->id_treatment(), id_frame++, mask);
+			int treatment_x = offset + TREATMENT_OFFSET + ACTIVITY_DISTANCE * (i - 1);
+			MBFrame * frame = new MBFrame(current_level, "treatment", treatment_x, TREATMENT_Y, activity->id_treatment(), id_frame++, mask);
 			frames[TREATMENT].push_back(frame);
 			add_child(frame);
 		}
 	}
 
-	// type = "in";
-	// for(int i = 1; i <= n_frames; i++){
-	// 	frames[1][i] = new MBFrame(current_level, type, p_x + 170 * (i - 1), 108, answer->piece(atoi(current_level.c_str()), i, 0), id_frame++);
-	// 	add_child(frames[1][i]);
-	// }
-
-	// type = "main";
-	// for(int i = 1; i <= n_frames; i++){
-	// 	frames[2][i] = new MBFrame(current_level, type, p_x + 170 * (i - 1), 178, answer->piece(atoi(current_level.c_str()), i, 1), id_frame++);
-	// 	add_child(frames[2][i]);
-	// }
-
-	// type = "out";
-	// for(int i = 1; i <= n_frames; i++){
-	// 	frames[3][i] = new MBFrame(current_level, type, p_x + 48 + 170 * (i - 1), 320, answer->piece(atoi(current_level.c_str()), i, 2), id_frame++);
-	// 	add_child(frames[3][i]);
-	// }
-
-
-	// type = "treatment";
-	// for(int i = 1; i <= n_frames; i++){
-	// 	frames[4][i] = new MBFrame(current_level, type, p_x + 15 + 170 * (i - 1), 358, answer->piece(atoi(current_level.c_str()), i, 3), id_frame++);
-	// 	add_child(frames[4][i]);
-	// }
 	if(TRAIL) printf("Construiu Trail\n");
 }
 

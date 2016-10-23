@@ -13,7 +13,7 @@ using namespace ijengine;
 
 class MBToolbar : public GameObject{
 	public:
-		MBToolbar(std::string current_level, int r, int g, int b);
+		MBToolbar(std::string current_level, int r, int g, int b, int n_activities, int n_ins, int n_intermediary, int n_outs1, int n_outs2, int n_treatments);
         void set_following(bool following);
         bool get_following();
         void do_action(string label);

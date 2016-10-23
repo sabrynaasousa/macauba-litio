@@ -18,8 +18,6 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 
 	if(LEVEL) printf("Começou a construir level\n");
 	
-	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0);
-
 	fstream level_design("res/" + m_current_level + "/level_design.txt");
 
 	if(not level_design.is_open()){
@@ -32,6 +30,8 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 
 	level_design >> n_activities >> n_ins >> n_intermediary >> n_outs1 >> n_outs2 >> n_treatments;
 	printf("Atividades: %d\nEntradas: %d\nIntermediarios: %d\nSaídas 1: %d\nSaídas 2: %d\nTratamentos: %d\n", n_activities, n_ins, n_intermediary, n_outs1, n_outs2, n_treatments);
+
+	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0, n_activities, n_ins, n_intermediary, n_outs1, n_outs2, n_treatments);
 
 	level_design >> n_trail_activities;
 	printf("Atividades da trilha: %d\n", n_trail_activities);
