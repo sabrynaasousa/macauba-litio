@@ -6,6 +6,7 @@
 #include <ijengine/rectangle.h>
 #include <ijengine/game_object.h>
 
+#include "mb_playable_level.h"
 #include "mb_frame.h"
 #include "mb_activity.h"
 
@@ -38,6 +39,7 @@ class MBTrail : public GameObject{
 	private:
         double m_x, m_y;
 		double m_percentage;
+		bool m_complete;
 		int n_frames;
 		vector<MBFrame *> frames[6];
         shared_ptr<Texture> m_face_texture[5];

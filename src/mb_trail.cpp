@@ -6,6 +6,7 @@
 MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities, int number_of_activities, int id_initial_intermediary){
 	if(TRAIL) printf("Construindo Trail\n");
 	m_percentage = 0;
+	m_complete = false;
 	m_face_texture[0] = resources::get_texture("sad.png");
 	m_face_texture[1] = resources::get_texture("ok.png");
 	m_face_texture[2] = resources::get_texture("happy.png");
@@ -91,13 +92,19 @@ void MBTrail::update_self(unsigned, unsigned){
 	int n_filled_frames = 0;
 	int correct = 0;
 
+
+	m_complete = true;
 	for(int type = 0; type <= 5; type++){
 		for(auto frame : frames[type]){
-			if(frame->is_right())
-				correct++;
-
-			if(frame->filled())
+			if(frame->filled()){
 				n_filled_frames++;
+
+				if(frame->is_right()){
+					correct++;
+				}
+			}else{
+				m_complete = false;
+			}
 		}
 	}
 
@@ -105,19 +112,23 @@ void MBTrail::update_self(unsigned, unsigned){
 		m_percentage = (double)correct/n_filled_frames * 100.0;
 	else
 		m_percentage = 0;
+
+	if(m_complete){
+		auto p = this->parent();
+		auto parent_class = dynamic_cast <MBPlayableLevel *>(p);
+		if(parent_class){
+			parent_class->show_confirmation_button(m_percentage);
+		}
+	}
+
 	if(TRAIL) printf("Saindo update_self trail\n");
 }
 
 void MBTrail::draw_self(Canvas *canvas, unsigned, unsigned){
 	if(TRAIL) printf("Entrando draw_self trail\n");
-	canvas->draw(m_face_texture[min((int)(m_percentage/(100.0/3)+1e-8), 2)].get(), Rectangle(0, 0, 60, 60), 1290, 80);
 
-/*
-	auto font = resources::get_font("Forelle.ttf", 40);
-	canvas->set_font(font);
+	int icon_position = min((int)(m_percentage/(100.0/3)+1e-8), 2);
+	canvas->draw(m_face_texture[icon_position].get(), Rectangle(0, 0, 60, 60), 1290, 80);
 
-	canvas->set_draw_color(Color(0, 0, 0));
-	canvas->draw(to_string(m_percentage) + " %", 800, 20);
-*/
 	if(TRAIL) printf("Saindo draw_self trail\n");
 }

@@ -132,6 +132,12 @@ void MBPlayableLevel::do_action(string label){
 	}
 }
 
+void MBPlayableLevel::show_confirmation_button(double percentage){
+	//FIXME
+	printf("Percentage: %.2f\n", percentage);
+	m_done = true;
+}
+
 bool MBPlayableLevel::on_event(const GameEvent&){
 	return false;
 }

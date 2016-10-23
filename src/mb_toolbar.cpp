@@ -16,6 +16,11 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int n_activ
     // int x;
     // scanf("%d", &x);
 
+    for(int i = 0; i < n_intermediaries; i++){
+        m_pieces.push_back(new MBPiece(current_level, TOOLBAR_DISTANCE + 90 * (i%11), 445 + 90 * (i/11), ids["intermediary"][i], "intermediary"));
+        add_child(m_pieces.back());
+    }
+
     for(int i = 0; i < n_activities; i++){
         m_pieces.push_back(new MBPiece(current_level, TOOLBAR_DISTANCE + 280 * (i%4), 445 + 170 * (i/4), ids["activity"][i], "activity"));
         add_child(m_pieces.back());
@@ -30,11 +35,6 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int n_activ
     //For das out2 fixme
     for(int i = 0; i < n_outs2; i++){
         m_pieces.push_back(new MBPiece(current_level, TOOLBAR_DISTANCE + 90 * (i%11), 585 + 70 * (i/11), ids["out2"][i], "out2"));
-        add_child(m_pieces.back());
-    }
-    
-    for(int i = 0; i < n_intermediaries; i++){
-        m_pieces.push_back(new MBPiece(current_level, TOOLBAR_DISTANCE + 90 * (i%11), 445 + 90 * (i/11), ids["intermediary"][i], "intermediary"));
         add_child(m_pieces.back());
     }
 
