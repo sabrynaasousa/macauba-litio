@@ -93,15 +93,14 @@ bool MBButton::on_event(const GameEvent& event){
             if(m_click_state == CLICKING){
                 auto p = this->parent();
 
-                if(m_level == "1"){
-                    auto parent_class = dynamic_cast <MBPlayableLevel *>(p);
-                    parent_class -> do_action(m_label);
-                }
-                else if(m_level == "menu"){
+                if(m_level == "menu"){
                     auto parent_class = dynamic_cast <MBMenu *>(p);
                     parent_class -> do_action(m_label);
                 }else if(m_level == "toolbar"){
                     auto parent_class = dynamic_cast <MBToolbar *>(p);
+                    parent_class -> do_action(m_label);
+                }else{
+                    auto parent_class = dynamic_cast <MBPlayableLevel *>(p);
                     parent_class -> do_action(m_label);
                 }
             }

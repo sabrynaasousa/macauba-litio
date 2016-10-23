@@ -5,8 +5,8 @@
 Level * MBLevelFactory::make_level(const string &level_id){
     if(level_id == "menu")
         return new MBMenu(0, 142, 50, "menu", "", "");
-	if(level_id == "1")
-		return new MBPlayableLevel(255, 0, 0, "1", "", "");
+	if(level_id == "lt_1")
+		return new MBPlayableLevel(255, 0, 0, "lt_1", "", "");
 	else
 		return nullptr;
 }

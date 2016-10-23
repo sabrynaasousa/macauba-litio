@@ -1,7 +1,7 @@
 #include "mb_menu.h"
 
 vector<int> label_buttons[] = { {0, 1, 2, 3}, {4, 5}, {}, {} };
-map<string, int> idx_names = { {"principal",0}, {"iniciar", 1}, {"opcoes", 2}, {"creditos", 3}, {"macauba", 4}, {"litio", 5} };
+map<string, int> idx_names = { {"principal",0}, {"iniciar", 1}, {"opcoes", 2}, {"creditos", 3}, {"litio", 4}, {"macauba", 5} };
 
 MBMenu::MBMenu(const string&, const string&, const string, int){
 }
@@ -24,8 +24,8 @@ MBMenu::MBMenu(int r, int g, int b, const string &current, const string&, const 
     m_buttons.push_back(new MBButton("Créditos", "creditos", m_current_level, "btn_background.png", 433, m_buttons[1]->y() + m_buttons[1]->h() + 20, 500, 112));
     m_buttons.push_back(new MBButton("Sair", "sair", m_current_level, "btn_background.png", 433, m_buttons[2]->y() + m_buttons[2]->h() + 20, 500, 112));
 
-    m_buttons.push_back(new MBButton("Macaúba", "macauba", m_current_level, "btn_background.png", 433, 320, 500, 112));
-    m_buttons.push_back(new MBButton("Lítio", "litio", m_current_level, "btn_background.png", 433, m_buttons[4]->y() + m_buttons[4]->h() + 20, 500, 112));
+    m_buttons.push_back(new MBButton("Lítio", "litio", m_current_level, "btn_background.png", 433, 320, 500, 112));
+    m_buttons.push_back(new MBButton("Macaúba", "macauba", m_current_level, "btn_background.png", 433, m_buttons[4]->y() + m_buttons[4]->h() + 20, 500, 112));
     m_buttons.push_back(new MBButton("Voltar", "voltar", m_current_level, "btn_background.png", 30, m_buttons[5]->y() + m_buttons[5]->h() + 40, 250, 112));
 
     int tam = m_buttons.size();
@@ -79,11 +79,13 @@ void MBMenu::do_action(string label){
         exit(0);
     }
     else if(label == "macauba"){
-        m_next = "1";
-        m_done = true;
+        //FIXME
+        //m_next = "mb_1";
+        //m_done = true;
     }
     else if(label == "litio"){
-        //FIXME
+        m_next = "lt_1";
+        m_done = true;
     }
     else if(label == "voltar"){
         m_placeholders.clear();
