@@ -16,6 +16,7 @@ class MBPlayableLevel : public MBLevel {
         string current_level() const;
         void do_action(string label);
         void show_confirmation_button(double percentage);
+        void hide_confirmation_button();
 
         bool on_event(const GameEvent& event);
 

@@ -133,9 +133,18 @@ void MBPlayableLevel::do_action(string label){
 }
 
 void MBPlayableLevel::show_confirmation_button(double percentage){
-	//FIXME
+	// TODO Mostrar botão de confirmação pra validar processo, 
+	// e mostrar mensagem de sucesso e mandar pro próximo level quando percentage = 100%
+	// mensagem de erro quando for 99% ou menos
+	// Antes de validar, mostrar "Tem certeza?", que nem no voltar
 	printf("Percentage: %.2f\n", percentage);
 	m_done = true;
+}
+
+void MBPlayableLevel::hide_confirmation_button(){
+	// TODO Esconder botão de confirmação aqui, já tá implementado pra fazer isso quando não tem todos os
+	// frames preenchidos, aqui é só esconder mesmo
+	// Acontece quando tava tudo preenchido e ele removeu uma
 }
 
 bool MBPlayableLevel::on_event(const GameEvent&){

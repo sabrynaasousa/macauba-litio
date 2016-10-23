@@ -93,7 +93,7 @@ void MBTrail::update_self(unsigned, unsigned){
 	int correct = 0;
 
 
-	m_complete = true;
+	bool complete = true;
 	for(int type = 0; type <= 5; type++){
 		for(auto frame : frames[type]){
 			if(frame->filled()){
@@ -103,22 +103,31 @@ void MBTrail::update_self(unsigned, unsigned){
 					correct++;
 				}
 			}else{
-				m_complete = false;
+				complete = false;
 			}
 		}
 	}
 
 	if(n_filled_frames)
-		m_percentage = (double)correct/n_filled_frames * 100.0;
+		m_percentage = (double) correct/n_filled_frames * 100.0;
 	else
 		m_percentage = 0;
 
-	if(m_complete){
-		auto p = this->parent();
-		auto parent_class = dynamic_cast <MBPlayableLevel *>(p);
-		if(parent_class){
-			parent_class->show_confirmation_button(m_percentage);
+	if(complete != m_complete){
+		auto parent_class = this->parent();
+		auto p = dynamic_cast <MBPlayableLevel *>(parent_class);
+		if(not p){
+			printf("Trail parent is not MBPlayableLevel\n");
+			exit(-4);
+		} 
+
+		if(complete){
+			p->show_confirmation_button(m_percentage);
+		}else{
+			p->hide_confirmation_button();
 		}
+
+		m_complete = complete;
 	}
 
 	if(TRAIL) printf("Saindo update_self trail\n");
