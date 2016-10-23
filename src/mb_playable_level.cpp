@@ -28,10 +28,48 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 	getline(level_design, m_level_name);
 	printf("Level name = [%s]\n", m_level_name.c_str());
 
-	level_design >> n_activities >> n_ins >> n_intermediary >> n_outs1 >> n_outs2 >> n_treatments;
-	printf("Atividades: %d\nEntradas: %d\nIntermediarios: %d\nSaídas 1: %d\nSaídas 2: %d\nTratamentos: %d\n", n_activities, n_ins, n_intermediary, n_outs1, n_outs2, n_treatments);
+	map<string, vector<int> > ids;
+	int id;
 
-	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0, n_activities, n_ins, n_intermediary, n_outs1, n_outs2, n_treatments);
+	level_design >> n_activities;
+	for(int i = 0; i < n_activities; ++i){
+		level_design >> id;
+		ids["activity"].push_back(id);
+	}
+
+	level_design >> n_ins;
+	for(int i = 0; i < n_ins; ++i){
+		level_design >> id;
+		ids["in"].push_back(id);
+	}
+
+	level_design >> n_intermediaries;
+	for(int i = 0; i < n_intermediaries; ++i){
+		level_design >> id;
+		ids["intermediary"].push_back(id);
+	}
+
+	level_design >> n_outs1;
+	for(int i = 0; i < n_outs1; ++i){
+		level_design >> id;
+		ids["out1"].push_back(id);
+	}
+
+	level_design >> n_outs2; 
+	for(int i = 0; i < n_outs2; ++i){
+		level_design >> id;
+		ids["out2"].push_back(id);
+	}
+
+	level_design >> n_treatments;
+	for(int i = 0; i < n_treatments; ++i){
+		level_design >> id;
+		ids["treatment"].push_back(id);
+	}
+
+	printf("Atividades: %d\nEntradas: %d\nIntermediarios: %d\nSaídas 1: %d\nSaídas 2: %d\nTratamentos: %d\n", n_activities, n_ins, n_intermediaries, n_outs1, n_outs2, n_treatments);
+
+	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0, n_activities, n_ins, n_intermediaries, n_outs1, n_outs2, n_treatments, ids);
 
 	level_design >> n_trail_activities;
 	printf("Atividades da trilha: %d\n", n_trail_activities);

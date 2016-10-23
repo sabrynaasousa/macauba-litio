@@ -23,7 +23,7 @@ class MBPlayableLevel : public MBLevel {
         void draw_self(Canvas *canvas, unsigned now, unsigned last);
 
     private:
-        int n_activities, n_ins, n_intermediary, n_outs1, n_outs2, n_treatments;
+        int n_activities, n_ins, n_intermediaries, n_outs1, n_outs2, n_treatments;
         int n_trail_activities;
         vector<MBActivity *> m_activities;
 };
