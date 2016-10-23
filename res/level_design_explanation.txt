@@ -1,5 +1,6 @@
 Nome da Fase
 numero_de_atividades //número de atividades que vão estar na toolbar
+id_atividade1 id_atividade2 id_atividade3 ...
 numero_de_entradas
 id_entrada1 id_entrada2 id_entrada3 ...
 numero_de_intermediarios 
@@ -10,7 +11,8 @@ numero_de_saidas_2
 id_saida2_1 id_saida2_2 id_saida2_3
 numero_de_tratamentos
 id_tratamento_1 id_tratamento2 id_tratamento3 ...
-numero_de_atividades_trilha //aqui começa a descrição da trilha
+id_intermediario_inicial //aqui começa a descrição da trilha, 0 se não houver inicial
+numero_de_atividades_trilha 
 id_atividade id_entrada id_intermediario id_saida1 id_saida2 id_tratamento
 id_atividade id_entrada id_intermediario id_saida1 id_saida2 id_tratamento
 id_atividade id_entrada id_intermediario id_saida1 id_saida2 id_tratamento

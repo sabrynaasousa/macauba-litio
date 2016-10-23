@@ -10,36 +10,36 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int n_activ
     goto eita;
     eita:
 	for(int i = 0; i < n_ins; i++){
-        m_pieces.push_back(new MBPiece(current_level, 210 + 80 * (i%11), 445 + 100 * (i/11), ids["in"][i], "in"));        
+        m_pieces.push_back(new MBPiece(current_level, TOOLBAR_DISTANCE + 80 * (i%11), 445 + 100 * (i/11), ids["in"][i], "in"));        
         add_child(m_pieces.back());
     }
     // int x;
     // scanf("%d", &x);
 
     for(int i = 0; i < n_activities; i++){
-        m_pieces.push_back(new MBPiece(current_level, 210 + 280 * (i%4), 445 + 170 * (i/4), ids["activity"][i], "activity"));
+        m_pieces.push_back(new MBPiece(current_level, TOOLBAR_DISTANCE + 280 * (i%4), 445 + 170 * (i/4), ids["activity"][i], "activity"));
         add_child(m_pieces.back());
     }
         
 
     for(int i = 0; i < n_outs1; i++){
-        m_pieces.push_back(new MBPiece(current_level, 210 + 80 * (i%11), 445 + 70 * (i/11), ids["out1"][i], "out1"));
+        m_pieces.push_back(new MBPiece(current_level, TOOLBAR_DISTANCE + 90 * (i%11), 445 + 70 * (i/11), ids["out1"][i], "out1"));
         add_child(m_pieces.back());
     }
 
     //For das out2 fixme
     for(int i = 0; i < n_outs2; i++){
-        m_pieces.push_back(new MBPiece(current_level, 210 + 80 * (i%11), 585 + 70 * (i/11), ids["out2"][i], "out2"));
+        m_pieces.push_back(new MBPiece(current_level, TOOLBAR_DISTANCE + 90 * (i%11), 585 + 70 * (i/11), ids["out2"][i], "out2"));
         add_child(m_pieces.back());
     }
     
     for(int i = 0; i < n_intermediaries; i++){
-        m_pieces.push_back(new MBPiece(current_level, 210 + 80 * (i%11), 445 + 90 * (i/11), ids["intermediary"][i], "intermediary"));
+        m_pieces.push_back(new MBPiece(current_level, TOOLBAR_DISTANCE + 90 * (i%11), 445 + 90 * (i/11), ids["intermediary"][i], "intermediary"));
         add_child(m_pieces.back());
     }
 
     for(int i = 0; i < n_treatments; i++){
-        m_pieces.push_back(new MBPiece(current_level, 210 + 160 * (i%7), 445 + 72 * (i/7), ids["treatment"][i], "treatment"));
+        m_pieces.push_back(new MBPiece(current_level, TOOLBAR_DISTANCE + 160 * (i%7), 445 + 72 * (i/7), ids["treatment"][i], "treatment"));
 	    add_child(m_pieces.back());
 	}
 

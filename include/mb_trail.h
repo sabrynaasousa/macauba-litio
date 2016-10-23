@@ -29,7 +29,7 @@ class MBTrail : public GameObject{
 		static const int OUT1_Y = ACTIVITY_Y + 142;
 		static const int OUT2_Y = OUT1_Y;
 		static const int TREATMENT_Y = OUT1_Y + 38;
-		MBTrail(std::string current_level, vector<MBActivity *> activities, int number_of_activities);
+		MBTrail(std::string current_level, vector<MBActivity *> activities, int number_of_activities, int id_initial_intermediary);
 
 	protected:
 		void update_self(unsigned now, unsigned last);

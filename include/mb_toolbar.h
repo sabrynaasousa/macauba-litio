@@ -24,6 +24,8 @@ class MBToolbar : public GameObject{
         void do_action(string label);
         bool equals(string type, string piece_type);
 
+        static const int TOOLBAR_DISTANCE = 210;
+
 	protected:
 		void update_self(unsigned now, unsigned last);
 		void draw_self(Canvas *canvas, unsigned now, unsigned last);

@@ -24,7 +24,7 @@ class MBPlayableLevel : public MBLevel {
 
     private:
         int n_activities, n_ins, n_intermediaries, n_outs1, n_outs2, n_treatments;
-        int n_trail_activities;
+        int n_trail_activities, id_initial_intermediary;
         vector<MBActivity *> m_activities;
 };
 

@@ -71,6 +71,7 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 
 	MBToolbar *toolbar = new MBToolbar(current, 255, 255, 0, n_activities, n_ins, n_intermediaries, n_outs1, n_outs2, n_treatments, ids);
 
+	level_design >> id_initial_intermediary;
 	level_design >> n_trail_activities;
 	printf("Atividades da trilha: %d\n", n_trail_activities);
 
@@ -88,7 +89,7 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 	// auto m_m_texture = resources::get_texture(m_current_level + "/collectable.png");
 	m_background = resources::get_texture(m_current_level + "/background.png");
 
-	MBTrail *trail = new MBTrail(m_current_level, m_activities, n_trail_activities);
+	MBTrail *trail = new MBTrail(m_current_level, m_activities, n_trail_activities, id_initial_intermediary);
 	trail->set_priority(2);
 	add_child(trail);
 
@@ -148,10 +149,13 @@ void MBPlayableLevel::draw_self(Canvas *canvas, unsigned, unsigned){
 
 	canvas->draw(m_background.get(), 0, 0);
 
-	auto font = resources::get_font("MonospaceBold.ttf", 40);
+	int font_size = 40;
+	auto font = resources::get_font("MonospaceBold.ttf", font_size);
 	canvas->set_font(font);
 
 	canvas->set_draw_color(Color(255, 255, 255));
-	canvas->draw(m_level_name, 512, 20);
+
+	double len = 0.6 * m_level_name.size() * font_size - 1;
+	canvas->draw(m_level_name, 683 - len/2 , 20);
 	if(LEVEL) printf("Saiu draw_self level\n");
 }

@@ -3,7 +3,7 @@
 
 #include <ijengine/canvas.h>
 
-MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities, int number_of_activities){
+MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities, int number_of_activities, int id_initial_intermediary){
 	if(TRAIL) printf("Construindo Trail\n");
 	m_percentage = 0;
 	m_face_texture[0] = resources::get_texture("sad.png");
@@ -17,12 +17,21 @@ MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities, int
 	int offset = 300;
 	int id_frame = 0;
 
+	if(id_initial_intermediary){
+		int initial_intermediary_x = offset + INTERMEDIARY_OFFSET + ACTIVITY_DISTANCE * (-2);
+		MBFrame * frame = new MBFrame(current_level, "intermediary", initial_intermediary_x, INTERMEDIARY_Y, id_initial_intermediary, id_frame++, 0);
+		frames[INTERMEDIARY].push_back(frame);
+		add_child(frame);
+	}
+
 	for(int i = 0; i < number_of_activities; ++i){
 		MBActivity * activity = activities[i];
 
 		int mask = 0;
 		if(i > 0){
 			if(activities[i-1]->id_intermediary()) mask += 1 << ACTIVITY;
+		}else{
+			if(id_initial_intermediary) mask += 1 << ACTIVITY;
 		}
 
 		mask += ((activity->id_in() != 0) << IN) + ((activity->id_intermediary()!= 0) << INTERMEDIARY) + ((activity->id_out1()!= 0) << OUT1) + ((activity->id_out2()!= 0) << OUT2);
