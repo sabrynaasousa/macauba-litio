@@ -132,10 +132,11 @@ bool MBPiece::on_event(const GameEvent& event){
         m_x = mouse_x - m_width/2;
         m_y = mouse_y - m_height/2;
         printf("%d\n", m_id);
-        set_priority(10);
+        set_priority(100);
 
         return true;
-    }else{
+    }
+    else{
         set_priority(2);
     }
     //printf("Event x, y => [%f, %f]\n", event.get_property<double>("x"), event.get_property<double>("y"));

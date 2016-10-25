@@ -1,13 +1,13 @@
 #include "mb_menu.h"
 
-vector<int> label_buttons[] = { {0, 1, 2, 3}, {4, 5}, {}, {} };
+vector<int> label_buttons[] = { {0, 1, 2, 3}, {4, 5}, {}, {}, {}, {} };
 map<string, int> idx_names = { {"principal",0}, {"iniciar", 1}, {"opcoes", 2}, {"creditos", 3}, {"litio", 4}, {"macauba", 5} };
 
 MBMenu::MBMenu(const string&, const string&, const string, int){
 }
 
 MBMenu::MBMenu(int r, int g, int b, const string &current, const string&, const string&){
-	video::set_full_screen(1);
+	video::set_full_screen(0);
 
     m_r = r;
     m_g = g;
@@ -59,7 +59,7 @@ void MBMenu::do_action(string label){
         btn->set_active(false);
     }
 
-    if(label == "iniciar" || label == "opcoes"){
+    if(label == "opcoes"){
         m_buttons[6]->set_active(true);
     }
 
@@ -95,9 +95,11 @@ void MBMenu::do_action(string label){
             m_buttons[idx]->set_active(true);
     }
 
+    printf("viiiiiiiiiiiiish\n");
     for(auto idx : label_buttons[idx_names[label]]){
         m_buttons[idx]->set_active(true);
     }
+    printf("2 visiisiisdisdisississh\n");
 }
 
 bool MBMenu::on_event(const GameEvent&){

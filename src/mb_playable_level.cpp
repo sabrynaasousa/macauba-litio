@@ -18,6 +18,20 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 
 	if(LEVEL) printf("Começou a construir level\n");
 	
+	m_buttons.clear();
+	m_buttons.push_back(new MBButton("Voltar", "voltar", m_current_level, 1176, 0, 200, 70, 35));
+	m_buttons.push_back(new MBButton("Sim", "sim", "", "back_btn_background_lt.png", 433, 220, 500, 112));
+	m_buttons.push_back(new MBButton("Não", "nao", "", "back_btn_background_lt.png", 433, m_buttons.back()->y() + m_buttons.back()->h() + 20, 500, 112));
+	m_buttons.push_back(new MBButton("black-hole", "", 0, 0, "black-hole.png", 1366, 768, true));
+
+	for(int i=0;i<m_buttons.size();i++){
+		m_buttons[i]->set_priority(1000);
+		add_child(m_buttons[i]);
+		if(i) m_buttons[i]->set_active(false);
+	}
+
+	m_buttons.back()->set_priority(900);
+
 	fstream level_design("res/" + m_current_level + "/level_design.txt");
 
 	if(not level_design.is_open()){
@@ -96,13 +110,6 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 	toolbar->set_priority(2);
 	add_child(toolbar);
 
-	m_buttons.clear();
-	//m_buttons.push_back(new MBButton("Pronto!", m_current_level, 250, 220, "menu-nova-aventura.png", 299, 34));
-
-	// for(auto btn : m_buttons){
-		// add_child(btn);
-	// }
-
 	event::register_listener(this);
 
 	this->set_priority(10);
@@ -127,8 +134,23 @@ string MBPlayableLevel::current_level() const{
 }
 
 void MBPlayableLevel::do_action(string label){
-	if(label == "Pronto!"){
+	if(label == "voltar"){
+		for(auto btn : m_buttons)
+			btn->set_active(true);
+	}
+	else if(label == "sim"){
+		for(auto btn : m_buttons)
+			btn->set_active(false);
+
+		m_next = "menu";
 		m_done = true;
+		return;
+	}
+	else if(label == "nao"){
+
+	}
+	else if(label == "black-hole"){
+		printf("lalala\n");
 	}
 }
 

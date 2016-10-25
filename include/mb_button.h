@@ -15,9 +15,9 @@ using std::string;
 
 class MBButton : public GameObject, public GameEventsListener {
     public:
-        MBButton(string label, string cur_level, double b_x, double b_y, string img, double b_w, double b_h);
-        MBButton(string btn_text, string label, string cur_level, double b_x, double b_y, double b_w, double b_h, int font_size = 40);
-        MBButton(string btn_text, string btn_label, string cur_level, string img, double b_x, double b_y, double b_w, double b_h);
+        MBButton(string label, string cur_level, double b_x, double b_y, string img, double b_w, double b_h, bool murph = false);
+        MBButton(string btn_text, string label, string cur_level, double b_x, double b_y, double b_w, double b_h, int font_size = 40, bool murph = false);
+        MBButton(string btn_text, string btn_label, string cur_level, string img, double b_x, double b_y, double b_w, double b_h, bool murph = false);
         MBButton() {}
         ~MBButton();
 
@@ -54,6 +54,7 @@ class MBButton : public GameObject, public GameEventsListener {
         int m_font_size;
         shared_ptr<Texture> m_texture;
         bool m_active, m_active_texture;
+        bool m_blackhole;
 };
 
 #endif

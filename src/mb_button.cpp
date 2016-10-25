@@ -5,10 +5,11 @@
 
 #include <ijengine/canvas.h>
 
-MBButton::MBButton(string btn_label, string cur_level, double b_x, double b_y, string img, double b_w, double b_h) :
+MBButton::MBButton(string btn_label, string cur_level, double b_x, double b_y, string img, double b_w, double b_h, bool murph) :
     m_click_state(NOT_CLICKING), m_hover_state(NOT_HOVERING), m_label(btn_label), m_img(img), m_level(cur_level),
-    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(-1), m_active(true){
+    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(-1), m_active(true), m_blackhole(murph) {
     
+    m_blackhole = false;
     m_texture_label = img;
     m_texture = resources::get_texture(cur_level + "/" + m_texture_label);
     m_active_texture = true;
@@ -16,9 +17,9 @@ MBButton::MBButton(string btn_label, string cur_level, double b_x, double b_y, s
     event::register_listener(this);
 }
 
-MBButton::MBButton(string btn_text, string btn_label, string cur_level, double b_x, double b_y, double b_w, double b_h, int font_size) :
+MBButton::MBButton(string btn_text, string btn_label, string cur_level, double b_x, double b_y, double b_w, double b_h, int font_size, bool murph) :
     m_click_state(NOT_CLICKING), m_hover_state(NOT_HOVERING), m_label(btn_label), m_level(cur_level),
-    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(font_size), m_active(true), m_active_texture(false) {
+    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(font_size), m_active(true), m_active_texture(false), m_blackhole(murph) {
 
     m_text = btn_text;
 
@@ -26,9 +27,9 @@ MBButton::MBButton(string btn_text, string btn_label, string cur_level, double b
 }
 
 // button with text and background
-MBButton::MBButton(string btn_text, string btn_label, string cur_level, string img, double b_x, double b_y, double b_w, double b_h) :
+MBButton::MBButton(string btn_text, string btn_label, string cur_level, string img, double b_x, double b_y, double b_w, double b_h, bool murph) :
     m_click_state(NOT_CLICKING), m_hover_state(NOT_HOVERING), m_label(btn_label), m_img(img), m_level(cur_level),
-    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(-1), m_active(true), m_active_texture(false) {
+    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(-1), m_active(true), m_active_texture(false), m_blackhole(murph) {
 
     m_text = btn_text;
     m_texture_label = img;
@@ -67,9 +68,11 @@ void MBButton::set_active_texture(bool c_active_texture){
 void MBButton::update_self(unsigned, unsigned){}
 
 bool MBButton::on_event(const GameEvent& event){
+    printf("é aqui?\n");
     if(not m_active) return false;
 
     if(event.id() == GAME_MOUSE_PRESSED){
+        printf("dei um press em %s\n", m_label.c_str());
         double mouse_x = event.get_property<double>("x");
         double mouse_y = event.get_property<double>("y");
 
@@ -90,24 +93,34 @@ bool MBButton::on_event(const GameEvent& event){
         int min_y = m_y, max_y = m_y + m_h;
 
         if(mouse_x >= min_x && mouse_x <= max_x && mouse_y >= min_y && mouse_y <= max_y){
+            printf("cliquei em %s\n", m_label.c_str());
+
             if(m_click_state == CLICKING){
+                printf("hello\n");
                 auto p = this->parent();
+                printf("goodbye\n");
 
                 if(m_level == "menu"){
                     auto parent_class = dynamic_cast <MBMenu *>(p);
                     parent_class -> do_action(m_label);
-                }else if(m_level == "toolbar"){
+                }
+                else if(m_level == "toolbar"){
                     auto parent_class = dynamic_cast <MBToolbar *>(p);
                     parent_class -> do_action(m_label);
-                }else{
+                }
+                else{
+                    printf("saldajldkasjldk\n");
                     auto parent_class = dynamic_cast <MBPlayableLevel *>(p);
                     parent_class -> do_action(m_label);
                 }
             }
         }
+
+        m_click_state = NOT_CLICKING;
     }
 
-    return false;
+    // return false;
+    return m_blackhole;
 }
 
 void MBButton::draw_self(Canvas *canvas, unsigned, unsigned){
