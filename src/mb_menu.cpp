@@ -79,13 +79,14 @@ void MBMenu::do_action(string label){
         exit(0);
     }
     else if(label == "macauba"){
-        //FIXME
-        //m_next = "mb_1";
-        //m_done = true;
+        m_next = "mb_1";
+        m_done = true;
+		return;
     }
     else if(label == "litio"){
         m_next = "lt_1";
         m_done = true;
+		return;
     }
     else if(label == "voltar"){
         m_placeholders.clear();
