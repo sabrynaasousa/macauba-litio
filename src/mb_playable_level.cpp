@@ -31,7 +31,7 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 	m_buttons.push_back(new MBButton("Validar", "validar", "", "btn_background_" + level_parsed + ".png", 1150, 90, 100, 30, 20));
 	m_buttons.push_back(new MBButton("black-hole-validate", "", 0, 0, "black-hole-validate.png", 1366, 768, true));
 
-	for(int i=0;i<m_buttons.size();i++){
+	for(int i=0;i<(int)m_buttons.size();i++){
         m_buttons[i]->set_priority(1000);
         add_child(m_buttons[i]);
         if(i) m_buttons[i]->set_active(false);
@@ -148,8 +148,6 @@ void MBPlayableLevel::do_action(string label){
 		vector<int> ids = { 1, 2, 5 };
 		for(auto id : ids)
 			m_buttons[id]->set_active(true);
-
-		m_buttons[4]->set_active(false);
 	}
 	else if(label == "voltar"){
 		for(int i=1;i<=3;i++)
@@ -167,8 +165,15 @@ void MBPlayableLevel::do_action(string label){
 		m_done = true;
 	}
 	else if(label == "nao"){
-		for(int i=1;i<m_buttons.size();i++)
-			m_buttons[i]->set_active(false);
+		if(m_buttons.back()->active()){
+			for(int i=1;i<(int)m_buttons.size();i++)
+				if(i != 4)
+					m_buttons[i]->set_active(false);
+		}
+		else if(m_buttons[3]->active()){
+			for(int i=1;i<(int)m_buttons.size();i++)
+				m_buttons[i]->set_active(false);
+		}
 	}
 }
 
