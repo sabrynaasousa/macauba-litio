@@ -96,8 +96,12 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 	toolbar->set_priority(2);
 	add_child(toolbar);
 
+	string level_parsed = "";
+	level_parsed += m_current_level[0];
+	level_parsed += m_current_level[1];
+
 	m_buttons.clear();
-	m_buttons.push_back(new MBButton("Validar", "validar", m_current_level, 1130, 70, 200, 70, 20, Color::BLACK));
+	m_buttons.push_back(new MBButton("Validar", "validar", "", "btn_background_" + level_parsed + ".png", 1150, 90, 100, 30, 20));
 
 	for(auto btn : m_buttons)
 		add_child(btn);

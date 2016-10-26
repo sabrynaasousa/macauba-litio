@@ -1,13 +1,12 @@
 #include "mb_menu.h"
 
-vector<int> label_buttons[] = { {0, 1, 2, 3}, {4, 5}, {}, {} };
-map<string, int> idx_names = { {"principal",0}, {"iniciar", 1}, {"opcoes", 2}, {"creditos", 3}, {"litio", 4}, {"macauba", 5} };
-
 MBMenu::MBMenu(const string&, const string&, const string, int){
 }
 
 MBMenu::MBMenu(int r, int g, int b, const string &current, const string&, const string&){
 	video::set_full_screen(1);
+
+    populate_label_map();
 
     m_r = r;
     m_g = g;
@@ -129,4 +128,20 @@ void MBMenu::draw_self(Canvas *canvas, unsigned, unsigned){
         for(int i=0;i<tam;i++)
             canvas->draw(m_placeholders[i], 400, 230 + 80 * i);
     }
+}
+
+void MBMenu::populate_label_map(){
+    label_buttons[0].push_back(0);
+    label_buttons[0].push_back(1);
+    label_buttons[0].push_back(2);
+    label_buttons[0].push_back(3);
+    label_buttons[1].push_back(4);
+    label_buttons[1].push_back(5);
+
+    idx_names.insert(make_pair("principal", 0));
+    idx_names.insert(make_pair("iniciar", 1));
+    idx_names.insert(make_pair("opcoes", 2));
+    idx_names.insert(make_pair("creditos", 3));
+    idx_names.insert(make_pair("litio", 4));
+    idx_names.insert(make_pair("macauba", 5));
 }
