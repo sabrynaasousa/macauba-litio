@@ -17,6 +17,26 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 	m_start = -1;
 
 	if(LEVEL) printf("Começou a construir level\n");
+
+	string level_parsed = "";
+	level_parsed += m_current_level[0];
+	level_parsed += m_current_level[1];
+
+	m_buttons.clear();
+	m_buttons.push_back(new MBButton("Validar", "validar", "", "btn_background_" + level_parsed + ".png", 1150, 90, 100, 30, 20));
+	m_buttons.push_back(new MBButton("Voltar", "voltar", m_current_level, 1250, 20, 100, 30, 20));
+	m_buttons.push_back(new MBButton("Sim", "sim", "", "btn_background_" + level_parsed + ".png", 433, 220, 500, 112));
+	m_buttons.push_back(new MBButton("Não", "nao", "", "btn_background_" + level_parsed + ".png", 433, m_buttons.back()->y() + m_buttons.back()->h() + 20, 500, 112));
+	m_buttons.push_back(new MBButton("black-hole", "", 0, 0, "black-hole.png", 1366, 768, true));
+
+	for(int i=0;i<m_buttons.size();i++){
+        m_buttons[i]->set_priority(1000);
+        add_child(m_buttons[i]);
+        if(i > 1) m_buttons[i]->set_active(false);
+	}
+
+	m_buttons.back()->set_priority(900);
+	m_buttons[0]->set_active(false);
 	
 	fstream level_design("res/" + m_current_level + "/level_design.txt");
 
@@ -83,10 +103,6 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 		m_activities.push_back(activity);
 	}
 
-	//exit(0);
-
-	// auto font = resources::get_font("Forelle.ttf", 40);
-	// auto m_m_texture = resources::get_texture(m_current_level + "/collectable.png");
 	m_background = resources::get_texture(m_current_level + "/background.png");
 
 	MBTrail * trail = new MBTrail(m_current_level, m_activities, n_trail_activities, id_initial_intermediary);
@@ -96,23 +112,15 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 	toolbar->set_priority(2);
 	add_child(toolbar);
 
-	string level_parsed = "";
-	level_parsed += m_current_level[0];
-	level_parsed += m_current_level[1];
-
-	m_buttons.clear();
-	m_buttons.push_back(new MBButton("Validar", "validar", "", "btn_background_" + level_parsed + ".png", 1150, 90, 100, 30, 20));
-
-	for(auto btn : m_buttons)
-		add_child(btn);
-
-	m_buttons[0]->set_active(false);
-
 	event::register_listener(this);
 
 	this->set_priority(10);
 
 	if(LEVEL) printf("Construiu level\n");
+}
+
+MBPlayableLevel::~MBPlayableLevel(){
+	event::unregister_listener(this);
 }
 
 bool MBPlayableLevel::done() const{
@@ -138,6 +146,18 @@ void MBPlayableLevel::do_action(string label){
 
 		printf("NEXT: %s\n", m_next.c_str());
 		m_done = true;
+	}
+	else if(label == "voltar"){
+		for(int i=1;i<m_buttons.size();i++)
+			m_buttons[i]->set_active(true);
+	}
+	else if(label == "sim"){
+		m_next = "menu";
+		m_done = true;
+	}
+	else if(label == "nao"){
+		for(int i=2;i<m_buttons.size();i++)
+			m_buttons[i]->set_active(false);
 	}
 }
 

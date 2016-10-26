@@ -1,6 +1,7 @@
 #include "mb_menu.h"
 
 MBMenu::MBMenu(const string&, const string&, const string, int){
+    populate_label_map();
 }
 
 MBMenu::MBMenu(int r, int g, int b, const string &current, const string&, const string&){
@@ -35,7 +36,6 @@ MBMenu::MBMenu(int r, int g, int b, const string &current, const string&, const 
 
     event::register_listener(this);
 }
-
 
 MBMenu::~MBMenu(){
     event::unregister_listener(this);

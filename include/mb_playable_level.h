@@ -9,6 +9,7 @@
 class MBPlayableLevel : public MBLevel {
     public:
         MBPlayableLevel(int r, int g, int b, const string &current, const string &next = "", const string &audio_path = "");
+        ~MBPlayableLevel();
 
         bool done() const;
         string next() const;
