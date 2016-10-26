@@ -23,21 +23,25 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 	level_parsed += m_current_level[1];
 
 	m_buttons.clear();
-	m_buttons.push_back(new MBButton("Validar", "validar", "", "btn_background_" + level_parsed + ".png", 1150, 90, 100, 30, 20));
 	m_buttons.push_back(new MBButton("Voltar", "voltar", m_current_level, 1250, 20, 100, 30, 20));
 	m_buttons.push_back(new MBButton("Sim", "sim", "", "btn_background_" + level_parsed + ".png", 433, 220, 500, 112));
 	m_buttons.push_back(new MBButton("Não", "nao", "", "btn_background_" + level_parsed + ".png", 433, m_buttons.back()->y() + m_buttons.back()->h() + 20, 500, 112));
 	m_buttons.push_back(new MBButton("black-hole", "", 0, 0, "black-hole.png", 1366, 768, true));
 
+	m_buttons.push_back(new MBButton("Validar", "validar", "", "btn_background_" + level_parsed + ".png", 1150, 90, 100, 30, 20));
+	m_buttons.push_back(new MBButton("black-hole-validate", "", 0, 0, "black-hole-validate.png", 1366, 768, true));
+
 	for(int i=0;i<m_buttons.size();i++){
         m_buttons[i]->set_priority(1000);
         add_child(m_buttons[i]);
-        if(i > 1) m_buttons[i]->set_active(false);
+        if(i) m_buttons[i]->set_active(false);
 	}
 
-	m_buttons.back()->set_priority(900);
-	m_buttons[0]->set_active(false);
-	
+	m_buttons.back()->set_priority(1100);
+	m_buttons[1]->set_priority(1200);
+	m_buttons[2]->set_priority(1200);
+	m_buttons[3]->set_priority(1100);
+
 	fstream level_design("res/" + m_current_level + "/level_design.txt");
 
 	if(not level_design.is_open()){
@@ -141,22 +145,29 @@ string MBPlayableLevel::current_level() const{
 
 void MBPlayableLevel::do_action(string label){
 	if(label == "validar"){
-		if(m_level_percentage < 100.0)
-			m_next = "menu";
+		vector<int> ids = { 1, 2, 5 };
+		for(auto id : ids)
+			m_buttons[id]->set_active(true);
 
-		printf("NEXT: %s\n", m_next.c_str());
-		m_done = true;
+		m_buttons[4]->set_active(false);
 	}
 	else if(label == "voltar"){
-		for(int i=1;i<m_buttons.size();i++)
+		for(int i=1;i<=3;i++)
 			m_buttons[i]->set_active(true);
 	}
 	else if(label == "sim"){
-		m_next = "menu";
+		if(m_buttons.back()->active()){
+			if(m_level_percentage < 100.0)
+				m_next = "menu";
+		}
+		else if(m_buttons[3]->active()){
+			m_next = "menu";
+		}
+
 		m_done = true;
 	}
 	else if(label == "nao"){
-		for(int i=2;i<m_buttons.size();i++)
+		for(int i=1;i<m_buttons.size();i++)
 			m_buttons[i]->set_active(false);
 	}
 }
@@ -164,12 +175,12 @@ void MBPlayableLevel::do_action(string label){
 void MBPlayableLevel::show_confirmation_button(double percentage){
 	// TODO mostrar mensagem de game over quando porcentagem menor que 100
 
-	m_buttons[0]->set_active(true);
+	m_buttons[4]->set_active(true);
 	m_level_percentage = percentage;
 }
 
 void MBPlayableLevel::hide_confirmation_button(){
-	m_buttons[0]->set_active(false);
+	m_buttons[4]->set_active(false);
 }
 
 bool MBPlayableLevel::on_event(const GameEvent&){
