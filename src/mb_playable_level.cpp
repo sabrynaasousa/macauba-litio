@@ -97,11 +97,11 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 	add_child(toolbar);
 
 	m_buttons.clear();
-	//m_buttons.push_back(new MBButton("Pronto!", m_current_level, 250, 220, "menu-nova-aventura.png", 299, 34));
+	m_buttons.push_back(new MBButton("Validar", "validar", m_current_level, 1176, 0, 200, 70, 20, Color::BLACK));
 
-	// for(auto btn : m_buttons){
-		// add_child(btn);
-	// }
+	for(auto btn : m_buttons){
+		add_child(btn);
+	}
 
 	event::register_listener(this);
 

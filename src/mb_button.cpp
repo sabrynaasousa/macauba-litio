@@ -7,7 +7,7 @@
 
 MBButton::MBButton(string btn_label, string cur_level, double b_x, double b_y, string img, double b_w, double b_h) :
     m_click_state(NOT_CLICKING), m_hover_state(NOT_HOVERING), m_label(btn_label), m_img(img), m_level(cur_level),
-    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(-1), m_active(true){
+    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(-1), m_active(true), m_font_color(Color::WHITE) {
     
     m_texture_label = img;
     m_texture = resources::get_texture(cur_level + "/" + m_texture_label);
@@ -16,19 +16,21 @@ MBButton::MBButton(string btn_label, string cur_level, double b_x, double b_y, s
     event::register_listener(this);
 }
 
-MBButton::MBButton(string btn_text, string btn_label, string cur_level, double b_x, double b_y, double b_w, double b_h, int font_size) :
+MBButton::MBButton(string btn_text, string btn_label, string cur_level, double b_x, double b_y, double b_w, double b_h, int font_size, const Color& color) :
     m_click_state(NOT_CLICKING), m_hover_state(NOT_HOVERING), m_label(btn_label), m_level(cur_level),
-    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(font_size), m_active(true), m_active_texture(false) {
+    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(font_size), m_active(true), m_active_texture(false), m_font_color(color) {
 
     m_text = btn_text;
 
     event::register_listener(this);
 }
 
+
+
 // button with text and background
-MBButton::MBButton(string btn_text, string btn_label, string cur_level, string img, double b_x, double b_y, double b_w, double b_h) :
+MBButton::MBButton(string btn_text, string btn_label, string cur_level, string img, double b_x, double b_y, double b_w, double b_h, int font_size) :
     m_click_state(NOT_CLICKING), m_hover_state(NOT_HOVERING), m_label(btn_label), m_img(img), m_level(cur_level),
-    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(-1), m_active(true), m_active_texture(false) {
+    m_x(b_x), m_y(b_y), m_h(b_h), m_w(b_w), m_font_size(font_size), m_active(true), m_active_texture(false), m_font_color(Color::WHITE) {
 
     m_text = btn_text;
     m_texture_label = img;
@@ -120,7 +122,7 @@ void MBButton::draw_self(Canvas *canvas, unsigned, unsigned){
             int font_size = m_font_size == -1 ? 60 : m_font_size;
             auto font = resources::get_font("MonospaceBold.ttf", font_size);
             canvas->set_font(font);
-            canvas->set_draw_color(Color(255, 255, 255));
+            canvas->set_draw_color(m_font_color);
 
             double len = 0.6 * m_label.size() * font_size - 1;
             canvas->draw(m_text, m_x + m_w/2 - len/2, m_y + 25);
