@@ -165,7 +165,7 @@ void MBPlayableLevel::draw_self(Canvas *canvas, unsigned, unsigned){
 	canvas->draw(m_background.get(), 0, 0);
 
 	int font_size = 40;
-	auto font = resources::get_font("MonospaceBold.ttf", font_size);
+	auto font = resources::get_font("fonts/MonospaceBold.ttf", font_size);
 	canvas->set_font(font);
 
 	canvas->set_draw_color(Color(255, 255, 255));

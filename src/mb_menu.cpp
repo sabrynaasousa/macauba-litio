@@ -84,7 +84,7 @@ void MBMenu::do_action(string label){
 		return;
     }
     else if(label == "litio"){
-        m_next = "lt_1";
+        m_next = "lt_4"; //TODO mudar pra 1
         m_done = true;
 		return;
     }
@@ -114,14 +114,14 @@ void MBMenu::draw_self(Canvas *canvas, unsigned, unsigned){
     if(m_background)
         canvas->draw(m_background.get(), 0, 0);
 
-    auto font = resources::get_font("MonospaceBold.ttf", 80);
+    auto font = resources::get_font("fonts/MonospaceBold.ttf", 80);
     canvas->set_font(font);
     canvas->set_draw_color(Color(255, 255, 255));
 
     canvas->draw("Simuladores EA / GA", 350, 50);
 
     if(not m_placeholders.empty()){
-        font = resources::get_font("MonospaceBold.ttf", 40);
+        font = resources::get_font("fonts/MonospaceBold.ttf", 40);
         canvas->set_font(font);
         canvas->set_draw_color(Color(0, 0, 0));
 

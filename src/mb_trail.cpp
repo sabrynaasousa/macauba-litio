@@ -1,19 +1,13 @@
 #include "mb_trail.h"
-#include "mb_answer.h"
-
 #include <ijengine/canvas.h>
 
 MBTrail::MBTrail(std::string current_level, vector<MBActivity *> activities, int number_of_activities, int id_initial_intermediary){
 	if(TRAIL) printf("Construindo Trail\n");
 	m_percentage = 0;
 	m_complete = false;
-	m_face_texture[0] = resources::get_texture("sad.png");
-	m_face_texture[1] = resources::get_texture("ok.png");
-	m_face_texture[2] = resources::get_texture("happy.png");
-
-	MBAnswer *answer = new MBAnswer();
-
-	n_frames = answer->n_frames(atoi(current_level.c_str())); 
+	m_face_texture[0] = resources::get_texture("smiles/sad.png");
+	m_face_texture[1] = resources::get_texture("smiles/ok.png");
+	m_face_texture[2] = resources::get_texture("smiles/happy.png");
 
 	int offset = 300;
 	int id_frame = 0;

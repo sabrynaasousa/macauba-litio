@@ -1,6 +1,5 @@
 #include "mb_frame.h"
 #include "mb_piece.h"
-#include "mb_answer.h"
 
 MBFrame::MBFrame(){
 

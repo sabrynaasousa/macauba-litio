@@ -118,7 +118,7 @@ void MBButton::draw_self(Canvas *canvas, unsigned, unsigned){
 
         if(not m_text.empty()){
             int font_size = m_font_size == -1 ? 60 : m_font_size;
-            auto font = resources::get_font("MonospaceBold.ttf", font_size);
+            auto font = resources::get_font("fonts/MonospaceBold.ttf", font_size);
             canvas->set_font(font);
             canvas->set_draw_color(Color(255, 255, 255));
 

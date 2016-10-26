@@ -1,13 +1,19 @@
 #include "mb_toolbar.h"
 #include "mb_button.h"
 #include <ijengine/canvas.h>
+#include <algorithm>
 
 MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int n_activities, int n_ins, int n_intermediaries, int n_outs1, int n_outs2, int n_treatments, map<string, vector<int> > ids)
 	: m_r(r), m_g(g), m_b(b), m_x(0), m_y(440), m_following(false), m_active_rectangle(0) {
     if(TOOLBAR) printf("Construindo toolbar\n");
 
-    // TODO fixme
     goto eita;
+    for(auto &id : ids){
+        vector<int> &v = id.second;
+        random_shuffle(v.begin(), v.end());
+    }
+
+    // TODO fixme
     eita:
 	for(int i = 0; i < n_ins; i++){
         m_pieces.push_back(new MBPiece(current_level, TOOLBAR_DISTANCE + 80 * (i%11), 445 + 100 * (i/11), ids["in"][i], "in"));        
