@@ -17,7 +17,31 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 	m_start = -1;
 
 	if(LEVEL) printf("Começou a construir level\n");
-	
+
+	string level_parsed = "";
+	level_parsed += m_current_level[0];
+	level_parsed += m_current_level[1];
+
+	m_buttons.clear();
+	m_buttons.push_back(new MBButton("Voltar", "voltar", m_current_level, 1250, 20, 100, 30, 20));
+	m_buttons.push_back(new MBButton("Sim", "sim", "", "btn_background_" + level_parsed + ".png", 433, 220, 500, 112));
+	m_buttons.push_back(new MBButton("Não", "nao", "", "btn_background_" + level_parsed + ".png", 433, m_buttons.back()->y() + m_buttons.back()->h() + 20, 500, 112));
+	m_buttons.push_back(new MBButton("black-hole", "", 0, 0, "black-hole.png", 1366, 768, true));
+
+	m_buttons.push_back(new MBButton("Validar", "validar", "", "btn_background_" + level_parsed + ".png", 1150, 90, 100, 30, 20));
+	m_buttons.push_back(new MBButton("black-hole-validate", "", 0, 0, "black-hole-validate.png", 1366, 768, true));
+
+	for(int i=0;i<m_buttons.size();i++){
+        m_buttons[i]->set_priority(1000);
+        add_child(m_buttons[i]);
+        if(i) m_buttons[i]->set_active(false);
+	}
+
+	m_buttons.back()->set_priority(1100);
+	m_buttons[1]->set_priority(1200);
+	m_buttons[2]->set_priority(1200);
+	m_buttons[3]->set_priority(1100);
+
 	fstream level_design("res/" + m_current_level + "/level_design.txt");
 
 	if(not level_design.is_open()){
@@ -83,31 +107,24 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 		m_activities.push_back(activity);
 	}
 
-	//exit(0);
-
-	// auto font = resources::get_font("Forelle.ttf", 40);
-	// auto m_m_texture = resources::get_texture(m_current_level + "/collectable.png");
 	m_background = resources::get_texture(m_current_level + "/background.png");
 
-	MBTrail *trail = new MBTrail(m_current_level, m_activities, n_trail_activities, id_initial_intermediary);
+	MBTrail * trail = new MBTrail(m_current_level, m_activities, n_trail_activities, id_initial_intermediary);
 	trail->set_priority(2);
 	add_child(trail);
 
 	toolbar->set_priority(2);
 	add_child(toolbar);
 
-	m_buttons.clear();
-	//m_buttons.push_back(new MBButton("Pronto!", m_current_level, 250, 220, "menu-nova-aventura.png", 299, 34));
-
-	// for(auto btn : m_buttons){
-		// add_child(btn);
-	// }
-
 	event::register_listener(this);
 
 	this->set_priority(10);
 
 	if(LEVEL) printf("Construiu level\n");
+}
+
+MBPlayableLevel::~MBPlayableLevel(){
+	event::unregister_listener(this);
 }
 
 bool MBPlayableLevel::done() const{
@@ -127,24 +144,43 @@ string MBPlayableLevel::current_level() const{
 }
 
 void MBPlayableLevel::do_action(string label){
-	if(label == "Pronto!"){
+	if(label == "validar"){
+		vector<int> ids = { 1, 2, 5 };
+		for(auto id : ids)
+			m_buttons[id]->set_active(true);
+
+		m_buttons[4]->set_active(false);
+	}
+	else if(label == "voltar"){
+		for(int i=1;i<=3;i++)
+			m_buttons[i]->set_active(true);
+	}
+	else if(label == "sim"){
+		if(m_buttons.back()->active()){
+			if(m_level_percentage < 100.0)
+				m_next = "menu";
+		}
+		else if(m_buttons[3]->active()){
+			m_next = "menu";
+		}
+
 		m_done = true;
+	}
+	else if(label == "nao"){
+		for(int i=1;i<m_buttons.size();i++)
+			m_buttons[i]->set_active(false);
 	}
 }
 
 void MBPlayableLevel::show_confirmation_button(double percentage){
-	// TODO Mostrar botão de confirmação pra validar processo, 
-	// e mostrar mensagem de sucesso e mandar pro próximo level quando percentage = 100%
-	// mensagem de erro quando for 99% ou menos
-	// Antes de validar, mostrar "Tem certeza?", que nem no voltar
-	printf("Percentage: %.2f\n", percentage);
-	m_done = true;
+	// TODO mostrar mensagem de game over quando porcentagem menor que 100
+
+	m_buttons[4]->set_active(true);
+	m_level_percentage = percentage;
 }
 
 void MBPlayableLevel::hide_confirmation_button(){
-	// TODO Esconder botão de confirmação aqui, já tá implementado pra fazer isso quando não tem todos os
-	// frames preenchidos, aqui é só esconder mesmo
-	// Acontece quando tava tudo preenchido e ele removeu uma
+	m_buttons[4]->set_active(false);
 }
 
 bool MBPlayableLevel::on_event(const GameEvent&){

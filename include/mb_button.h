@@ -8,6 +8,7 @@
 #include <ijengine/game_object.h>
 #include <ijengine/events_translator.h>
 #include <ijengine/game_events_listener.h>
+#include <ijengine/color.h>
 
 using namespace ijengine;
 using std::shared_ptr;
@@ -15,10 +16,10 @@ using std::string;
 
 class MBButton : public GameObject, public GameEventsListener {
     public:
-        MBButton(string label, string cur_level, double b_x, double b_y, string img, double b_w, double b_h);
-        MBButton(string btn_text, string label, string cur_level, double b_x, double b_y, double b_w, double b_h, int font_size = 40);
-        MBButton(string btn_text, string btn_label, string cur_level, string img, double b_x, double b_y, double b_w, double b_h);
-        MBButton() {}
+        MBButton(string label, string cur_level, double b_x, double b_y, string img, double b_w, double b_h, bool murph = false);
+        MBButton(string btn_text, string label, string cur_level, double b_x, double b_y, double b_w, double b_h, int font_size = 40, const Color& color = Color::WHITE, bool murph = false);
+        MBButton(string btn_text, string btn_label, string cur_level, string img, double b_x, double b_y, double b_w, double b_h, int font_size = -1, bool murph = false);
+        MBButton() : m_font_color(Color::WHITE) {}
         ~MBButton();
 
         double w();
@@ -53,7 +54,8 @@ class MBButton : public GameObject, public GameEventsListener {
         double m_x, m_y, m_h, m_w;
         int m_font_size;
         shared_ptr<Texture> m_texture;
-        bool m_active, m_active_texture;
+        bool m_active, m_active_texture, m_blackhole;
+        Color m_font_color;
 };
 
 #endif

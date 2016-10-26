@@ -9,6 +9,7 @@
 class MBPlayableLevel : public MBLevel {
     public:
         MBPlayableLevel(int r, int g, int b, const string &current, const string &next = "", const string &audio_path = "");
+        ~MBPlayableLevel();
 
         bool done() const;
         string next() const;
@@ -28,6 +29,7 @@ class MBPlayableLevel : public MBLevel {
         int n_activities, n_ins, n_intermediaries, n_outs1, n_outs2, n_treatments;
         int n_trail_activities, id_initial_intermediary;
         vector<MBActivity *> m_activities;
+        double m_level_percentage;
 };
 
 #endif

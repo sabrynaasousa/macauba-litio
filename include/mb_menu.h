@@ -32,6 +32,10 @@ class MBMenu : public MBLevel {
 
     private:
         vector<string> m_placeholders;
+        vector<int> label_buttons[20];
+        map<string, int> idx_names;
+
+        void populate_label_map();
 };
 
 #endif
