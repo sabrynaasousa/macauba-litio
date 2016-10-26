@@ -7,14 +7,11 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int n_activ
 	: m_r(r), m_g(g), m_b(b), m_x(0), m_y(440), m_following(false), m_active_rectangle(0) {
     if(TOOLBAR) printf("Construindo toolbar\n");
 
-    goto eita;
     for(auto &id : ids){
         vector<int> &v = id.second;
         random_shuffle(v.begin(), v.end());
     }
 
-    // TODO fixme
-    eita:
 	for(int i = 0; i < n_ins; i++){
         m_pieces.push_back(new MBPiece(current_level, TOOLBAR_DISTANCE + 80 * (i%11), 445 + 100 * (i/11), ids["in"][i], "in"));        
         add_child(m_pieces.back());

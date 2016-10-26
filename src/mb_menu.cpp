@@ -83,7 +83,7 @@ void MBMenu::do_action(string label){
 		return;
     }
     else if(label == "litio"){
-        m_next = "lt_4"; //TODO mudar pra 1
+        m_next = "lt_1";
         m_done = true;
 		return;
     }

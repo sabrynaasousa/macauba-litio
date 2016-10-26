@@ -119,10 +119,7 @@ bool MBPiece::on_event(const GameEvent& event){
             p->set_following(m_following);
             m_frame_id = -1;
 
-            printf("Clicou na %d\n", m_id);
             return true;
-        }else{
-            printf("Nao clicou na %d\n", m_id);
         }
     }
 
