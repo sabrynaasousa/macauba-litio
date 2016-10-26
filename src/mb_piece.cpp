@@ -107,7 +107,6 @@ bool MBPiece::on_event(const GameEvent& event){
         exit(-5);
     }
 
-    if(event.id() == GAME_MOUSE_PRESSED ) printf("Clicou %d %d\n", p->get_following(), m_following);
     if(event.id() == GAME_MOUSE_PRESSED && (p->get_following() == m_following)){
         double mouse_x = event.get_property<double>("x");
         double mouse_y = event.get_property<double>("y");
@@ -128,14 +127,12 @@ bool MBPiece::on_event(const GameEvent& event){
         double mouse_y = event.get_property<double>("y");
         m_x = mouse_x - m_width/2;
         m_y = mouse_y - m_height/2;
-        printf("%d\n", m_id);
         set_priority(30);
 
         return true;
     }else{
         set_priority(2);
     }
-    //printf("Event x, y => [%f, %f]\n", event.get_property<double>("x"), event.get_property<double>("y"));
 
     return false;
 }
@@ -168,10 +165,7 @@ void MBPiece::on_collision(const Collidable *collidable, const Rectangle& r, con
             m_y = p->y();
             m_frame_id = p->id();
         }
-        //printf("area do ret: %.2f\n", r.area());
     }
-    //printf("MBPiece colidiu em %.2f,%.2f em %u-%u\n", where.x(), where.y(), now, last);
-    
 }
 
 void MBPiece::update_self(unsigned now, unsigned) {

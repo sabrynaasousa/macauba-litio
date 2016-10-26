@@ -69,7 +69,6 @@ MBToolbar::MBToolbar(std::string current_level, int r, int g, int b, int n_activ
 }
 
 bool MBToolbar::equals(string type, string piece_type){
-    printf("[%s] [%s]\n", type.c_str(), piece_type.c_str());
     return ((type == piece_type) or (type == "out" and (piece_type == "out1" or piece_type == "out2")));
 }
 
@@ -93,11 +92,6 @@ void MBToolbar::do_action(string label){
 
     for(auto piece : m_pieces){
         piece->set_active(equals(type, piece->type()));
-        if(equals(type, piece->type())){
-            printf("Piece %s ativada\n", piece->type().c_str());
-        }else{
-            printf("Piece %s desativada\n", piece->type().c_str());
-        }
     }
 }
 

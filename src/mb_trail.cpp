@@ -105,7 +105,7 @@ void MBTrail::update_self(unsigned, unsigned){
 	if(n_filled_frames)
 		m_percentage = (double) correct/n_filled_frames * 100.0;
 	else
-		m_percentage = 0;
+		m_percentage = 100.0;
 
 	if(complete != m_complete){
 		auto parent_class = this->parent();

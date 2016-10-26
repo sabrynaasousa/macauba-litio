@@ -132,11 +132,8 @@ const list<Rectangle>& MBFrame::hit_boxes() const{
 
 void MBFrame::on_collision(const Collidable * c_piece, const Rectangle& rectangle, const unsigned now, const unsigned){
 	if(auto p = dynamic_cast<const MBPiece *>(c_piece)){
-        //printf("(%f , %f) x (%f, %f)\n", m_x, m_y, p->x(), p->y());
-
         int id_piece = p->id();
 
-        //printf("%f x %f (%f, %f)\n", rectangle.area(), p->bounding_box().area(), rectangle.x(), rectangle.y());
         if(rectangle.area() >= m_minimum_area && not p->following() && (now - p->last_following()) < 20 && m_piece == nullptr && p->type() == m_type){
 			if(id_piece == m_correct_piece){
 				m_is_right = true;
@@ -148,7 +145,6 @@ void MBFrame::on_collision(const Collidable * c_piece, const Rectangle& rectangl
 			set_filled(true);
         }
     }
-    // printf("MBFrame colidiu em %.2f,%.2f em %u-%u\n", where.x(), where.y(), now, last);
 }
 
 void MBFrame::update_self(unsigned now, unsigned) {
