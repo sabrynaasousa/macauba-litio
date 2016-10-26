@@ -25,8 +25,6 @@ MBButton::MBButton(string btn_text, string btn_label, string cur_level, double b
     event::register_listener(this);
 }
 
-
-
 // button with text and background
 MBButton::MBButton(string btn_text, string btn_label, string cur_level, string img, double b_x, double b_y, double b_w, double b_h, int font_size) :
     m_click_state(NOT_CLICKING), m_hover_state(NOT_HOVERING), m_label(btn_label), m_img(img), m_level(cur_level),

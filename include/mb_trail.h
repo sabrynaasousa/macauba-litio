@@ -37,6 +37,7 @@ class MBTrail : public GameObject{
 		void draw_self(Canvas *canvas, unsigned now, unsigned last);
 
 	private:
+
         double m_x, m_y;
 		double m_percentage;
 		bool m_complete;

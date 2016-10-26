@@ -89,7 +89,7 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 	// auto m_m_texture = resources::get_texture(m_current_level + "/collectable.png");
 	m_background = resources::get_texture(m_current_level + "/background.png");
 
-	MBTrail *trail = new MBTrail(m_current_level, m_activities, n_trail_activities, id_initial_intermediary);
+	MBTrail * trail = new MBTrail(m_current_level, m_activities, n_trail_activities, id_initial_intermediary);
 	trail->set_priority(2);
 	add_child(trail);
 
@@ -97,11 +97,12 @@ MBPlayableLevel::MBPlayableLevel(int r, int g, int b, const string &current, con
 	add_child(toolbar);
 
 	m_buttons.clear();
-	m_buttons.push_back(new MBButton("Validar", "validar", m_current_level, 1176, 0, 200, 70, 20, Color::BLACK));
+	m_buttons.push_back(new MBButton("Validar", "validar", m_current_level, 1130, 70, 200, 70, 20, Color::BLACK));
 
-	for(auto btn : m_buttons){
+	for(auto btn : m_buttons)
 		add_child(btn);
-	}
+
+	m_buttons[0]->set_active(false);
 
 	event::register_listener(this);
 
@@ -127,24 +128,24 @@ string MBPlayableLevel::current_level() const{
 }
 
 void MBPlayableLevel::do_action(string label){
-	if(label == "Pronto!"){
+	if(label == "validar"){
+		if(m_level_percentage < 100.0)
+			m_next = "menu";
+
+		printf("NEXT: %s\n", m_next.c_str());
 		m_done = true;
 	}
 }
 
 void MBPlayableLevel::show_confirmation_button(double percentage){
-	// TODO Mostrar botão de confirmação pra validar processo, 
-	// e mostrar mensagem de sucesso e mandar pro próximo level quando percentage = 100%
-	// mensagem de erro quando for 99% ou menos
-	// Antes de validar, mostrar "Tem certeza?", que nem no voltar
-	printf("Percentage: %.2f\n", percentage);
-	m_done = true;
+	// TODO mostrar mensagem de game over quando porcentagem menor que 100
+
+	m_buttons[0]->set_active(true);
+	m_level_percentage = percentage;
 }
 
 void MBPlayableLevel::hide_confirmation_button(){
-	// TODO Esconder botão de confirmação aqui, já tá implementado pra fazer isso quando não tem todos os
-	// frames preenchidos, aqui é só esconder mesmo
-	// Acontece quando tava tudo preenchido e ele removeu uma
+	m_buttons[0]->set_active(false);
 }
 
 bool MBPlayableLevel::on_event(const GameEvent&){
